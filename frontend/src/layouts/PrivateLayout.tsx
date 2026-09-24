@@ -1,4 +1,4 @@
-import useRequireAuth from 'src/hooks/useRequireAuth.tsx'
+import useRequireAuth from 'src/core/hooks/useRequireAuth.tsx'
 
 const PrivateLayout = () => {
   const authRedirect = useRequireAuth()
