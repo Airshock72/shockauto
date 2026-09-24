@@ -55,7 +55,7 @@ export default defineConfig(({ mode }) => ({
       })
   ].filter(Boolean),
   server: {
-    port: 3000,
+    port: 5173,
     open: true
   },
   build: {
