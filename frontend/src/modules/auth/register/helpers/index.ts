@@ -1,5 +1,6 @@
 import type { Slide } from 'src/core/types/ImageSlider.ts'
 import type { RegisterFormValues } from 'src/modules/auth/register/store/register.ts'
+import type { RegisterParams } from 'src/api/auth/types.ts'
 
 const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1920&q=80`
 
@@ -57,3 +58,10 @@ export const TOP_CARS: Array<Slide> = [
 ]
 
 export const FIELD_ORDER: Array<keyof RegisterFormValues> = ['firstName', 'lastName', 'email', 'password', 'repeatPassword']
+
+export const transformRegisterUserParams = (values: RegisterFormValues): RegisterParams => ({
+  firstName: values.firstName.trim(),
+  lastName: values.lastName.trim(),
+  email: values.email.trim(),
+  password: values.password
+})

@@ -1,12 +1,16 @@
 import type { AnimationEvent, ChangeEvent, SubmitEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { AuthApi } from 'src/api'
+import { ResponseStatuses } from 'src/api/types/apiGlobalTypes.ts'
 import { type RegisterFormValues, useRegisterReducer } from 'src/modules/auth/register/store/register.ts'
 import { validateRegisterForm } from 'src/modules/auth/register/validation'
-import { FIELD_ORDER } from 'src/modules/auth/register/helpers'
+import { FIELD_ORDER, transformRegisterUserParams } from 'src/modules/auth/register/helpers'
 
 const useRegister = () => {
+  const navigate = useNavigate()
   const [state, dispatch] = useRegisterReducer()
-  const { values, errors, isSubmitted, formShaking } = state
+  const { values, errors, isSubmitted, formShaking, isLoading } = state
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -16,8 +20,10 @@ const useRegister = () => {
     if (isSubmitted) dispatch({ type: 'SET_ERRORS', payload: validateRegisterForm(nextValues) })
   }
 
-  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (isLoading) return
+
     dispatch({ type: 'SET_SUBMITTED', payload: true })
 
     const nextErrors = validateRegisterForm(values)
@@ -31,8 +37,16 @@ const useRegister = () => {
       return
     }
 
-    // TODO: call the register endpoint once it's available in src/api/auth
-    toast.success('ანგარიში შეიქმნა', { description: `კეთილი იყოს თქვენი მობრძანება, ${values.firstName.trim()}!` })
+    dispatch({ type: 'SET_LOADING', payload: true })
+    const response = await AuthApi.register(transformRegisterUserParams(values))
+
+    if (response.status === ResponseStatuses.SUCCESS) {
+      toast.success('ანგარიში შეიქმნა', { description: `კეთილი იყოს თქვენი მობრძანება, ${values.firstName.trim()}!` })
+      navigate('/login')
+      return
+    }
+
+    dispatch({ type: 'SET_LOADING', payload: false })
   }
 
   const handleFormAnimationEnd = (event: AnimationEvent<HTMLFormElement>) => {
@@ -44,6 +58,7 @@ const useRegister = () => {
   return {
     values,
     errors,
+    isLoading,
     handleChange,
     handleSubmit,
     handleFormAnimationEnd,

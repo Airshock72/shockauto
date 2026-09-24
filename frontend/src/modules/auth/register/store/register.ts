@@ -15,18 +15,21 @@ export interface RegisterStore {
   readonly errors: RegisterFormErrors
   readonly isSubmitted: boolean
   readonly formShaking: boolean
+  readonly isLoading: boolean
 }
 
 export type SET_VALUES = 'SET_VALUES'
 export type SET_ERRORS = 'SET_ERRORS'
 export type SET_SUBMITTED = 'SET_SUBMITTED'
 export type SET_FORM_SHAKING = 'SET_FORM_SHAKING'
+export type SET_LOADING = 'SET_LOADING'
 
 export type RegisterActions =
   | { type: SET_VALUES, readonly payload: RegisterFormValues }
   | { type: SET_ERRORS, readonly payload: RegisterFormErrors }
   | { type: SET_SUBMITTED, readonly payload: boolean }
   | { type: SET_FORM_SHAKING, readonly payload: boolean }
+  | { type: SET_LOADING, readonly payload: boolean }
 
 const initialRegisterStore: RegisterStore = {
   values: {
@@ -38,7 +41,8 @@ const initialRegisterStore: RegisterStore = {
   },
   errors: {},
   isSubmitted: false,
-  formShaking: false
+  formShaking: false,
+  isLoading: false
 }
 
 export const useRegisterReducer = (): [RegisterStore, Dispatch<RegisterActions>] => {
@@ -69,6 +73,11 @@ export const registerReducer = (
     return {
       ...state,
       formShaking: action.payload
+    }
+  case 'SET_LOADING':
+    return {
+      ...state,
+      isLoading: action.payload
     }
   default:
     return state

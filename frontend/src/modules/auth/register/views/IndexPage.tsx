@@ -13,6 +13,7 @@ const Register = () => {
   const {
     values,
     errors,
+    isLoading,
     handleChange,
     handleSubmit,
     handleFormAnimationEnd,
@@ -24,8 +25,8 @@ const Register = () => {
       <section className='flex items-center justify-center px-4 py-10 sm:px-6 lg:px-10'>
         <Card className='w-full max-w-lg animate-fade-up'>
           <header className='mb-8 space-y-2'>
-            <h1 className='text-display-sm font-bold'>ანგარიშის შექმნა</h1>
-            <p className='text-sm text-muted-foreground'>შემოუერთდით ShockAuto-ს და იპოვეთ თქვენთვის შესაფერისი მანქანა</p>
+            <h1 className='text-display-sm font-bold text-center'>ანგარიშის შექმნა</h1>
+            <p className='text-sm text-muted-foreground text-center'>შემოუერთდით ShockAuto-ს და იპოვეთ თქვენთვის შესაფერისი მანქანა</p>
           </header>
 
           <form noValidate onSubmit={handleSubmit} onAnimationEnd={handleFormAnimationEnd} className='space-y-4'>
@@ -96,7 +97,7 @@ const Register = () => {
               shake={shouldShake('repeatPassword')}
             />
 
-            <Button type='submit' variant='primary' size='lg' fullWidth className='mt-2'>
+            <Button type='submit' variant='primary' size='lg' fullWidth loading={isLoading} className='mt-2'>
               რეგისტრაცია
             </Button>
           </form>

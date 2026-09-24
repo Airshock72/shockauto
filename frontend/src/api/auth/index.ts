@@ -1,6 +1,8 @@
 import * as PublicApi from 'src/api/requests'
+import type { GlobalResponse } from 'src/api/types/apiGlobalTypes.ts'
 import {
   type LoginParams,
+  type RegisterParams,
   RefreshTokenStatus,
   type ResponseToken,
   type Token,
@@ -11,6 +13,10 @@ import { parseLogin } from 'src/api/auth/parsers.ts'
 export const login = async (params: LoginParams): Promise<TokenData> => {
   const response = await PublicApi.post('/Auth/Login', params)
   return parseLogin(response)
+}
+
+export const register = (params: RegisterParams): Promise<GlobalResponse> => {
+  return PublicApi.post('/Auth/Register', params)
 }
 
 export const refreshToken = async (): Promise<RefreshTokenStatus> => {

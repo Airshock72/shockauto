@@ -21,6 +21,13 @@ export interface LoginParams {
     verificationCode?: number
 }
 
+export interface RegisterParams {
+    readonly firstName: string
+    readonly lastName: string
+    readonly email: string
+    readonly password: string
+}
+
 export interface ResponseToken {
     readonly token_type: 'Bearer',
     readonly expiresIn: number,
