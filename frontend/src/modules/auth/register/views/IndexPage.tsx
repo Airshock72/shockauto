@@ -113,7 +113,7 @@ const Register = () => {
             <Link
               to='/login'
               className='font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline'
-            >რეგისტრაცია
+            >ავტორიზაცია
             </Link>
           </p>
         </Card>
