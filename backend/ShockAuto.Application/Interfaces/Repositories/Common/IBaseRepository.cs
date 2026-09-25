@@ -2,7 +2,7 @@
 
 namespace ShockAuto.Application.Interfaces.Repositories.Common;
 
-public interface IBaseRepository<T, in TKey> where T : class
+public interface IBaseRepository<T, TKey> where T : class
 {
     public Task<T?> Get(TKey id, CancellationToken cancellationToken = default);
     public Task<T?> Get(TKey id, CancellationToken cancellationToken = default, params Expression<Func<T, object?>>[] includes);

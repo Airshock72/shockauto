@@ -1,6 +1,13 @@
 ﻿using Scalar.AspNetCore;
+using ShockAuto.Application;
+using ShockAuto.Persistence;
+using ShockAuto.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplication();
+builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddServices(builder.Configuration);
 
 builder.Services.AddOpenApi();
 builder.Services.AddCors(options =>
