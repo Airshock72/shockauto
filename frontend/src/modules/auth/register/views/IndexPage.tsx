@@ -8,6 +8,7 @@ import Divider from 'src/core/components/dividers/Divider.tsx'
 import GoogleIcon from 'src/core/components/icons/GoogleIcon.tsx'
 import CarShowcase from 'src/modules/auth/register/views/CarShowcase.tsx'
 import useRegister from 'src/modules/auth/register/hooks/useRegister.ts'
+import { normalizeEmail } from 'src/core/helpers/normalizers.ts'
 
 const Register = () => {
   const {
@@ -62,6 +63,7 @@ const Register = () => {
               placeholder='name@example.com'
               autoComplete='email'
               leftIcon={<Mail />}
+              normalizer={normalizeEmail}
               value={values.email}
               onChange={handleChange}
               error={errors.email}

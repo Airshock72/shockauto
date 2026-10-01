@@ -1,5 +1,6 @@
 import { cn } from 'src/core/lib/utils'
-import useImageSlider from 'src/core/hooks/useImageSlider.ts'
+import useImageSlider from 'src/core/hooks/sliders/useImageSlider.ts'
+import useImageSliderAnimation from 'src/core/hooks/sliders/useImageSliderAnimation.ts'
 import type { ImageSliderProps } from 'src/core/types/ImageSlider.ts'
 
 const ImageSlider = ({ slides, interval = 5000, className }: ImageSliderProps) => {
@@ -12,10 +13,22 @@ const ImageSlider = ({ slides, interval = 5000, className }: ImageSliderProps) =
     handleImageError
   } = useImageSlider(slides)
 
+  const {
+    containerRef,
+    handlePointerDown,
+    handlePointerMove,
+    handlePointerUp
+  } = useImageSliderAnimation({ count: slides.length, activeIndex: state.activeIndex, interval, goTo, setPaused })
+
   if (!slides.length) return null
 
   return (
     <div
+      ref={containerRef}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
       role='region'
       aria-roledescription='carousel'
       aria-label='Featured cars'
@@ -27,19 +40,18 @@ const ImageSlider = ({ slides, interval = 5000, className }: ImageSliderProps) =
       onBlur={() => setPaused(false)}
       className={cn(
         'group relative isolate overflow-hidden rounded-3xl bg-linear-to-br from-primary/40 via-card to-neon/30 shadow-elevated outline-none',
+        'cursor-grab touch-pan-y select-none',
         'focus-visible:ring-4 focus-visible:ring-ring/40',
         className
       )}
     >
-      {slides.map((slide, index) => {
-        const isActive = index === state.activeIndex
-
-        return (
+      <div className='absolute inset-0 -z-10 isolate overflow-hidden'>
+        {slides.map((slide, index) => (
           <div
             key={slide.src}
-            aria-hidden={!isActive}
-            className={cn('absolute inset-0 -z-10', isActive ? 'opacity-100' : 'opacity-0')}
-            style={{ transition: 'opacity 1.1s var(--ease-fluid)' }}
+            data-slide
+            aria-hidden={index !== state.activeIndex}
+            className='invisible absolute inset-0 overflow-hidden will-change-[clip-path]'
           >
             {!state.failedIndexes.has(index) && (
               <img
@@ -49,13 +61,13 @@ const ImageSlider = ({ slides, interval = 5000, className }: ImageSliderProps) =
                 decoding='async'
                 draggable={false}
                 onError={() => handleImageError(index)}
-                className={cn('size-full object-cover', isActive ? 'scale-100' : 'scale-110')}
-                style={{ objectPosition: slide.position, transition: `transform ${interval + 1500}ms var(--ease-fluid)` }}
+                className='size-full object-cover will-change-transform'
+                style={{ objectPosition: slide.position }}
               />
             )}
           </div>
-        )
-      })}
+        ))}
+      </div>
 
       <div className='pointer-events-none absolute inset-0 -z-10 bg-linear-to-t from-black/85 via-black/20 to-black/30' />
 

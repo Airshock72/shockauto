@@ -1,6 +1,6 @@
 import type { KeyboardEvent } from 'react'
 import type { Slide } from 'src/core/types/ImageSlider.ts'
-import { useImageSliderReducer } from 'src/core/store/imageSlider.ts'
+import { useImageSliderReducer } from 'src/core/store/sliders/imageSlider.ts'
 
 const useImageSlider = (slides: Array<Slide>) => {
   const [state, dispatch] = useImageSliderReducer()

@@ -1,6 +1,8 @@
-import { type ComponentProps, type ReactNode, useId, useState } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 import { cn } from 'src/core/lib/utils'
+import type { Normalizer } from 'src/core/helpers/normalizers.ts'
+import useTextInput from 'src/core/hooks/inputs/textInput.ts'
 
 interface TextInputProps extends ComponentProps<'input'> {
   readonly label?: string
@@ -9,6 +11,7 @@ interface TextInputProps extends ComponentProps<'input'> {
   readonly leftIcon?: ReactNode
   readonly containerClassName?: string
   readonly shake?: boolean
+  readonly normalizer?: Normalizer
 }
 
 const TextInput = ({
@@ -18,19 +21,23 @@ const TextInput = ({
   leftIcon,
   containerClassName,
   shake = false,
+  normalizer,
   className,
   id,
   type = 'text',
   disabled,
+  onChange,
   ...props
 }: TextInputProps) => {
-  const generatedId = useId()
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
-
-  const inputId = id ?? generatedId
-  const messageId = `${inputId}-message`
-  const isPassword = type === 'password'
-  const message = error ?? hint
+  const {
+    isPasswordVisible,
+    inputId,
+    messageId,
+    isPassword,
+    message,
+    handleChange,
+    togglePasswordVisibility
+  } = useTextInput({ id, type, error, hint, normalizer, onChange })
 
   return (
     <div className={cn('flex flex-col gap-1.5', containerClassName)}>
@@ -46,7 +53,7 @@ const TextInput = ({
             className={cn(
               'pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-muted-foreground',
               'transition-colors duration-200 group-focus-within:text-primary [&_svg]:size-4.5',
-              error && 'text-destructive group-focus-within:text-destructive'
+              error && 'text-destructive'
             )}
           >
             {leftIcon}
@@ -71,6 +78,7 @@ const TextInput = ({
             isPassword && 'pr-11',
             className
           )}
+          onChange={handleChange}
           {...props}
         />
 
@@ -78,7 +86,7 @@ const TextInput = ({
           <button
             type='button'
             disabled={disabled}
-            onClick={() => setIsPasswordVisible((visible) => !visible)}
+            onClick={togglePasswordVisibility}
             aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
             aria-controls={inputId}
             className={cn(
