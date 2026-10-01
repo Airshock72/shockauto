@@ -1,0 +1,37 @@
+/*
+ * 404 keypad — animations are driven by GSAP (useKeypadInteractions).
+ * These are only the static styles and resting states.
+ */
+.kp-pulse {
+  stroke-dasharray: 3 97;
+  stroke-dashoffset: 3;
+  opacity: 0;
+  filter: drop-shadow(0 0 4px var(--neon));
+}
+
+.kp-spark,
+.kp-digit-glow {
+  opacity: 0;
+}
+
+/* Interactions */
+.kp-cable-hit {
+  cursor: grab;
+  touch-action: none;
+}
+
+.kp-dragging,
+.kp-dragging * {
+  cursor: grabbing;
+}
+
+.kp-key-hit {
+  cursor: pointer;
+}
+
+.kp-ripple {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 2;
+  pointer-events: none;
+}

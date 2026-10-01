@@ -4,6 +4,7 @@ import PageLoader from 'src/core/components/Loadings/PageLoader.tsx'
 import PrivateLayout from 'src/layouts/PrivateLayout.tsx'
 import PublicLayout from 'src/layouts/PublicLayout.tsx'
 import { routes } from 'src/router/routes.ts'
+import NotFoundPage from 'src/modules/notFound/views/IndexPage.tsx'
 
 const Register = lazy(() => import('src/modules/auth/register/views/IndexPage.tsx'))
 
@@ -22,6 +23,7 @@ const AppRouter = () => {
             }
           />
         ))}
+        <Route path='*' element={<NotFoundPage />} />
       </Route>
 
       <Route element={<PublicLayout />}>
