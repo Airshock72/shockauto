@@ -1,5 +1,6 @@
 import type { AnimationEvent, ChangeEvent, SubmitEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { AuthApi } from 'src/api'
 import { ResponseStatuses } from 'src/api/types/apiGlobalTypes.ts'
@@ -9,6 +10,7 @@ import { FIELD_ORDER, transformRegisterUserParams } from 'src/modules/auth/regis
 
 const useRegister = () => {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [state, dispatch] = useRegisterReducer()
   const { values, errors, isSubmitted, formShaking, isLoading } = state
 
@@ -41,7 +43,7 @@ const useRegister = () => {
     const response = await AuthApi.register(transformRegisterUserParams(values))
 
     if (response.status === ResponseStatuses.SUCCESS) {
-      toast.success('ანგარიში შეიქმნა', { description: `კეთილი იყოს თქვენი მობრძანება, ${values.firstName.trim()}!` })
+      toast.success(t('register.success.title'), { description: t('register.success.description', { name: values.firstName.trim() }) })
       navigate('/login')
       return
     }

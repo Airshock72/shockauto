@@ -1,6 +1,7 @@
 import { type GlobalResponse } from 'src/api/types/apiGlobalTypes.ts'
 import { stringify } from 'src/core/helpers/queryString.ts'
 import { handleRequestException, handleResponse } from 'src/api/helper'
+import i18n from 'src/i18n'
 
 const baseURL = import.meta.env.VITE_API_BASE_URL
 
@@ -14,7 +15,7 @@ export const sendRequest = async (
   try {
     const urlParams = stringify(params, { encode: true })
     const headersObject = {
-      'Accept-Language': 'ka',
+      'Accept-Language': i18n.resolvedLanguage ?? 'ka',
       'Accept': 'application/json'
     }
     const headers = { ...headersObject, 'Content-Type': 'application/json' }

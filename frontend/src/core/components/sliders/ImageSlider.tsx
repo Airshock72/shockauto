@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next'
 import { cn } from 'src/core/lib/utils'
 import useImageSlider from 'src/core/hooks/sliders/useImageSlider.ts'
 import useImageSliderAnimation from 'src/core/hooks/sliders/useImageSliderAnimation.ts'
 import type { ImageSliderProps } from 'src/core/types/ImageSlider.ts'
 
 const ImageSlider = ({ slides, interval = 5000, className }: ImageSliderProps) => {
+  const { t } = useTranslation()
   const {
     state,
     activeSlide,
@@ -31,7 +33,7 @@ const ImageSlider = ({ slides, interval = 5000, className }: ImageSliderProps) =
       onPointerCancel={handlePointerUp}
       role='region'
       aria-roledescription='carousel'
-      aria-label='Featured cars'
+      aria-label={t('slider.label')}
       tabIndex={0}
       onKeyDown={handleKeyDown}
       onMouseEnter={() => setPaused(true)}
@@ -89,7 +91,9 @@ const ImageSlider = ({ slides, interval = 5000, className }: ImageSliderProps) =
                 key={slide.src}
                 type='button'
                 onClick={() => goTo(index)}
-                aria-label={`Show slide ${index + 1}${slide.title ? `: ${slide.title}` : ''}`}
+                aria-label={slide.title
+                  ? t('slider.showSlideWithTitle', { index: index + 1, title: slide.title })
+                  : t('slider.showSlide', { index: index + 1 })}
                 aria-current={isActive || undefined}
                 className={cn(
                   'relative h-2 overflow-hidden rounded-full outline-none transition-[width,background-color] duration-500 ease-fluid',

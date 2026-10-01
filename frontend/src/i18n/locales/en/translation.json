@@ -1,0 +1,102 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "or": "or",
+    "changeLanguage": "Change language"
+  },
+  "errors": {
+    "default": "Something went wrong, please try again later",
+    "tooManyRequests": "Too many requests, please try again later",
+    "network": "Could not connect to the server, please check your internet connection",
+    "authExpired": "Please sign in again"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for doesn't exist or has been removed",
+    "backHome": "Back to Homepage"
+  },
+  "register": {
+    "title": "Create an account",
+    "subtitle": "Join ShockAuto and find the car that's right for you",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "password": "Password",
+    "passwordPlaceholder": "Create a password",
+    "repeatPassword": "Repeat password",
+    "repeatPasswordPlaceholder": "Repeat your password",
+    "submit": "Sign up",
+    "google": "Sign up with Google",
+    "haveAccount": "Already have an account?",
+    "login": "Sign in",
+    "success": {
+      "title": "Account created",
+      "description": "Welcome aboard, {{name}}!"
+    },
+    "showcase": {
+      "ferrari": {
+        "alt": "Red Ferrari LaFerrari parked in a bright garage",
+        "subtitle": "Hybrid V12 hypercar with 950 hp and a soundtrack from Maranello."
+      },
+      "lamborghini": {
+        "alt": "Orange Lamborghini Huracán EVO Spyder parked in a garage",
+        "subtitle": "Naturally aspirated V10 with 640 hp and an open-top roar."
+      },
+      "porsche": {
+        "alt": "Black Porsche Panamera Turbo driving on a highway",
+        "subtitle": "Four-door comfort with genuine 911 DNA."
+      },
+      "audi": {
+        "alt": "Matte grey Audi R8 on a winding road at golden hour",
+        "subtitle": "Mid-engine V10 with quattro all-wheel drive."
+      },
+      "mercedesAmg": {
+        "alt": "Matte black Mercedes-AMG GT parked on a harbor quay in Monaco",
+        "subtitle": "Hand-built biturbo V8 from Affalterbach."
+      },
+      "bmw": {
+        "alt": "Red BMW M4 on a palm-lined street",
+        "subtitle": "Twin-turbo inline-six tuned for the track and the street."
+      },
+      "mercedesG": {
+        "alt": "Black Mercedes-Benz G-Class on a wet asphalt track",
+        "subtitle": "An off-road icon, refined for the city."
+      }
+    }
+  },
+  "validation": {
+    "minLength2": "At least 2 characters",
+    "firstNameRequired": "First name is required",
+    "lastNameRequired": "Last name is required",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Enter a valid email, e.g. name@example.com",
+    "passwordRequired": "Password is required",
+    "passwordWeak": "Password doesn't meet the requirements below",
+    "repeatPasswordRequired": "Repeat your password",
+    "passwordsMismatch": "Passwords don't match"
+  },
+  "password": {
+    "show": "Show password",
+    "hide": "Hide password",
+    "met": "(met)",
+    "notMet": "(not met)",
+    "strength": {
+      "empty": "Enter a password",
+      "weak": "Weak",
+      "medium": "Medium",
+      "strong": "Strong"
+    },
+    "rules": {
+      "length": "At least 10 characters",
+      "uppercase": "One uppercase letter",
+      "lowercase": "One lowercase letter",
+      "number": "One number",
+      "special": "One symbol"
+    }
+  },
+  "slider": {
+    "label": "Featured cars",
+    "showSlide": "Show slide {{index}}",
+    "showSlideWithTitle": "Show slide {{index}}: {{title}}"
+  }
+}

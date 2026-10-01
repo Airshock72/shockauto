@@ -1,12 +1,15 @@
+import { useTranslation } from 'react-i18next'
 import { Skeleton } from 'src/core/components/ui/skeleton.tsx'
 
 const STAT_CARDS = 4
 const LIST_ROWS = 5
 
 const PageLoader = () => {
+  const { t } = useTranslation()
+
   return (
     <div role='status' aria-live='polite' aria-busy='true' className='relative w-full'>
-      <span className='sr-only'>იტვირთება...</span>
+      <span className='sr-only'>{t('common.loading')}</span>
 
       {/* Top progress beam */}
       <div className='fixed inset-x-0 top-0 z-50 h-0.5 overflow-hidden bg-primary/10'>

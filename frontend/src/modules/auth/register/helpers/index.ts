@@ -7,53 +7,53 @@ const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=f
 export const TOP_CARS: Array<Slide> = [
   {
     src: unsplash('1583121274602-3e2820c69888'),
-    alt: 'Red Ferrari LaFerrari parked in a bright garage',
+    alt: 'register.showcase.ferrari.alt',
     eyebrow: '· Ferrari',
     title: 'Ferrari LaFerrari',
-    subtitle: 'Hybrid V12 hypercar with 950 hp and a soundtrack from Maranello.'
+    subtitle: 'register.showcase.ferrari.subtitle'
   },
   {
     src: unsplash('1612825173281-9a193378527e'),
-    alt: 'Orange Lamborghini Huracán EVO Spyder parked in a garage',
+    alt: 'register.showcase.lamborghini.alt',
     position: '35% center',
     eyebrow: '· Lamborghini',
     title: 'Lamborghini Huracán EVO',
-    subtitle: 'Naturally aspirated V10 with 640 hp and an open-top roar.'
+    subtitle: 'register.showcase.lamborghini.subtitle'
   },
   {
     src: unsplash('1503376780353-7e6692767b70'),
-    alt: 'Black Porsche Panamera Turbo driving on a highway',
+    alt: 'register.showcase.porsche.alt',
     eyebrow: '· Porsche',
     title: 'Porsche Panamera Turbo',
-    subtitle: 'Four-door comfort with genuine 911 DNA.'
+    subtitle: 'register.showcase.porsche.subtitle'
   },
   {
     src: unsplash('1603584173870-7f23fdae1b7a'),
-    alt: 'Matte grey Audi R8 on a winding road at golden hour',
+    alt: 'register.showcase.audi.alt',
     eyebrow: '· Audi',
     title: 'Audi R8',
-    subtitle: 'Mid-engine V10 with quattro all-wheel drive.'
+    subtitle: 'register.showcase.audi.subtitle'
   },
   {
     src: unsplash('1617814065893-00757125efab'),
-    alt: 'Matte black Mercedes-AMG GT parked on a harbor quay in Monaco',
+    alt: 'register.showcase.mercedesAmg.alt',
     eyebrow: '· Mercedes-AMG',
     title: 'Mercedes-AMG GT',
-    subtitle: 'Hand-built biturbo V8 from Affalterbach.'
+    subtitle: 'register.showcase.mercedesAmg.subtitle'
   },
   {
     src: unsplash('1549399542-7e3f8b79c341'),
-    alt: 'Red BMW M4 on a palm-lined street',
+    alt: 'register.showcase.bmw.alt',
     eyebrow: '· BMW',
     title: 'BMW M4',
-    subtitle: 'Twin-turbo inline-six tuned for the track and the street.'
+    subtitle: 'register.showcase.bmw.subtitle'
   },
   {
     src: unsplash('1648413653819-7c0fd93e8e6a'),
-    alt: 'Black Mercedes-Benz G-Class on a wet asphalt track',
+    alt: 'register.showcase.mercedesG.alt',
     eyebrow: '· Mercedes-Benz',
     title: 'Mercedes-Benz G-Class',
-    subtitle: 'An off-road icon, refined for the city.'
+    subtitle: 'register.showcase.mercedesG.subtitle'
   }
 ]
 

@@ -1,7 +1,10 @@
+import i18n from 'src/i18n'
+
+// Backend error message → translation key
 export const errorMessagesMap: Record<string, string> = {
-  'Too Many Requests': 'დაფიქსირდა მოთხოვნების ჭარბი რაოდენობა, გთხოვთ სცადოთ მოგვიანებით'
+  'Too Many Requests': 'errors.tooManyRequests'
 }
 
-export const translateErrorMessage = (errorMessage: string, defaultMessage = 'დაფიქსირდა შეცდომა, გთხოვთ სცადოთ მოგვიანებით'): string => {
-  return errorMessagesMap[errorMessage] || defaultMessage
+export const translateErrorMessage = (errorMessage: string, defaultKey = 'errors.default'): string => {
+  return i18n.t(errorMessagesMap[errorMessage] || defaultKey)
 }

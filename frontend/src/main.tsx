@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import 'src/index.css'
+import 'src/i18n'
 import RouterApp from 'src/App.tsx'
 import { IdleTimerProvider } from 'src/providers/IdleTimerProvider.tsx'
 import { ThemeProvider } from 'src/providers/ThemeProvider.tsx'

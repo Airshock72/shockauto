@@ -1,0 +1,102 @@
+{
+  "common": {
+    "loading": "იტვირთება...",
+    "or": "ან",
+    "changeLanguage": "ენის შეცვლა"
+  },
+  "errors": {
+    "default": "დაფიქსირდა შეცდომა, გთხოვთ სცადოთ მოგვიანებით",
+    "tooManyRequests": "დაფიქსირდა მოთხოვნების ჭარბი რაოდენობა, გთხოვთ სცადოთ მოგვიანებით",
+    "network": "სერვერთან დაკავშირება ვერ მოხერხდა, შეამოწმეთ ინტერნეტ კავშირი",
+    "authExpired": "გთხოვთ გაიაროთ ავტორიზაცია თავიდან"
+  },
+  "notFound": {
+    "title": "გვერდი ვერ მოიძებნა",
+    "description": "გვერდი რომელსაც თქვენ ეძებთ ვერ მოიძებნა ან წაშლილია",
+    "backHome": "მთავარი გვერდი"
+  },
+  "register": {
+    "title": "ანგარიშის შექმნა",
+    "subtitle": "შემოუერთდით ShockAuto-ს და იპოვეთ თქვენთვის შესაფერისი მანქანა",
+    "firstName": "სახელი",
+    "lastName": "გვარი",
+    "email": "ელ.ფოსტა",
+    "password": "პაროლი",
+    "passwordPlaceholder": "შექმენით პაროლი",
+    "repeatPassword": "გაიმეორეთ პაროლი",
+    "repeatPasswordPlaceholder": "გაიმეორეთ თქვენი პაროლი",
+    "submit": "რეგისტრაცია",
+    "google": "Google რეგისტრაცია",
+    "haveAccount": "გაქვს ანგარიში?",
+    "login": "ავტორიზაცია",
+    "success": {
+      "title": "ანგარიში შეიქმნა",
+      "description": "კეთილი იყოს თქვენი მობრძანება, {{name}}!"
+    },
+    "showcase": {
+      "ferrari": {
+        "alt": "წითელი Ferrari LaFerrari ნათელ ავტოფარეხში",
+        "subtitle": "ჰიბრიდული V12 ჰიპერქარი 950 ცხ.ძ.-ით და მარანელოს ხმით."
+      },
+      "lamborghini": {
+        "alt": "ნარინჯისფერი Lamborghini Huracán EVO Spyder ავტოფარეხში",
+        "subtitle": "ატმოსფერული V10 640 ცხ.ძ.-ით და ღია სახურავის გრგვინვით."
+      },
+      "porsche": {
+        "alt": "შავი Porsche Panamera Turbo ავტობანზე",
+        "subtitle": "ოთხკარიანი კომფორტი ნამდვილი 911-ის დნმ-ით."
+      },
+      "audi": {
+        "alt": "მქრქალი ნაცრისფერი Audi R8 მიხვეულ-მოხვეულ გზაზე მზის ჩასვლისას",
+        "subtitle": "შუაძრავიანი V10 quattro სრული ამძრავით."
+      },
+      "mercedesAmg": {
+        "alt": "მქრქალი შავი Mercedes-AMG GT მონაკოს ნავსადგურში",
+        "subtitle": "ხელით აწყობილი ბიტურბო V8 აფალტერბახიდან."
+      },
+      "bmw": {
+        "alt": "წითელი BMW M4 პალმებიან ქუჩაზე",
+        "subtitle": "ტყუპ-ტურბო რიგითი ექვსცილინდრიანი ტრასისა და ქუჩისთვის."
+      },
+      "mercedesG": {
+        "alt": "შავი Mercedes-Benz G-Class სველ ასფალტზე",
+        "subtitle": "გზაგარეშე ხატი, დახვეწილი ქალაქისთვის."
+      }
+    }
+  },
+  "validation": {
+    "minLength2": "მინიმუმ 2 სიმბოლო",
+    "firstNameRequired": "სახელი სავალდებულოა",
+    "lastNameRequired": "გვარი სავალდებულოა",
+    "emailRequired": "ელ.ფოსტა სავალდებულოა",
+    "emailInvalid": "შეიყვანეთ სწორი ელ.ფოსტა, მაგ. name@example.com",
+    "passwordRequired": "პაროლი სავალდებულოა",
+    "passwordWeak": "პაროლი არ აკმაყოფილებს ქვემოთ მოცემულ მოთხოვნებს",
+    "repeatPasswordRequired": "გაიმეორეთ პაროლი",
+    "passwordsMismatch": "პაროლები არ ემთხვევა"
+  },
+  "password": {
+    "show": "პაროლის ჩვენება",
+    "hide": "პაროლის დამალვა",
+    "met": "(შესრულებულია)",
+    "notMet": "(არ არის შესრულებული)",
+    "strength": {
+      "empty": "შეიყვანეთ პაროლი",
+      "weak": "სუსტი",
+      "medium": "საშუალო",
+      "strong": "ძლიერი"
+    },
+    "rules": {
+      "length": "მინიმუმ 10 ასო",
+      "uppercase": "ერთი დიდი ასო",
+      "lowercase": "ერთი პატარა ასო",
+      "number": "ერთი ციფრი",
+      "special": "ერთი სიმბოლო"
+    }
+  },
+  "slider": {
+    "label": "რჩეული მანქანები",
+    "showSlide": "სლაიდი {{index}}",
+    "showSlideWithTitle": "სლაიდი {{index}}: {{title}}"
+  }
+}

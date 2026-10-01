@@ -1,5 +1,6 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { cn } from 'src/core/lib/utils'
 import type { Normalizer } from 'src/core/helpers/normalizers.ts'
 import useTextInput from 'src/core/hooks/inputs/textInput.ts'
@@ -38,6 +39,7 @@ const TextInput = ({
     handleChange,
     togglePasswordVisibility
   } = useTextInput({ id, type, error, hint, normalizer, onChange })
+  const { t } = useTranslation()
 
   return (
     <div className={cn('flex flex-col gap-1.5', containerClassName)}>
@@ -87,7 +89,7 @@ const TextInput = ({
             type='button'
             disabled={disabled}
             onClick={togglePasswordVisibility}
-            aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
+            aria-label={isPasswordVisible ? t('password.hide') : t('password.show')}
             aria-controls={inputId}
             className={cn(
               'absolute top-1/2 right-1.5 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground outline-none',

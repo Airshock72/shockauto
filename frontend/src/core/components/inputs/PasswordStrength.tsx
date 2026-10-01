@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { cn } from 'src/core/lib/utils'
 import { getPasswordStrength, PASSWORD_RULES, type PasswordStrength as Strength } from 'src/core/helpers/validators.ts'
 
@@ -7,16 +8,17 @@ interface PasswordStrengthProps {
   readonly className?: string
 }
 
-const STRENGTH_META: Record<Strength, { readonly bars: number, readonly label: string, readonly color: string, readonly text: string }> = {
-  empty: { bars: 0, label: 'შეიყვანეთ პაროლი', color: 'bg-transparent', text: 'text-muted-foreground' },
-  weak: { bars: 1, label: 'სუსტი', color: 'bg-destructive', text: 'text-destructive' },
-  medium: { bars: 2, label: 'საშუალო', color: 'bg-warning', text: 'text-warning' },
-  strong: { bars: 3, label: 'ძლიერი', color: 'bg-success', text: 'text-success' }
+const STRENGTH_META: Record<Strength, { readonly bars: number, readonly labelKey: string, readonly color: string, readonly text: string }> = {
+  empty: { bars: 0, labelKey: 'password.strength.empty', color: 'bg-transparent', text: 'text-muted-foreground' },
+  weak: { bars: 1, labelKey: 'password.strength.weak', color: 'bg-destructive', text: 'text-destructive' },
+  medium: { bars: 2, labelKey: 'password.strength.medium', color: 'bg-warning', text: 'text-warning' },
+  strong: { bars: 3, labelKey: 'password.strength.strong', color: 'bg-success', text: 'text-success' }
 }
 
 const BAR_COUNT = 3
 
 const PasswordStrength = ({ password, className }: PasswordStrengthProps) => {
+  const { t } = useTranslation()
   const strength = getPasswordStrength(password)
   const meta = STRENGTH_META[strength]
 
@@ -37,7 +39,7 @@ const PasswordStrength = ({ password, className }: PasswordStrengthProps) => {
           ))}
         </div>
         <span className={cn('min-w-16 text-right text-xs font-medium transition-colors', meta.text)} aria-live='polite'>
-          {meta.label}
+          {t(meta.labelKey)}
         </span>
       </div>
 
@@ -62,8 +64,8 @@ const PasswordStrength = ({ password, className }: PasswordStrengthProps) => {
               >
                 <Check className={cn('size-3 stroke-3 transition-opacity', passed ? 'opacity-100' : 'opacity-0')} />
               </span>
-              {rule.label}
-              <span className='sr-only'>{passed ? '(met)' : '(not met)'}</span>
+              {t(rule.labelKey)}
+              <span className='sr-only'>{passed ? t('password.met') : t('password.notMet')}</span>
             </li>
           )
         })}

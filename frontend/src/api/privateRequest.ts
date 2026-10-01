@@ -3,6 +3,7 @@ import { stringify } from 'src/core/helpers/queryString.ts'
 import { RefreshTokenStatus } from 'src/api/auth/types.ts'
 import { clearLocalStorage, handleRequestException, handleResponse, setAuthExpiredMessage } from 'src/api/helper'
 import { refreshToken } from 'src/api/auth'
+import i18n from 'src/i18n'
 
 const baseURL = import.meta.env.VITE_API_BASE_URL
 let refreshTokenPromise: Promise<RefreshTokenStatus> | null = null
@@ -21,7 +22,7 @@ export const sendPrivateRequest = async (
     const urlParams = stringify(params, { encode: true })
     const headersObject: Record<string, string> = {
       Authorization: token ? `Bearer ${token.accessToken}` : '',
-      'Accept-Language': 'ka',
+      'Accept-Language': i18n.resolvedLanguage ?? 'ka',
       'Accept': 'application/json'
     }
     const headers = { ...headersObject, 'Content-Type': 'application/json' }
@@ -47,7 +48,7 @@ export const sendPrivateRequest = async (
 
       if (refreshStatus === RefreshTokenStatus.LOCKED || refreshStatus === RefreshTokenStatus.FAILED) {
         clearLocalStorage()
-        setAuthExpiredMessage('გთხოვთ გაიაროთ ავტორიზაცია თავიდან')
+        setAuthExpiredMessage(i18n.t('errors.authExpired'))
         window.location.href = '/login'
         return { status: ResponseStatuses.UNAUTHENTICATED, content: null }
       }

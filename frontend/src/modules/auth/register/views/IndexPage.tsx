@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Lock, Mail, User } from 'lucide-react'
 import Card from 'src/core/components/cards/Card.tsx'
 import TextInput from 'src/core/components/inputs/TextInput.tsx'
@@ -11,6 +12,7 @@ import useRegister from 'src/modules/auth/register/hooks/useRegister.ts'
 import { normalizeEmail } from 'src/core/helpers/normalizers.ts'
 
 const Register = () => {
+  const { t } = useTranslation()
   const {
     values,
     errors,
@@ -23,35 +25,35 @@ const Register = () => {
 
   return (
     <main className='min-h-dvh bg-aurora lg:grid lg:grid-cols-2'>
-      <section className='flex items-center justify-center px-4 py-10 sm:px-6 lg:px-10'>
+      <section className='flex items-center justify-center px-4 pt-20 pb-10 sm:px-6 lg:px-10'>
         <Card className='w-full max-w-lg animate-fade-up'>
           <header className='mb-8 space-y-2'>
-            <h1 className='text-display-sm font-bold text-center'>ანგარიშის შექმნა</h1>
-            <p className='text-sm text-muted-foreground text-center'>შემოუერთდით ShockAuto-ს და იპოვეთ თქვენთვის შესაფერისი მანქანა</p>
+            <h1 className='text-display-sm font-bold text-center'>{t('register.title')}</h1>
+            <p className='text-sm text-muted-foreground text-center'>{t('register.subtitle')}</p>
           </header>
 
           <form noValidate onSubmit={handleSubmit} onAnimationEnd={handleFormAnimationEnd} className='space-y-4'>
             <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
               <TextInput
                 name='firstName'
-                label='სახელი'
-                placeholder='სახელი'
+                label={t('register.firstName')}
+                placeholder={t('register.firstName')}
                 autoComplete='given-name'
                 leftIcon={<User />}
                 value={values.firstName}
                 onChange={handleChange}
-                error={errors.firstName}
+                error={errors.firstName && t(errors.firstName)}
                 shake={shouldShake('firstName')}
               />
               <TextInput
                 name='lastName'
-                label='გვარი'
-                placeholder='გვარი'
+                label={t('register.lastName')}
+                placeholder={t('register.lastName')}
                 autoComplete='family-name'
                 leftIcon={<User />}
                 value={values.lastName}
                 onChange={handleChange}
-                error={errors.lastName}
+                error={errors.lastName && t(errors.lastName)}
                 shake={shouldShake('lastName')}
               />
             </div>
@@ -59,14 +61,14 @@ const Register = () => {
             <TextInput
               type='email'
               name='email'
-              label='ელ.ფოსტა'
+              label={t('register.email')}
               placeholder='name@example.com'
               autoComplete='email'
               leftIcon={<Mail />}
               normalizer={normalizeEmail}
               value={values.email}
               onChange={handleChange}
-              error={errors.email}
+              error={errors.email && t(errors.email)}
               shake={shouldShake('email')}
             />
 
@@ -74,13 +76,13 @@ const Register = () => {
               <TextInput
                 type='password'
                 name='password'
-                label='პაროლი'
-                placeholder='შექმენით პაროლი'
+                label={t('register.password')}
+                placeholder={t('register.passwordPlaceholder')}
                 autoComplete='new-password'
                 leftIcon={<Lock />}
                 value={values.password}
                 onChange={handleChange}
-                error={errors.password}
+                error={errors.password && t(errors.password)}
                 shake={shouldShake('password')}
               />
               <PasswordStrength password={values.password} />
@@ -89,33 +91,33 @@ const Register = () => {
             <TextInput
               type='password'
               name='repeatPassword'
-              label='გაიმეორეთ პაროლი'
-              placeholder='გაიმეორეთ თქვენი პაროლი'
+              label={t('register.repeatPassword')}
+              placeholder={t('register.repeatPasswordPlaceholder')}
               autoComplete='new-password'
               leftIcon={<Lock />}
               value={values.repeatPassword}
               onChange={handleChange}
-              error={errors.repeatPassword}
+              error={errors.repeatPassword && t(errors.repeatPassword)}
               shake={shouldShake('repeatPassword')}
             />
 
             <Button type='submit' variant='primary' size='lg' fullWidth loading={isLoading} className='mt-2'>
-              რეგისტრაცია
+              {t('register.submit')}
             </Button>
           </form>
 
-          <Divider label='ან' className='my-6' />
+          <Divider label={t('common.or')} className='my-6' />
 
           <Button variant='outline' size='lg' fullWidth leftIcon={<GoogleIcon />}
-          >Google რეგისტრაცია
+          >{t('register.google')}
           </Button>
 
           <p className='mt-8 text-center text-sm text-muted-foreground'>
-            გაქვს ანგარიში? {' '}
+            {t('register.haveAccount')} {' '}
             <Link
               to='/login'
               className='font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline'
-            >ავტორიზაცია
+            >{t('register.login')}
             </Link>
           </p>
         </Card>

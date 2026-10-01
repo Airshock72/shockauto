@@ -2,18 +2,18 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export interface PasswordRule {
   readonly id: string
-  readonly label: string
+  readonly labelKey: string
   readonly test: (value: string) => boolean
 }
 
 export type PasswordStrength = 'empty' | 'weak' | 'medium' | 'strong'
 
 export const PASSWORD_RULES: Array<PasswordRule> = [
-  { id: 'length', label: 'მინიმუმ 10 ასო', test: (value) => value.length >= 10 },
-  { id: 'uppercase', label: 'ერთი დიდი ასო', test: (value) => /[A-Z]/.test(value) },
-  { id: 'lowercase', label: 'ერთი პატარა ასო', test: (value) => /[a-z]/.test(value) },
-  { id: 'number', label: 'ერთი ციფრი', test: (value) => /\d/.test(value) },
-  { id: 'special', label: 'ერთი სიმბოლო', test: (value) => /[^A-Za-z0-9\s]/.test(value) }
+  { id: 'length', labelKey: 'password.rules.length', test: (value) => value.length >= 10 },
+  { id: 'uppercase', labelKey: 'password.rules.uppercase', test: (value) => /[A-Z]/.test(value) },
+  { id: 'lowercase', labelKey: 'password.rules.lowercase', test: (value) => /[a-z]/.test(value) },
+  { id: 'number', labelKey: 'password.rules.number', test: (value) => /\d/.test(value) },
+  { id: 'special', labelKey: 'password.rules.special', test: (value) => /[^A-Za-z0-9\s]/.test(value) }
 ]
 
 export const isValidEmail = (value: string): boolean => EMAIL_REGEX.test(value.trim())

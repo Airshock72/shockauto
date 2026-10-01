@@ -2,9 +2,9 @@ import { toast } from 'sonner'
 import { type GlobalResponse, ResponseStatuses } from 'src/api/types/apiGlobalTypes.ts'
 import { translateErrorMessage } from 'src/core/helpers/errorTranslator.ts'
 import { throwException } from 'src/core/helpers'
+import i18n from 'src/i18n'
 
 const AUTH_EXPIRED_MESSAGE_KEY = 'auth-expired-message'
-const NETWORK_ERROR_MESSAGE = 'სერვერთან დაკავშირება ვერ მოხერხდა, შეამოწმეთ ინტერნეტ კავშირი'
 
 export interface NotifyOptions {
   title: string
@@ -96,7 +96,7 @@ export const handleRequestException = (err: unknown, silent = false): GlobalResp
   throwException(err)
 
   const isAborted = err instanceof DOMException && err.name === 'AbortError'
-  if (!silent && !isAborted) notifyError({ title: NETWORK_ERROR_MESSAGE, duration: 4.5 })
+  if (!silent && !isAborted) notifyError({ title: i18n.t('errors.network'), duration: 4.5 })
 
   return {
     status: ResponseStatuses.UNEXPECTED,
