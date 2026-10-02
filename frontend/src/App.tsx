@@ -7,6 +7,7 @@ import PublicLayout from 'src/layouts/PublicLayout.tsx'
 import { routes } from 'src/router/routes.ts'
 import NotFoundPage from 'src/modules/notFound/views/IndexPage.tsx'
 
+const Login = lazy(() => import('src/modules/auth/login/views/IndexPage.tsx'))
 const Register = lazy(() => import('src/modules/auth/register/views/IndexPage.tsx'))
 
 const AppRouter = () => {
@@ -31,7 +32,15 @@ const AppRouter = () => {
         </Route>
 
         <Route element={<PublicLayout />}>
-          <Route path='/login' element={<div>Register Page</div>} />
+          <Route
+            path='/login'
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <Login />
+              </Suspense>
+            }
+          />
+          <Route path='/reset-password' element={<div>Reset Password Page</div>} />
           <Route
             path='/register'
             element={

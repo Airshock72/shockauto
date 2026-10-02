@@ -64,6 +64,48 @@
       }
     }
   },
+  "login": {
+    "title": "ავტორიზაცია",
+    "subtitle": "შედით ShockAuto-ს ანგარიშზე",
+    "email": "ელ.ფოსტა",
+    "password": "პაროლი",
+    "passwordPlaceholder": "შეიყვანეთ პაროლი",
+    "forgotPassword": "პაროლის აღდგენა",
+    "submit": "ავტორიზაცია",
+    "google": "ავტორიზაცია Google",
+    "noAccount": "არ გაქვს ანგარიში?",
+    "register": "რეგისტრაცია",
+    "showcase": {
+      "mclaren": {
+        "alt": "ნარინჯისფერი McLaren 720S",
+        "subtitle": "ბიტურბო V8 720 ცხ.ძ.-ით და ნახშირბადის მონოკოკით."
+      },
+      "bugatti": {
+        "alt": "Bugatti Chiron ჰიპერქარი",
+        "subtitle": "W16 ოთხი ტურბოთი და 1500 ცხ.ძ."
+      },
+      "astonMartin": {
+        "alt": "Aston Martin DBS გრან-ტურიზმო",
+        "subtitle": "ბრიტანული ელეგანტურობა V12 ძალით."
+      },
+      "rollsRoyce": {
+        "alt": "Rolls-Royce Wraith კუპე",
+        "subtitle": "ფუფუნება, რომელიც გზაზე თითქოს მიცურავს."
+      },
+      "mustang": {
+        "alt": "Ford Mustang მასლ-ქარი",
+        "subtitle": "ამერიკული V8 ლეგენდა 1964 წლიდან."
+      },
+      "corvette": {
+        "alt": "Chevrolet Corvette სპორტული მანქანა",
+        "subtitle": "ამერიკის სპორტქარი V8 ძრავით."
+      },
+      "nissan": {
+        "alt": "Nissan GT-R სპორტული მანქანა",
+        "subtitle": "ხელით აწყობილი ტყუპ-ტურბო V6 და სრული ამძრავი."
+      }
+    }
+  },
   "validation": {
     "minLength2": "მინიმუმ 2 სიმბოლო",
     "firstNameRequired": "სახელი სავალდებულოა",

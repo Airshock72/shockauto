@@ -64,6 +64,48 @@
       }
     }
   },
+  "login": {
+    "title": "Sign in",
+    "subtitle": "Sign in to your ShockAuto account",
+    "email": "Email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "forgotPassword": "Reset password",
+    "submit": "Sign in",
+    "google": "Sign in with Google",
+    "noAccount": "Don't have an account?",
+    "register": "Sign up",
+    "showcase": {
+      "mclaren": {
+        "alt": "Orange McLaren 720S",
+        "subtitle": "Twin-turbo V8 with 720 hp and a carbon-fibre monocoque."
+      },
+      "bugatti": {
+        "alt": "Bugatti Chiron hypercar",
+        "subtitle": "Quad-turbo W16 with 1,500 hp."
+      },
+      "astonMartin": {
+        "alt": "Aston Martin DBS grand tourer",
+        "subtitle": "British elegance with V12 muscle."
+      },
+      "rollsRoyce": {
+        "alt": "Rolls-Royce Wraith coupé",
+        "subtitle": "Luxury that glides over the road."
+      },
+      "mustang": {
+        "alt": "Ford Mustang muscle car",
+        "subtitle": "An American V8 legend since 1964."
+      },
+      "corvette": {
+        "alt": "Chevrolet Corvette sports car",
+        "subtitle": "America's sports car with a V8 heart."
+      },
+      "nissan": {
+        "alt": "Nissan GT-R sports car",
+        "subtitle": "Hand-built twin-turbo V6 with all-wheel drive."
+      }
+    }
+  },
   "validation": {
     "minLength2": "At least 2 characters",
     "firstNameRequired": "First name is required",

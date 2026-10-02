@@ -1,18 +1,15 @@
 import type { AnimationEvent, ChangeEvent, SubmitEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'sonner'
 import { AuthApi } from 'src/api'
 import { ResponseStatuses } from 'src/api/types/apiGlobalTypes.ts'
-import { type RegisterFormValues, useRegisterReducer } from 'src/modules/auth/register/store/register.ts'
-import { validateRegisterForm } from 'src/modules/auth/register/validation'
-import { FIELD_ORDER, transformRegisterUserParams } from 'src/modules/auth/register/helpers'
+import { type LoginFormValues, useLoginReducer } from 'src/modules/auth/login/store/login.ts'
+import { validateLoginForm } from 'src/modules/auth/login/validation'
+import { FIELD_ORDER, transformLoginParams } from 'src/modules/auth/login/helpers'
 import { applyFormErrors } from 'src/core/helpers/forms.ts'
 
-const useRegister = () => {
+const useLogin = () => {
   const navigate = useNavigate()
-  const { t } = useTranslation()
-  const [state, dispatch] = useRegisterReducer()
+  const [state, dispatch] = useLoginReducer()
   const { values, errors, isSubmitted, formShaking, isLoading } = state
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +17,7 @@ const useRegister = () => {
     const nextValues = { ...values, [name]: value }
 
     dispatch({ type: 'SET_VALUES', payload: nextValues })
-    if (isSubmitted) dispatch({ type: 'SET_ERRORS', payload: validateRegisterForm(nextValues) })
+    if (isSubmitted) dispatch({ type: 'SET_ERRORS', payload: validateLoginForm(nextValues) })
   }
 
   const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
@@ -29,14 +26,14 @@ const useRegister = () => {
 
     dispatch({ type: 'SET_SUBMITTED', payload: true })
 
-    if (applyFormErrors(event.currentTarget, validateRegisterForm(values), FIELD_ORDER, dispatch)) return
+    if (applyFormErrors(event.currentTarget, validateLoginForm(values), FIELD_ORDER, dispatch)) return
 
     dispatch({ type: 'SET_LOADING', payload: true })
-    const response = await AuthApi.register(transformRegisterUserParams(values))
+    const response = await AuthApi.login(transformLoginParams(values))
 
-    if (response.status === ResponseStatuses.SUCCESS) {
-      toast.success(t('register.success.title'), { description: t('register.success.description', { name: values.firstName.trim() }) })
-      navigate('/login')
+    if (response.status === ResponseStatuses.SUCCESS && response.data) {
+      localStorage.setItem('token', JSON.stringify(response.data))
+      navigate('/', { replace: true })
       return
     }
 
@@ -47,7 +44,7 @@ const useRegister = () => {
     if (event.animationName === 'shake') dispatch({ type: 'SET_FORM_SHAKING', payload: false })
   }
 
-  const shouldShake = (field: keyof RegisterFormValues) => formShaking && Boolean(errors[field])
+  const shouldShake = (field: keyof LoginFormValues) => formShaking && Boolean(errors[field])
 
   return {
     values,
@@ -60,4 +57,4 @@ const useRegister = () => {
   }
 }
 
-export default useRegister
+export default useLogin
