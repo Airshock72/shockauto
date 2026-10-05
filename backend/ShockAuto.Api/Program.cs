@@ -1,5 +1,6 @@
 ﻿using Scalar.AspNetCore;
 using ShockAuto.Api;
+using ShockAuto.Api.Middleware;
 using ShockAuto.Application;
 using ShockAuto.Persistence;
 using ShockAuto.Services;
@@ -18,6 +19,8 @@ if (!app.Environment.IsProduction())
     app.MapOpenApi();
     app.MapScalarApiReference("/swagger");
 }
+
+app.UseMiddleware<UnhandledException>();
 
 app.UseRateLimiter();
 app.UseAuthentication();
