@@ -1,20 +1,22 @@
 import type { KeyboardEvent } from 'react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
+import { useDropdownReducer } from 'src/modules/header/store/dropdown.ts'
 
 const menuItemSelector = '[role="menuitem"]'
 
 const useDropdown = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [state, dispatch] = useDropdownReducer()
+  const { isOpen } = state
   const rootRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
 
   const close = useCallback((restoreFocus = false) => {
-    setIsOpen(false)
+    dispatch({ type: 'SET_OPEN', payload: false })
     if (restoreFocus) triggerRef.current?.focus()
-  }, [])
+  }, [dispatch])
 
-  const toggle = () => setIsOpen((open) => !open)
+  const toggle = () => dispatch({ type: 'SET_OPEN', payload: !isOpen })
 
   useEffect(() => {
     if (!isOpen) return

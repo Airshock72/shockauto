@@ -1,4 +1,5 @@
 import { Settings, UserRound } from 'lucide-react'
+import { cva } from 'class-variance-authority'
 import gsap from 'gsap'
 import type { UserMenuLink } from 'src/modules/header/types'
 
@@ -25,3 +26,22 @@ export const animateMenuReveal = (panel: HTMLElement, transformOrigin: string) =
       ease: 'power2.out'
     }, 0.08)
 }
+
+export const avatarVariants = cva(
+  [
+    'relative inline-flex shrink-0 items-center justify-center rounded-full bg-linear-to-br from-primary to-neon select-none',
+    'font-display font-semibold text-primary-foreground ring-2 ring-background shadow-[0_0_14px_-3px_var(--neon)]'
+  ],
+  {
+    variants: {
+      size: {
+        sm: 'size-8 text-xs',
+        md: 'size-9 text-sm',
+        lg: 'size-12 text-base'
+      }
+    },
+    defaultVariants: {
+      size: 'md'
+    }
+  }
+)

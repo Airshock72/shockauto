@@ -1,14 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import useCurrentUser from 'src/core/hooks/useCurrentUser.ts'
 import useWelcomeHero from 'src/modules/dashboard/hooks/useWelcomeHero.ts'
-import { nameToken, splitGreeting, toWords } from 'src/modules/dashboard/helpers'
-
-const renderWords = (text: string, keyPrefix: string, className?: string) =>
-  toWords(text).map((part, index) =>
-    /^\s+$/.test(part) ? part : (
-      <span key={`${keyPrefix}-${index}`} data-hero-word className={`inline-block ${className ?? ''}`}>{part}</span>
-    )
-  )
+import Words from 'src/modules/dashboard/views/Words.tsx'
+import { nameToken, splitGreeting } from 'src/modules/dashboard/helpers'
 
 const IndexPage = () => {
   const { t } = useTranslation()
@@ -36,9 +30,9 @@ const IndexPage = () => {
 
         <h1 aria-label={t('dashboard.welcome', { name: user.name })} className='mt-4 text-display-md font-bold'>
           <span aria-hidden='true'>
-            {renderWords(before, 'before')}
-            {renderWords(user.name, 'name', 'text-gradient')}
-            {renderWords(after, 'after')}
+            <Words text={before} />
+            <Words text={user.name} className='text-gradient' />
+            <Words text={after} />
           </span>
         </h1>
         <p data-hero-fade className='mt-3 max-w-2xl text-sm text-muted-foreground sm:text-base'>

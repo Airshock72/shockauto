@@ -1,46 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import { ChevronRight, Globe, LogOut, Palette } from 'lucide-react'
 import { cn } from 'src/core/lib/utils'
-import UserAvatar from 'src/core/components/avatars/UserAvatar.tsx'
+import UserAvatar from 'src/modules/header/views/UserAvatar.tsx'
 import LanguageSwitcher from 'src/core/components/switchers/LanguageSwitcher.tsx'
 import ThemeSwitcher from 'src/core/components/switchers/ThemeSwitcher.tsx'
 import Button from 'src/core/components/buttons/Button.tsx'
-import useCurrentUser from 'src/core/hooks/useCurrentUser.ts'
-import useLogout from 'src/modules/header/hooks/useLogout.ts'
-import useTheme from 'src/core/hooks/useTheme.ts'
-import useMenuReveal from 'src/modules/header/hooks/useMenuReveal.ts'
+import useMobileMenu from 'src/modules/header/hooks/useMobileMenu.ts'
 import { userMenuLinks } from 'src/modules/header/helpers'
 
 const MobileMenu = () => {
-  const { t } = useTranslation()
-  const user = useCurrentUser()
-  const logout = useLogout()
-  const { resolvedTheme } = useTheme()
-  const [isOpen, setIsOpen] = useState(false)
-  const panelRef = useRef<HTMLElement>(null)
-  useMenuReveal(panelRef, isOpen, 'top center')
-
-  const close = () => setIsOpen(false)
-
-  useEffect(() => {
-    if (!isOpen) return
-
-    const { overflow } = document.body.style
-    document.body.style.overflow = 'hidden'
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsOpen(false)
-    }
-    document.addEventListener('keydown', onKeyDown)
-
-    return () => {
-      document.body.style.overflow = overflow
-      document.removeEventListener('keydown', onKeyDown)
-    }
-  }, [isOpen])
+  const { t, user, logout, resolvedTheme, isOpen, panelRef, close, toggle } = useMobileMenu()
 
   return (
     <>
@@ -49,7 +19,7 @@ const MobileMenu = () => {
         aria-expanded={isOpen}
         aria-controls='mobile-menu'
         aria-label={t(isOpen ? 'header.closeMenu' : 'header.openMenu')}
-        onClick={() => setIsOpen((open) => !open)}
+        onClick={toggle}
         className={cn(
           'relative size-10 shrink-0 rounded-xl border bg-card/60 text-foreground shadow-soft outline-none',
           'transition-colors duration-200 hover:bg-accent focus-visible:ring-4 focus-visible:ring-ring/40',
