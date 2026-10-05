@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import PageLoader from 'src/core/components/Loadings/PageLoader.tsx'
-import LanguageSwitcher from 'src/core/components/switchers/LanguageSwitcher.tsx'
 import PrivateLayout from 'src/layouts/PrivateLayout.tsx'
 import PublicLayout from 'src/layouts/PublicLayout.tsx'
 import { routes } from 'src/router/routes.ts'
@@ -12,46 +11,42 @@ const Register = lazy(() => import('src/modules/auth/register/views/IndexPage.ts
 
 const AppRouter = () => {
   return (
-    <>
-      <LanguageSwitcher />
-
-      <Routes>
-        <Route element={<PrivateLayout />}>
-          {routes.map((el, index) => (
-            <Route
-              key={index}
-              path={el.path}
-              element={
-                <Suspense fallback={<PageLoader />}>
-                  <el.element />
-                </Suspense>
-              }
-            />
-          ))}
-          <Route path='*' element={<NotFoundPage />} />
-        </Route>
-
-        <Route element={<PublicLayout />}>
+    <Routes>
+      <Route element={<PrivateLayout />}>
+        {routes.map((el, index) => (
           <Route
-            path='/login'
+            key={index}
+            path={el.path}
             element={
               <Suspense fallback={<PageLoader />}>
-                <Login />
+                <el.element />
               </Suspense>
             }
           />
-          <Route path='/reset-password' element={<div>Reset Password Page</div>} />
-          <Route
-            path='/register'
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <Register />
-              </Suspense>
-            }
-          />
-        </Route>
-      </Routes>
-    </>
+        ))}
+        <Route path='*' element={<NotFoundPage />} />
+      </Route>
+
+      <Route element={<PublicLayout />}>
+        <Route
+          path='/login'
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <Login />
+            </Suspense>
+          }
+        />
+        <Route path='/reset-password' element={<div>Reset Password Page</div>} />
+        <Route
+          path='/register'
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <Register />
+            </Suspense>
+          }
+        />
+      </Route>
+    </Routes>
   )
 }
 

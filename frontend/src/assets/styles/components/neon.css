@@ -1,0 +1,10 @@
+.neon-edge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--neon) 80%, transparent), transparent);
+}

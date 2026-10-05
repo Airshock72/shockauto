@@ -1,9 +1,14 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import type { Language } from 'src/i18n'
-import { animateLanguageSwitch, LANGUAGE_OPTIONS, prefersReducedMotion } from 'src/core/helpers/languageSwitcher.ts'
+import {
+  animateLanguageSwitch,
+  getThumbPosition,
+  languageOptions,
+  prefersReducedMotion
+} from 'src/core/helpers/languageSwitcher.ts'
 
 gsap.registerPlugin(useGSAP)
 
@@ -14,18 +19,20 @@ const useLanguageSwitcher = () => {
   const hasMounted = useRef(false)
 
   const activeLanguage = (i18n.resolvedLanguage ?? 'ka') as Language
-  const activeIndex = Math.max(0, LANGUAGE_OPTIONS.findIndex((option) => option.code === activeLanguage))
+  const activeIndex = Math.max(0, languageOptions.findIndex((option) => option.code === activeLanguage))
+  const activeIndexRef = useRef(activeIndex)
+
+  const getActiveButton = (index: number) =>
+    containerRef.current?.querySelectorAll<HTMLButtonElement>('[data-language]')[index]
 
   useGSAP(
     () => {
-      const container = containerRef.current
+      activeIndexRef.current = activeIndex
       const thumb = thumbRef.current
-      if (!container || !thumb) return
+      const target = getActiveButton(activeIndex)
+      if (!thumb || !target) return
 
-      const target = container.querySelectorAll<HTMLButtonElement>('[data-language]')[activeIndex]
-      if (!target) return
-
-      const position = { x: target.offsetLeft, width: target.offsetWidth }
+      const position = getThumbPosition(target)
 
       if (!hasMounted.current || prefersReducedMotion()) {
         hasMounted.current = true
@@ -37,6 +44,25 @@ const useLanguageSwitcher = () => {
     },
     { dependencies: [activeIndex], scope: containerRef }
   )
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    let isInitialCallback = true
+    const observer = new ResizeObserver(() => {
+      if (isInitialCallback) {
+        isInitialCallback = false
+        return
+      }
+
+      const target = getActiveButton(activeIndexRef.current)
+      if (target && thumbRef.current) gsap.set(thumbRef.current, getThumbPosition(target)).then()
+    })
+
+    observer.observe(container)
+    return () => observer.disconnect()
+  }, [])
 
   const handleSelect = (language: Language) => {
     if (language !== activeLanguage) i18n.changeLanguage(language).then()

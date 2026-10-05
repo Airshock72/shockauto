@@ -4,6 +4,29 @@
     "or": "or",
     "changeLanguage": "Change language"
   },
+  "header": {
+    "tagline": "Find your perfect car",
+    "menu": "Main menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "userMenu": "User menu",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Log out",
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "switchToDark": "Switch to dark theme",
+    "switchToLight": "Switch to light theme"
+  },
+  "dashboard": {
+    "online": "Online",
+    "welcome": "Welcome back, {{name}}",
+    "subtitle": "Here's an overview of your account"
+  },
   "errors": {
     "default": "Something went wrong, please try again later",
     "tooManyRequests": "Too many requests, please try again later",

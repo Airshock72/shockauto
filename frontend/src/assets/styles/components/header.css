@@ -1,0 +1,113 @@
+:root {
+  --crystal-duration: 5s;
+  --crystal-highlight: oklch(0.82 0.16 200);
+  --crystal-spark: oklch(0.85 0.17 200);
+}
+
+[data-theme='dark'] {
+  --crystal-highlight: oklch(0.99 0.02 250);
+  --crystal-spark: oklch(1 0 0);
+}
+
+.brand-crystal {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 25%;
+  box-shadow: 0 0 0 1px color-mix(in oklch, var(--primary) 25%, transparent), 0 6px 20px -6px var(--glow);
+}
+
+.brand-crystal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  background: conic-gradient(
+    from 200deg at 70% 25%,
+    transparent 0deg,
+    oklch(0.9 0.12 200 / 0.55) 40deg,
+    transparent 90deg,
+    oklch(0.85 0.16 300 / 0.5) 160deg,
+    transparent 220deg,
+    oklch(0.95 0.1 90 / 0.35) 290deg,
+    transparent 360deg
+  );
+  animation: crystal-refract 7s ease-in-out infinite alternate;
+}
+
+.brand-crystal::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    oklch(0.9 0.12 200 / 0.45) 46.5%,
+    oklch(1 0 0 / 0.9) 50%,
+    oklch(0.85 0.16 300 / 0.45) 53.5%,
+    transparent 58%
+  );
+  transform: translateX(-60%);
+  animation: crystal-glint var(--crystal-duration) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.brand-sparkle {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  width: 0.875rem;
+  height: 0.875rem;
+  pointer-events: none;
+  background-color: var(--crystal-spark);
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  filter: drop-shadow(0 0 3px var(--crystal-spark));
+  transform: scale(0);
+  animation: crystal-sparkle var(--crystal-duration) ease-out infinite;
+}
+
+.brand-wordmark {
+  position: relative;
+}
+
+.brand-wordmark::after {
+  content: attr(data-text) / '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: transparent;
+  background-image: linear-gradient(
+    110deg,
+    transparent 40%,
+    var(--crystal-highlight) 50%,
+    transparent 60%
+  );
+  background-size: 250% 100%;
+  background-repeat: no-repeat;
+  background-position: 100% 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: wordmark-shine var(--crystal-duration) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes crystal-glint {
+  0% { transform: translateX(-60%); }
+  30%, 100% { transform: translateX(60%); }
+}
+
+@keyframes crystal-sparkle {
+  0%, 22% { transform: scale(0) rotate(0deg); opacity: 0; }
+  30% { transform: scale(1) rotate(45deg); opacity: 1; }
+  42%, 100% { transform: scale(0) rotate(90deg); opacity: 0; }
+}
+
+@keyframes crystal-refract {
+  from { transform: rotate(0deg) scale(1.2); opacity: 0.55; }
+  to { transform: rotate(40deg) scale(1.35); opacity: 0.9; }
+}
+
+@keyframes wordmark-shine {
+  0%, 18% { background-position: 100% 0; }
+  55%, 100% { background-position: 0 0; }
+}
