@@ -3,6 +3,8 @@ import type { ComponentProps, ComponentType } from 'react'
 
 export interface LanguageSwitcherProps {
     readonly extended?: boolean
+    /** Compact size with short labels only */
+    readonly mini?: boolean
     readonly className?: string
 }
 

@@ -25,10 +25,10 @@ const Login = () => {
 
   return (
     <main className='min-h-dvh bg-aurora lg:grid lg:grid-cols-2'>
-      <section className='flex items-center justify-center px-4 pt-20 pb-10 sm:px-6 lg:px-10'>
-        <Card className='w-full max-w-lg animate-fade-up'>
-          <header className='mb-8 space-y-2'>
-            <h1 className='text-display-sm font-bold text-center'>{t('login.title')}</h1>
+      <section className='flex items-center justify-center px-4 pt-20 pb-10 sm:px-6 md:min-h-dvh lg:px-10 short:pt-14 short:pb-4'>
+        <Card className='w-full max-w-lg animate-fade-up short:px-6 short:py-5'>
+          <header className='mb-8 space-y-2 short:mb-4 short:space-y-1'>
+            <h1 className='text-display-sm font-bold text-center short:text-2xl'>{t('login.title')}</h1>
             <p className='text-sm text-muted-foreground text-center'>{t('login.subtitle')}</p>
           </header>
 
@@ -47,7 +47,7 @@ const Login = () => {
               shake={shouldShake('email')}
             />
 
-            <div className='space-y-3'>
+            <div className='space-y-3 md:space-y-4'>
               <TextInput
                 type='password'
                 name='password'
@@ -70,18 +70,18 @@ const Login = () => {
               </div>
             </div>
 
-            <Button type='submit' variant='primary' size='lg' fullWidth loading={isLoading} className='mt-2'>
+            <Button type='submit' variant='primary' size='lg' fullWidth loading={isLoading} className='mt-2 short:mt-1 short:h-10'>
               {t('login.submit')}
             </Button>
           </form>
 
-          <Divider label={t('common.or')} className='my-6' />
+          <Divider label={t('common.or')} className='my-6 short:my-1.5' />
 
-          <Button variant='outline' size='lg' fullWidth leftIcon={<GoogleIcon />}
+          <Button variant='outline' size='lg' fullWidth leftIcon={<GoogleIcon />} className='short:h-10'
           >{t('login.google')}
           </Button>
 
-          <p className='mt-8 text-center text-sm text-muted-foreground'>
+          <p className='mt-8 text-center text-sm text-muted-foreground short:mt-4'>
             {t('login.noAccount')} {' '}
             <Link
               to='/register'

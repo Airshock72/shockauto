@@ -23,7 +23,7 @@ const PasswordStrength = ({ password, className }: PasswordStrengthProps) => {
   const meta = STRENGTH_META[strength]
 
   return (
-    <div className={cn('space-y-3', className)}>
+    <div className={cn('space-y-3 short:space-y-2', className)}>
       <div className='flex items-center gap-3'>
         <div className='grid flex-1 grid-cols-3 gap-1.5' aria-hidden='true'>
           {Array.from({ length: BAR_COUNT }, (_, index) => (
@@ -43,7 +43,7 @@ const PasswordStrength = ({ password, className }: PasswordStrengthProps) => {
         </span>
       </div>
 
-      <ul className='grid grid-cols-1 gap-x-4 gap-y-1.5 xs:grid-cols-2'>
+      <ul className='grid grid-cols-1 gap-x-4 gap-y-1.5 xs:grid-cols-2 short:gap-y-1'>
         {PASSWORD_RULES.map((rule) => {
           const passed = rule.test(password)
 

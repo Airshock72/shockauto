@@ -3,3 +3,5 @@
 @import "./assets/styles/theme.css";
 @import "./assets/styles/components.css";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant short (@media (min-width: 48rem) and (max-height: 56rem));
+@custom-variant tight (@media (min-width: 48rem) and (max-height: 44rem));

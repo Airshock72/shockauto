@@ -42,9 +42,9 @@ const TextInput = ({
   const { t } = useTranslation()
 
   return (
-    <div className={cn('flex flex-col gap-1.5', containerClassName)}>
+    <div className={cn('relative flex flex-col gap-1.5 short:gap-1', containerClassName)}>
       {label && (
-        <label htmlFor={inputId} className='text-sm font-medium text-foreground'>
+        <label htmlFor={inputId} className='text-sm font-medium text-foreground short:text-xs'>
           {label}
         </label>
       )}
@@ -69,7 +69,7 @@ const TextInput = ({
           aria-invalid={error ? true : undefined}
           aria-describedby={message ? messageId : undefined}
           className={cn(
-            'h-11 w-full rounded-lg border border-input bg-card px-3.5 text-sm text-foreground shadow-soft outline-none',
+            'h-11 w-full rounded-lg border border-input bg-card px-3.5 text-sm text-foreground shadow-soft outline-none short:h-10',
             'transition-[border-color,box-shadow,background-color] duration-200 ease-fluid',
             'placeholder:text-muted-foreground/70',
             'hover:border-primary/40',
@@ -105,7 +105,12 @@ const TextInput = ({
       {message && (
         <p
           id={messageId}
-          className={cn('animate-fade-in text-xs', error ? 'text-destructive' : 'text-muted-foreground')}
+          title={message}
+          className={cn(
+            'animate-fade-in text-xs',
+            'md:absolute md:inset-x-0 md:top-full md:truncate md:text-2xs md:leading-4',
+            error ? 'text-destructive' : 'text-muted-foreground'
+          )}
         >
           {message}
         </p>

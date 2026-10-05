@@ -25,15 +25,15 @@ const Register = () => {
 
   return (
     <main className='min-h-dvh bg-aurora lg:grid lg:grid-cols-2'>
-      <section className='flex items-center justify-center px-4 pt-20 pb-10 sm:px-6 lg:px-10'>
-        <Card className='w-full max-w-lg animate-fade-up'>
-          <header className='mb-8 space-y-2'>
-            <h1 className='text-display-sm font-bold text-center'>{t('register.title')}</h1>
-            <p className='text-sm text-muted-foreground text-center'>{t('register.subtitle')}</p>
+      <section className='flex items-center justify-center px-4 pt-20 pb-10 sm:px-6 md:min-h-dvh lg:px-10 short:pt-14 short:pb-4 tight:pb-3'>
+        <Card className='w-full max-w-lg animate-fade-up md:max-w-xl short:px-6 short:py-5 tight:py-4'>
+          <header className='mb-8 space-y-2 short:mb-4 short:space-y-1 tight:mb-3'>
+            <h1 className='text-display-sm font-bold text-center short:text-2xl tight:text-xl'>{t('register.title')}</h1>
+            <p className='text-sm text-muted-foreground text-center tight:text-xs'>{t('register.subtitle')}</p>
           </header>
 
           <form noValidate onSubmit={handleSubmit} onAnimationEnd={handleFormAnimationEnd} className='space-y-4'>
-            <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+            <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 short:gap-3'>
               <TextInput
                 name='firstName'
                 label={t('register.firstName')}
@@ -72,47 +72,48 @@ const Register = () => {
               shake={shouldShake('email')}
             />
 
-            <div className='space-y-3'>
-              <TextInput
-                type='password'
-                name='password'
-                label={t('register.password')}
-                placeholder={t('register.passwordPlaceholder')}
-                autoComplete='new-password'
-                leftIcon={<Lock />}
-                value={values.password}
-                onChange={handleChange}
-                error={errors.password && t(errors.password)}
-                shake={shouldShake('password')}
-              />
+            <div className='space-y-3 md:space-y-4'>
+              <div className='grid grid-cols-1 gap-4 md:grid-cols-2 short:gap-3'>
+                <TextInput
+                  type='password'
+                  name='password'
+                  label={t('register.password')}
+                  placeholder={t('register.passwordPlaceholder')}
+                  autoComplete='new-password'
+                  leftIcon={<Lock />}
+                  value={values.password}
+                  onChange={handleChange}
+                  error={errors.password && t(errors.password)}
+                  shake={shouldShake('password')}
+                />
+                <TextInput
+                  type='password'
+                  name='repeatPassword'
+                  label={t('register.repeatPassword')}
+                  placeholder={t('register.repeatPasswordPlaceholder')}
+                  autoComplete='new-password'
+                  leftIcon={<Lock />}
+                  value={values.repeatPassword}
+                  onChange={handleChange}
+                  error={errors.repeatPassword && t(errors.repeatPassword)}
+                  shake={shouldShake('repeatPassword')}
+                />
+              </div>
               <PasswordStrength password={values.password} />
             </div>
 
-            <TextInput
-              type='password'
-              name='repeatPassword'
-              label={t('register.repeatPassword')}
-              placeholder={t('register.repeatPasswordPlaceholder')}
-              autoComplete='new-password'
-              leftIcon={<Lock />}
-              value={values.repeatPassword}
-              onChange={handleChange}
-              error={errors.repeatPassword && t(errors.repeatPassword)}
-              shake={shouldShake('repeatPassword')}
-            />
-
-            <Button type='submit' variant='primary' size='lg' fullWidth loading={isLoading} className='mt-2'>
+            <Button type='submit' variant='primary' size='lg' fullWidth loading={isLoading} className='mt-2 short:mt-1 short:h-10'>
               {t('register.submit')}
             </Button>
           </form>
 
-          <Divider label={t('common.or')} className='my-6' />
+          <Divider label={t('common.or')} className='my-6 short:my-1.5 tight:my-1' />
 
-          <Button variant='outline' size='lg' fullWidth leftIcon={<GoogleIcon />}
+          <Button variant='outline' size='lg' fullWidth leftIcon={<GoogleIcon />} className='short:h-10'
           >{t('register.google')}
           </Button>
 
-          <p className='mt-8 text-center text-sm text-muted-foreground'>
+          <p className='mt-8 text-center text-sm text-muted-foreground short:mt-4 tight:mt-2'>
             {t('register.haveAccount')} {' '}
             <Link
               to='/login'

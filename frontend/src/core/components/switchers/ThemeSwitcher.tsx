@@ -1,10 +1,11 @@
 import { cn } from 'src/core/lib/utils'
 import useThemeSwitcher from 'src/core/hooks/switchers/useThemeSwitcher.ts'
+import type { ThemeSwitcherProps } from 'src/core/types/themeSwitcher.ts'
 import { stars } from 'src/core/helpers/themeSwitcher.ts'
 
 const moonCraters = ['top-1 left-3 size-1.5', 'top-3.5 left-1.5 size-1', 'bottom-1 left-3.5 size-1']
 
-const ThemeSwitcher = ({ className }: { readonly className?: string }) => {
+const ThemeSwitcher = ({ mini = false, className }: ThemeSwitcherProps) => {
   const { trackRef, isDark, label, toggleTheme } = useThemeSwitcher()
 
   return (
@@ -17,7 +18,8 @@ const ThemeSwitcher = ({ className }: { readonly className?: string }) => {
       title={label}
       onClick={toggleTheme}
       className={cn(
-        'group relative isolate h-9 w-17 shrink-0 overflow-hidden rounded-full border border-white/25 outline-none',
+        'group relative isolate shrink-0 overflow-hidden rounded-full border border-white/25 outline-none',
+        mini ? 'h-8 w-14' : 'h-9 w-17',
         'bg-linear-to-br from-sky-300 via-sky-400 to-blue-500 shadow-[inset_0_2px_6px_rgb(0_0_0/0.25)]',
         'focus-visible:ring-4 focus-visible:ring-ring/40',
         className
@@ -49,11 +51,10 @@ const ThemeSwitcher = ({ className }: { readonly className?: string }) => {
         <span className='absolute right-1 bottom-1.5 size-2.5 rounded-full bg-white/80' />
       </span>
 
-      {/* Sun ↔ moon thumb */}
       <span
         data-theme-thumb
         aria-hidden='true'
-        className='absolute top-1 left-1 size-7 rounded-full will-change-transform'
+        className={cn('absolute top-0.75 left-0.75 rounded-full will-change-transform', mini ? 'size-6' : 'size-7')}
       >
         <span
           data-theme-sun
