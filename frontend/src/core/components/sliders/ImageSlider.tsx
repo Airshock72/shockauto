@@ -4,7 +4,7 @@ import useImageSlider from 'src/core/hooks/sliders/useImageSlider.ts'
 import useImageSliderAnimation from 'src/core/hooks/sliders/useImageSliderAnimation.ts'
 import type { ImageSliderProps } from 'src/core/types/ImageSlider.ts'
 
-const ImageSlider = ({ slides, interval = 5000, className }: ImageSliderProps) => {
+const ImageSlider = ({ slides, interval = 5000, className, onSlideChange }: ImageSliderProps) => {
   const { t } = useTranslation()
   const {
     state,
@@ -13,7 +13,7 @@ const ImageSlider = ({ slides, interval = 5000, className }: ImageSliderProps) =
     setPaused,
     handleKeyDown,
     handleImageError
-  } = useImageSlider(slides)
+  } = useImageSlider(slides, onSlideChange)
 
   const {
     containerRef,

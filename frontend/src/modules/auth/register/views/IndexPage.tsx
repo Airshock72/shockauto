@@ -9,6 +9,7 @@ import Divider from 'src/core/components/dividers/Divider.tsx'
 import GoogleIcon from 'src/core/components/icons/GoogleIcon.tsx'
 import CarShowcase from 'src/modules/auth/register/views/CarShowcase.tsx'
 import useRegister from 'src/modules/auth/register/hooks/useRegister.ts'
+import useCarAccent from 'src/core/hooks/useCarAccent.ts'
 import { normalizeEmail } from 'src/core/helpers/normalizers.ts'
 
 const Register = () => {
@@ -22,13 +23,15 @@ const Register = () => {
     handleFormAnimationEnd,
     shouldShake
   } = useRegister()
+  const { pageRef, handleSlideChange } = useCarAccent()
 
   return (
-    <main className='min-h-dvh bg-aurora lg:grid lg:grid-cols-2'>
+    <main ref={pageRef} className='car-backdrop min-h-dvh lg:grid lg:grid-cols-2'>
       <section className='flex items-center justify-center px-4 pt-20 pb-10 sm:px-6 md:min-h-dvh lg:px-10 short:pt-14 short:pb-4 tight:pb-3'>
-        <Card className='w-full max-w-lg animate-fade-up md:max-w-xl short:px-6 short:py-5 tight:py-4'>
+        <Card className='car-card relative w-full max-w-lg animate-fade-up md:max-w-xl short:px-6 short:py-5 tight:py-4'>
           <header className='mb-8 space-y-2 short:mb-4 short:space-y-1 tight:mb-3'>
             <h1 className='text-display-sm font-bold text-center short:text-2xl tight:text-xl'>{t('register.title')}</h1>
+            <span aria-hidden='true' className='car-stripes -my-0.5 tight:hidden' />
             <p className='text-sm text-muted-foreground text-center tight:text-xs'>{t('register.subtitle')}</p>
           </header>
 
@@ -125,8 +128,8 @@ const Register = () => {
       </section>
 
       <aside className='hidden p-4 lg:block'>
-        <div className='sticky top-4 h-[calc(100dvh-2rem)]'>
-          <CarShowcase />
+        <div className='car-glow sticky top-4 h-[calc(100dvh-2rem)]'>
+          <CarShowcase onSlideChange={handleSlideChange} />
         </div>
       </aside>
     </main>

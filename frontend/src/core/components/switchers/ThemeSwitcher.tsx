@@ -1,9 +1,7 @@
+import { Moon, Sun } from 'lucide-react'
 import { cn } from 'src/core/lib/utils'
 import useThemeSwitcher from 'src/core/hooks/switchers/useThemeSwitcher.ts'
 import type { ThemeSwitcherProps } from 'src/core/types/themeSwitcher.ts'
-import { stars } from 'src/core/helpers/themeSwitcher.ts'
-
-const moonCraters = ['top-1 left-3 size-1.5', 'top-3.5 left-1.5 size-1', 'bottom-1 left-3.5 size-1']
 
 const ThemeSwitcher = ({ mini = false, className }: ThemeSwitcherProps) => {
   const { trackRef, isDark, label, toggleTheme } = useThemeSwitcher()
@@ -18,65 +16,50 @@ const ThemeSwitcher = ({ mini = false, className }: ThemeSwitcherProps) => {
       title={label}
       onClick={toggleTheme}
       className={cn(
-        'group relative isolate shrink-0 overflow-hidden rounded-full border border-white/25 outline-none',
-        mini ? 'h-8 w-14' : 'h-9 w-17',
-        'bg-linear-to-br from-sky-300 via-sky-400 to-blue-500 shadow-[inset_0_2px_6px_rgb(0_0_0/0.25)]',
+        'group relative isolate shrink-0 rounded-full border outline-none',
+        'border-zinc-300 bg-linear-to-b from-zinc-100 to-zinc-300 shadow-[inset_0_1px_0_rgb(255_255_255/0.8),0_1px_2px_rgb(0_0_0/0.15)]',
+        'dark:border-white/10 dark:from-zinc-700 dark:to-zinc-900 dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.08),0_1px_2px_rgb(0_0_0/0.4)]',
         'focus-visible:ring-4 focus-visible:ring-ring/40',
+        mini ? 'h-8 w-24' : 'h-9 w-28',
         className
       )}
     >
-      <span
-        data-theme-night
-        aria-hidden='true'
-        className='absolute inset-0 -z-10 bg-linear-to-br from-indigo-950 via-slate-900 to-violet-950 opacity-0'
-      >
-        {stars.map((star, index) => (
-          <span
-            key={index}
-            data-theme-star
-            className={cn('absolute opacity-0', star.className)}
-          >
-            <span
-              className='absolute inset-0 animate-glow-pulse rounded-full bg-white shadow-[0_0_4px_white]'
-              style={{ animationDelay: `${index * 0.4}s` }}
-            />
-          </span>
-        ))}
-      </span>
-
-      {/* Clouds */}
-      <span data-theme-clouds aria-hidden='true' className='absolute right-1 bottom-0.5 -z-10 h-4 w-8'>
-        <span className='absolute right-0 bottom-0 h-2.5 w-7 rounded-full bg-white/90' />
-        <span className='absolute right-3 bottom-1 size-3 rounded-full bg-white/90' />
-        <span className='absolute right-1 bottom-1.5 size-2.5 rounded-full bg-white/80' />
-      </span>
-
-      <span
-        data-theme-thumb
-        aria-hidden='true'
-        className={cn('absolute top-0.75 left-0.75 rounded-full will-change-transform', mini ? 'size-6' : 'size-7')}
-      >
-        <span
-          data-theme-sun
-          className={cn(
-            'absolute inset-0 rounded-full bg-linear-to-br from-amber-200 via-amber-300 to-orange-400',
-            'shadow-[0_0_0_3px_rgb(253_230_138/0.35),0_0_14px_rgb(251_191_36/0.8)]'
-          )}
-        />
-        <span
-          data-theme-moon
-          className='absolute inset-0 rounded-full bg-linear-to-br from-slate-100 to-slate-300 opacity-0 shadow-[0_0_12px_rgb(226_232_240/0.55)]'
-        >
-          {moonCraters.map((crater) => (
-            <span key={crater} className={cn('absolute rounded-full bg-slate-400/60 shadow-[inset_0_1px_1px_rgb(0_0_0/0.2)]', crater)} />
-          ))}
-        </span>
-      </span>
-
+      {/* Shift gate */}
       <span
         aria-hidden='true'
-        className='pointer-events-none absolute inset-0 rounded-full bg-white/0 transition-colors duration-200 group-hover:bg-white/10'
+        className={cn(
+          'absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-zinc-400/60 shadow-[inset_0_1px_2px_rgb(0_0_0/0.35)] dark:bg-black/60',
+          mini ? 'inset-x-7' : 'inset-x-8'
+        )}
       />
+
+      <Sun
+        data-theme-sun
+        aria-hidden='true'
+        className={cn('absolute top-1/2 -translate-y-1/2 text-zinc-400', mini ? 'left-1.5 size-3.5' : 'left-2 size-4')}
+      />
+      <Moon
+        data-theme-moon
+        aria-hidden='true'
+        className={cn('absolute top-1/2 -translate-y-1/2 text-zinc-400', mini ? 'right-1.5 size-3.5' : 'right-2 size-4')}
+      />
+
+      {/* Gear knob with an engraved shift pattern */}
+      <span
+        data-theme-knob
+        aria-hidden='true'
+        className={cn(
+          'absolute top-1/2 -translate-y-1/2 rounded-full will-change-transform',
+          'bg-[radial-gradient(circle_at_35%_30%,#ffffff,#d4d4d8_45%,#71717a)]',
+          'dark:bg-[radial-gradient(circle_at_35%_30%,#e4e4e7,#71717a_45%,#27272a)]',
+          'transition-[filter] duration-200 group-hover:brightness-110',
+          mini ? 'left-6 size-6' : 'left-7 size-7'
+        )}
+      >
+        <svg viewBox='0 0 24 24' fill='none' className='size-full p-1 text-zinc-800/70 dark:text-zinc-100/70'>
+          <path d='M6.5 7v10M12 7v10M17.5 7v10M6.5 12h11' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' />
+        </svg>
+      </span>
     </button>
   )
 }

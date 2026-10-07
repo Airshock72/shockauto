@@ -7,6 +7,7 @@ const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=f
 export const LOGIN_CARS: Array<Slide> = [
   {
     src: unsplash('1621135802920-133df287f89c'),
+    accent: '#1e7bff',
     alt: 'login.showcase.mclaren.alt',
     eyebrow: '· McLaren',
     title: 'McLaren 720S',
@@ -14,6 +15,7 @@ export const LOGIN_CARS: Array<Slide> = [
   },
   {
     src: unsplash('1600712242805-5f78671b24da'),
+    accent: '#c9b48a',
     alt: 'login.showcase.bugatti.alt',
     eyebrow: '· Bugatti',
     title: 'Bugatti Chiron',
@@ -21,6 +23,7 @@ export const LOGIN_CARS: Array<Slide> = [
   },
   {
     src: unsplash('1618843479313-40f8afb4b4d8'),
+    accent: '#facc15',
     alt: 'login.showcase.astonMartin.alt',
     eyebrow: '· Aston Martin',
     title: 'Aston Martin DBS',
@@ -28,6 +31,7 @@ export const LOGIN_CARS: Array<Slide> = [
   },
   {
     src: unsplash('1606664515524-ed2f786a0bd6'),
+    accent: '#94a3b8',
     alt: 'login.showcase.rollsRoyce.alt',
     eyebrow: '· Rolls-Royce',
     title: 'Rolls-Royce Wraith',
@@ -35,6 +39,7 @@ export const LOGIN_CARS: Array<Slide> = [
   },
   {
     src: unsplash('1494976388531-d1058494cdd8'),
+    accent: '#64748b',
     alt: 'login.showcase.mustang.alt',
     eyebrow: '· Ford',
     title: 'Ford Mustang',
@@ -42,6 +47,7 @@ export const LOGIN_CARS: Array<Slide> = [
   },
   {
     src: unsplash('1552519507-da3b142c6e3d'),
+    accent: '#0ea5e9',
     alt: 'login.showcase.corvette.alt',
     eyebrow: '· Chevrolet',
     title: 'Chevrolet Corvette',
@@ -49,6 +55,7 @@ export const LOGIN_CARS: Array<Slide> = [
   },
   {
     src: unsplash('1542362567-b07e54358753'),
+    accent: '#cbd5e1',
     alt: 'login.showcase.nissan.alt',
     eyebrow: '· Nissan',
     title: 'Nissan GT-R',

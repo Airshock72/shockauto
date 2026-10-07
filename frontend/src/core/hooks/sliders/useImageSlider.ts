@@ -1,11 +1,20 @@
 import type { KeyboardEvent } from 'react'
+import { useEffect, useEffectEvent } from 'react'
 import type { Slide } from 'src/core/types/ImageSlider.ts'
 import { useImageSliderReducer } from 'src/core/store/sliders/imageSlider.ts'
 
-const useImageSlider = (slides: Array<Slide>) => {
+const useImageSlider = (slides: Array<Slide>, onSlideChange?: (slide: Slide) => void) => {
   const [state, dispatch] = useImageSliderReducer()
 
   const activeSlide = slides[state.activeIndex]
+
+  const notifySlideChange = useEffectEvent(() => {
+    if (activeSlide) onSlideChange?.(activeSlide)
+  })
+
+  useEffect(() => {
+    notifySlideChange()
+  }, [state.activeIndex])
 
   const goTo = (index: number) => {
     dispatch({ type: 'SET_ACTIVE_INDEX', payload: (index + slides.length) % slides.length })
