@@ -4,10 +4,6 @@ export type FormErrorActions<K extends string> =
   | { type: 'SET_ERRORS', readonly payload: Partial<Record<K, string>> }
   | { type: 'SET_FORM_SHAKING', readonly payload: boolean }
 
-/**
- * Stores the errors, and if any field is invalid, shakes the form and focuses
- * the first invalid field in `fieldOrder`. Returns true when the form has errors.
- */
 export const applyFormErrors = <K extends string>(
   form: HTMLFormElement,
   errors: Partial<Record<K, string>>,

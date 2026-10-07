@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react'
 import useTheme from 'src/core/hooks/useTheme.ts'
 import { animateThemeSwitch } from 'src/core/helpers/themeSwitcher.ts'
 import { prefersReducedMotion } from 'src/core/helpers/languageSwitcher.ts'
+import { getElementCenter, spreadThemeChange } from 'src/core/helpers/themeTransition.ts'
 
 gsap.registerPlugin(useGSAP)
 
@@ -28,11 +29,18 @@ const useThemeSwitcher = () => {
     { dependencies: [isDark], scope: trackRef }
   )
 
+  const handleToggle = () => {
+    const track = trackRef.current
+    if (!track) return toggleTheme()
+
+    spreadThemeChange(getElementCenter(track), toggleTheme)
+  }
+
   return {
     trackRef,
     isDark,
     label: t(isDark ? 'theme.switchToLight' : 'theme.switchToDark'),
-    toggleTheme
+    toggleTheme: handleToggle
   }
 }
 

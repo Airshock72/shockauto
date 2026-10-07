@@ -1,0 +1,5 @@
+.theme-spreading::view-transition-old(root),
+.theme-spreading::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
