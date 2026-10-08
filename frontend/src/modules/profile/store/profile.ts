@@ -3,11 +3,11 @@ import { type Dispatch, useReducer } from 'react'
 export interface ProfileFormValues {
   readonly firstName: string
   readonly lastName: string
-  readonly gender: string
-  readonly birthDate: string
-  readonly personalNumber: string
+  readonly gender: string | null
+  readonly birthDate: string | null
+  readonly personalNumber: string | null
   readonly email: string
-  readonly phoneNumber: string
+  readonly phoneNumber: string | null
 }
 
 export type ProfileFormErrors = Partial<Record<keyof ProfileFormValues, string>>
@@ -17,32 +17,36 @@ export interface ProfileStore {
   readonly errors: ProfileFormErrors
   readonly isSubmitted: boolean
   readonly formShaking: boolean
+  readonly isLoading: boolean
 }
 
 export type SET_VALUES = 'SET_VALUES'
 export type SET_ERRORS = 'SET_ERRORS'
 export type SET_SUBMITTED = 'SET_SUBMITTED'
 export type SET_FORM_SHAKING = 'SET_FORM_SHAKING'
+export type SET_LOADING = 'SET_LOADING'
 
 export type ProfileActions =
   | { type: SET_VALUES, readonly payload: ProfileFormValues }
   | { type: SET_ERRORS, readonly payload: ProfileFormErrors }
   | { type: SET_SUBMITTED, readonly payload: boolean }
   | { type: SET_FORM_SHAKING, readonly payload: boolean }
+  | { type: SET_LOADING, readonly payload: boolean }
 
 const initialProfileStore: ProfileStore = {
   values: {
     firstName: '',
     lastName: '',
-    gender: '',
-    birthDate: '',
-    personalNumber: '',
+    gender: null,
+    birthDate: null,
+    personalNumber: null,
     email: '',
-    phoneNumber: ''
+    phoneNumber: null
   },
   errors: {},
   isSubmitted: false,
-  formShaking: false
+  formShaking: false,
+  isLoading: true
 }
 
 export const useProfileReducer = (): [ProfileStore, Dispatch<ProfileActions>] => {
@@ -73,6 +77,11 @@ export const profileReducer = (
     return {
       ...state,
       formShaking: action.payload
+    }
+  case 'SET_LOADING':
+    return {
+      ...state,
+      isLoading: action.payload
     }
   default:
     return state

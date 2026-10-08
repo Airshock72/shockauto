@@ -1,6 +1,6 @@
 import { type Dispatch, useReducer } from 'react'
 
-export type DatePickerView = 'days' | 'years'
+export type DatePickerView = 'days' | 'months' | 'years'
 
 export interface DatePickerStore {
   readonly isOpen: boolean

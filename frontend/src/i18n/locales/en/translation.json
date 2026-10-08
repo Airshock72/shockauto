@@ -56,7 +56,8 @@
     "default": "Something went wrong, please try again later",
     "tooManyRequests": "Too many requests, please try again later",
     "network": "Could not connect to the server, please check your internet connection",
-    "authExpired": "Please sign in again"
+    "authExpired": "Please sign in again",
+    "invalidCredentials": "No user was found with the provided credentials"
   },
   "notFound": {
     "title": "Page Not Found",
@@ -191,6 +192,7 @@
   },
   "datePicker": {
     "chooseYear": "Choose year",
+    "chooseMonth": "Choose month",
     "previousMonth": "Previous month",
     "nextMonth": "Next month",
     "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],

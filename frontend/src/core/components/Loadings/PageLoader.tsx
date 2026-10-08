@@ -11,13 +11,11 @@ const PageLoader = () => {
     <div role='status' aria-live='polite' aria-busy='true' className='relative w-full'>
       <span className='sr-only'>{t('common.loading')}</span>
 
-      {/* Top progress beam */}
       <div className='fixed inset-x-0 top-0 z-50 h-0.5 overflow-hidden bg-primary/10'>
         <div className='h-full w-1/3 animate-progress bg-linear-to-r from-transparent via-primary to-neon' />
       </div>
 
       <div className='container space-y-6 py-6 md:space-y-8 md:py-8'>
-        {/* Page header */}
         <div className='flex animate-fade-up flex-col gap-4 sm:flex-row sm:items-end sm:justify-between'>
           <div className='space-y-3'>
             <Skeleton className='h-3 w-24' />
@@ -30,7 +28,6 @@ const PageLoader = () => {
           </div>
         </div>
 
-        {/* Stat cards */}
         <div className='grid grid-cols-1 gap-4 xs:grid-cols-2 lg:grid-cols-4'>
           {Array.from({ length: STAT_CARDS }, (_, index) => (
             <div
@@ -48,7 +45,6 @@ const PageLoader = () => {
           ))}
         </div>
 
-        {/* Content area */}
         <div className='grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6'>
           <div className='animate-fade-up space-y-5 rounded-xl border bg-card/60 p-5 shadow-soft [animation-delay:320ms] sm:p-6 lg:col-span-2'>
             <div className='flex items-center justify-between gap-4'>

@@ -9,7 +9,7 @@ const validateName = (value: string, requiredKey: string): string | undefined =>
   return undefined
 }
 
-const validateBirthDate = (value: string): string | undefined => {
+const validateBirthDate = (value: string | null): string | undefined => {
   if (!value) return 'validation.birthDateRequired'
   if (value < minBirthDate || value > getTodayIso()) return 'validation.birthDateInvalid'
   return undefined

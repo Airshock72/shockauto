@@ -30,6 +30,13 @@ const cellClassName = cn(
   'disabled:pointer-events-none disabled:opacity-30'
 )
 
+const headerButtonClassName = cn(
+  'inline-flex items-center gap-1 rounded-lg px-2 py-1 font-display text-sm font-semibold outline-none',
+  'transition-colors duration-200 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring'
+)
+
+const chevronClassName = 'size-4 text-muted-foreground transition-transform duration-200 ease-fluid'
+
 const activeCellClassName = 'bg-primary font-semibold text-primary-foreground shadow-glow hover:bg-primary/90 hover:text-primary-foreground'
 
 const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, onValueChange }: DatePickerProps) => {
@@ -42,7 +49,9 @@ const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, o
     isOpen,
     view,
     viewYear,
+    viewMonth,
     monthLabel,
+    monthsShort,
     displayValue,
     weekdays,
     days,
@@ -54,7 +63,9 @@ const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, o
     handleContainerKeyDown,
     handleBlur,
     showMonth,
-    toggleYears,
+    toggleView,
+    selectMonth,
+    isMonthDisabled,
     selectYear,
     selectDay,
     getDayState
@@ -89,20 +100,28 @@ const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, o
           className='absolute top-full left-0 z-30 mt-2 w-full min-w-72 origin-top animate-scale-in rounded-xl border bg-popover/95 p-3 text-popover-foreground shadow-elevated backdrop-blur-xl sm:w-80'
         >
           <div className='mb-2 flex items-center justify-between gap-2'>
-            <button
-              type='button'
-              onClick={toggleYears}
-              aria-expanded={view === 'years'}
-              aria-label={t('datePicker.chooseYear')}
-              className='inline-flex items-center gap-1.5 rounded-lg px-2 py-1 font-display text-sm font-semibold outline-none transition-colors duration-200 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring'
-            >
-              <span>{monthLabel}</span>
-              <span className='text-gradient'>{viewYear}</span>
-              <ChevronDown
-                aria-hidden='true'
-                className={cn('size-4 text-muted-foreground transition-transform duration-200 ease-fluid', view === 'years' && 'rotate-180')}
-              />
-            </button>
+            <div className='flex items-center gap-0.5'>
+              <button
+                type='button'
+                onClick={() => toggleView('months')}
+                aria-expanded={view === 'months'}
+                aria-label={t('datePicker.chooseMonth')}
+                className={cn(headerButtonClassName, view === 'months' && 'bg-accent')}
+              >
+                {monthLabel}
+                <ChevronDown aria-hidden='true' className={cn(chevronClassName, view === 'months' && 'rotate-180')} />
+              </button>
+              <button
+                type='button'
+                onClick={() => toggleView('years')}
+                aria-expanded={view === 'years'}
+                aria-label={t('datePicker.chooseYear')}
+                className={cn(headerButtonClassName, view === 'years' && 'bg-accent')}
+              >
+                <span className='text-gradient'>{viewYear}</span>
+                <ChevronDown aria-hidden='true' className={cn(chevronClassName, view === 'years' && 'rotate-180')} />
+              </button>
+            </div>
 
             {view === 'days' && (
               <div className='flex gap-1'>
@@ -130,8 +149,8 @@ const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, o
 
           <div aria-hidden='true' className='mb-2 h-px bg-linear-to-r from-transparent via-neon/40 to-transparent' />
 
-          {view === 'days' ? (
-            <div key={`${viewYear}-${monthLabel}`} className='grid animate-fade-in grid-cols-7 gap-1'>
+          {view === 'days'
+            ? <div key={`${viewYear}-${monthLabel}`} className='grid animate-fade-in grid-cols-7 gap-1'>
               {weekdays.map((weekday) => (
                 <span key={weekday} className='flex h-8 items-center justify-center text-2xs font-medium text-muted-foreground'>
                   {weekday}
@@ -163,22 +182,36 @@ const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, o
                 )
               })}
             </div>
-          ) : (
-            <div ref={yearsRef} className='relative grid max-h-64 animate-fade-in grid-cols-4 gap-1 overflow-y-auto pr-1'>
-              {years.map((year) => (
-                <button
-                  key={year}
-                  type='button'
-                  data-active={year === viewYear || undefined}
-                  onClick={() => selectYear(year)}
-                  aria-pressed={year === viewYear}
-                  className={cn(cellClassName, 'h-9', year === viewYear && activeCellClassName)}
-                >
-                  {year}
-                </button>
-              ))}
-            </div>
-          )}
+            : view === 'months'
+              ? <div className='grid animate-fade-in grid-cols-3 gap-1.5'>
+                {monthsShort.map((month, index) => (
+                  <button
+                    key={month}
+                    type='button'
+                    disabled={isMonthDisabled(index)}
+                    onClick={() => selectMonth(index)}
+                    aria-pressed={index === viewMonth}
+                    className={cn(cellClassName, 'h-12', index === viewMonth && activeCellClassName)}
+                  >
+                    {month}
+                  </button>
+                ))}
+              </div>
+              : <div ref={yearsRef} className='relative grid max-h-64 animate-fade-in grid-cols-4 gap-1 overflow-y-auto pr-1'>
+                {years.map((year) => (
+                  <button
+                    key={year}
+                    type='button'
+                    data-active={year === viewYear || undefined}
+                    onClick={() => selectYear(year)}
+                    aria-pressed={year === viewYear}
+                    className={cn(cellClassName, 'h-9', year === viewYear && activeCellClassName)}
+                  >
+                    {year}
+                  </button>
+                ))}
+              </div>
+          }
         </div>
       )}
     </div>

@@ -8,7 +8,7 @@ gsap.registerPlugin(useGSAP)
 const useGenderSelect = (value: string) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const thumbRef = useRef<HTMLSpanElement>(null)
-  const valueRef = useRef(value)
+  const valueRef = useRef('')
 
   const getOption = (option: string) =>
     containerRef.current?.querySelector<HTMLElement>(`[data-gender="${option}"]`)

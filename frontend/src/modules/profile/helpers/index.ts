@@ -1,6 +1,7 @@
 import { Mars, Venus } from 'lucide-react'
 import { cva } from 'class-variance-authority'
 import type { ProfileFormValues } from 'src/modules/profile/store/profile.ts'
+import type { Profile } from 'src/api/account/types.ts'
 import type { GenderOption } from 'src/modules/profile/types'
 
 export const fieldOrder: Array<keyof ProfileFormValues> = [
@@ -14,11 +15,23 @@ export const fieldOrder: Array<keyof ProfileFormValues> = [
 ]
 
 export const genderOptions: Array<GenderOption> = [
-  { value: 'male', label: 'profile.genders.male', icon: Mars },
-  { value: 'female', label: 'profile.genders.female', icon: Venus }
+  { value: 'Male', label: 'profile.genders.male', icon: Mars },
+  { value: 'Female', label: 'profile.genders.female', icon: Venus }
 ]
 
 export const minBirthDate = '1900-01-01'
+
+export const transformProfileToFormValues = (profile: Profile): ProfileFormValues => ({
+  firstName: profile.firstName,
+  lastName: profile.lastName,
+  gender: profile.gender,
+  birthDate: profile.dateOfBirth?.slice(0, 10) ?? null,
+  personalNumber: profile.personalNumber,
+  email: profile.email,
+  phoneNumber: profile.mobilePhone
+})
+
+export const nullableFields: Array<keyof ProfileFormValues> = ['gender', 'birthDate', 'personalNumber', 'phoneNumber']
 
 export const actionCardVariants = cva(
   [

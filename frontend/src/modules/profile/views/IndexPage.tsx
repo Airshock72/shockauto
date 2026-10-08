@@ -11,18 +11,28 @@ import useProfile from 'src/modules/profile/hooks/useProfile.ts'
 import { minBirthDate } from 'src/modules/profile/helpers'
 import GenderSelect from 'src/modules/profile/views/GenderSelect.tsx'
 import ActionCard from 'src/modules/profile/views/ActionCard.tsx'
+import ProfileSkeleton from 'src/modules/profile/views/ProfileSkeleton.tsx'
 
 const IndexPage = () => {
   const { t } = useTranslation()
   const {
     values,
     errors,
+    isLoading,
     handleChange,
     handleBirthDateChange,
     handleSubmit,
     handleFormAnimationEnd,
     shouldShake
   } = useProfile()
+
+  if (isLoading) {
+    return (
+      <main className='container flex-1 py-8 md:py-12'>
+        <ProfileSkeleton />
+      </main>
+    )
+  }
 
   return (
     <main className='container flex-1 py-8 md:py-12'>
@@ -64,7 +74,7 @@ const IndexPage = () => {
             <GenderSelect
               name='gender'
               label={`${t('profile.gender')} *`}
-              value={values.gender}
+              value={values.gender ?? ''}
               onChange={handleChange}
               error={errors.gender && t(errors.gender)}
               shake={shouldShake('gender')}
@@ -75,7 +85,7 @@ const IndexPage = () => {
               placeholder={t('profile.birthDatePlaceholder')}
               min={minBirthDate}
               max={getTodayIso()}
-              value={values.birthDate}
+              value={values.birthDate ?? ''}
               onValueChange={handleBirthDateChange}
               error={errors.birthDate && t(errors.birthDate)}
               shake={shouldShake('birthDate')}
@@ -88,7 +98,7 @@ const IndexPage = () => {
               maxLength={11}
               leftIcon={<IdCard />}
               normalizer={normalizeDigits}
-              value={values.personalNumber}
+              value={values.personalNumber ?? ''}
               onChange={handleChange}
               error={errors.personalNumber && t(errors.personalNumber)}
               shake={shouldShake('personalNumber')}
@@ -99,6 +109,7 @@ const IndexPage = () => {
               label={`${t('profile.email')} *`}
               placeholder='name@example.com'
               autoComplete='email'
+              disabled
               leftIcon={<Mail />}
               normalizer={normalizeEmail}
               value={values.email}
@@ -116,7 +127,7 @@ const IndexPage = () => {
               maxLength={9}
               leftIcon={<Phone />}
               normalizer={normalizeDigits}
-              value={values.phoneNumber}
+              value={values.phoneNumber ?? ''}
               onChange={handleChange}
               error={errors.phoneNumber && t(errors.phoneNumber)}
               shake={shouldShake('phoneNumber')}

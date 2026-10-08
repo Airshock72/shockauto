@@ -1,6 +1,6 @@
 import { type FocusEvent, type KeyboardEvent, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDatePickerReducer } from 'src/core/store/inputs/datePicker.ts'
+import { type DatePickerView, useDatePickerReducer } from 'src/core/store/inputs/datePicker.ts'
 import {
   clampMonth,
   formatDisplayDate,
@@ -84,7 +84,14 @@ const useDatePicker = ({ value, min, max, onChange }: UseDatePickerParams) => {
 
   const showMonth = (offset: number) => dispatch({ type: 'SET_VIEW_DATE', payload: shiftMonth(viewYear, viewMonth, offset) })
 
-  const toggleYears = () => dispatch({ type: 'SET_VIEW', payload: view === 'years' ? 'days' : 'years' })
+  const toggleView = (target: DatePickerView) => dispatch({ type: 'SET_VIEW', payload: view === target ? 'days' : target })
+
+  const selectMonth = (month: number) => dispatch({ type: 'SET_VIEW_DATE', payload: { year: viewYear, month } })
+
+  const isMonthDisabled = (month: number) => {
+    const index = viewYear * 12 + month
+    return index < minDate.year * 12 + minDate.month || index > maxDate.year * 12 + maxDate.month
+  }
 
   const selectYear = (year: number) => {
     dispatch({ type: 'SET_VIEW_DATE', payload: { year, month: clampMonth(year, viewMonth, minDate, maxDate) } })
@@ -112,7 +119,9 @@ const useDatePicker = ({ value, min, max, onChange }: UseDatePickerParams) => {
     isOpen,
     view,
     viewYear,
+    viewMonth,
     monthLabel: months[viewMonth],
+    monthsShort,
     displayValue: formatDisplayDate(value, monthsShort),
     weekdays,
     days: getMonthDays(viewYear, viewMonth),
@@ -124,7 +133,9 @@ const useDatePicker = ({ value, min, max, onChange }: UseDatePickerParams) => {
     handleContainerKeyDown,
     handleBlur,
     showMonth,
-    toggleYears,
+    toggleView,
+    selectMonth,
+    isMonthDisabled,
     selectYear,
     selectDay,
     getDayState

@@ -1,7 +1,8 @@
 import i18n from 'src/i18n'
 
 export const errorMessagesMap: Record<string, string> = {
-  'Too Many Requests': 'errors.tooManyRequests'
+  'Too Many Requests': 'errors.tooManyRequests',
+  'invalidCredentials': 'errors.invalidCredentials'
 }
 
 export const translateErrorMessage = (errorMessage: string, defaultKey = 'errors.default'): string => {
