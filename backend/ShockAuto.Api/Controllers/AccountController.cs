@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShockAuto.Api.Extensions;
 using ShockAuto.Application.Common;
 using ShockAuto.Application.Features.AccountHandlers.GetProfile;
+using ShockAuto.Application.Features.AccountHandlers.UpdateProfile;
 
 namespace ShockAuto.Api.Controllers;
 
@@ -28,6 +29,17 @@ public class AccountController : ControllerBase
         User.SetClaims(query);
 
         Result result = await _sender.Send(query, cancellationToken);
+        return StatusCode(result.StatusCode, result.Data);
+    }
+
+    [HttpPut("Profile")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> UpdateProfile(UpdateProfileCommand command, CancellationToken cancellationToken)
+    {
+        User.SetClaims(command);
+
+        Result result = await _sender.Send(command, cancellationToken);
         return StatusCode(result.StatusCode, result.Data);
     }
 }

@@ -19,6 +19,7 @@ public class GetProfileQueryHandler : IRequestHandler<GetProfileQuery, Result>
         User user = (await _userRepository.Get(request.UserId, cancellationToken))!;
         GetProfileResponse response = new()
         {
+            UserId = user.Id,
             FirstName = user.FirstName,
             LastName = user.LastName,
 
