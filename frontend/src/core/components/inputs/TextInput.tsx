@@ -1,5 +1,5 @@
 import type { ComponentProps, ReactNode } from 'react'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from 'src/core/lib/utils'
 import type { Normalizer } from 'src/core/helpers/normalizers.ts'
@@ -13,7 +13,14 @@ interface TextInputProps extends ComponentProps<'input'> {
   readonly containerClassName?: string
   readonly shake?: boolean
   readonly normalizer?: Normalizer
+  readonly onClear?: () => void
 }
+
+const actionButtonClassName = cn(
+  'absolute top-1/2 right-1.5 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground outline-none',
+  'transition-colors duration-200 hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring',
+  'disabled:cursor-not-allowed disabled:opacity-60 [&_svg]:size-4.5'
+)
 
 const TextInput = ({
   label,
@@ -23,10 +30,12 @@ const TextInput = ({
   containerClassName,
   shake = false,
   normalizer,
+  onClear,
   className,
   id,
   type = 'text',
   disabled,
+  value,
   onChange,
   ...props
 }: TextInputProps) => {
@@ -40,6 +49,7 @@ const TextInput = ({
     togglePasswordVisibility
   } = useTextInput({ id, type, error, hint, normalizer, onChange })
   const { t } = useTranslation()
+  const isClearable = Boolean(onClear) && Boolean(value) && !isPassword
 
   return (
     <div className={cn('relative flex flex-col gap-1.5 short:gap-1', containerClassName)}>
@@ -77,9 +87,10 @@ const TextInput = ({
             'disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:shadow-none disabled:hover:border-input',
             'aria-invalid:border-destructive aria-invalid:hover:border-destructive aria-invalid:focus-visible:ring-destructive/15',
             leftIcon ? 'pl-10' : undefined,
-            isPassword && 'pr-11',
+            (isPassword || isClearable) && 'pr-11',
             className
           )}
+          value={value}
           onChange={handleChange}
           {...props}
         />
@@ -91,13 +102,22 @@ const TextInput = ({
             onClick={togglePasswordVisibility}
             aria-label={isPasswordVisible ? t('password.hide') : t('password.show')}
             aria-controls={inputId}
-            className={cn(
-              'absolute top-1/2 right-1.5 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground outline-none',
-              'transition-colors duration-200 hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring',
-              'disabled:cursor-not-allowed disabled:opacity-60 [&_svg]:size-4.5'
-            )}
+            className={actionButtonClassName}
           >
             {isPasswordVisible ? <EyeOff /> : <Eye />}
+          </button>
+        )}
+
+        {isClearable && (
+          <button
+            type='button'
+            disabled={disabled}
+            onClick={onClear}
+            aria-label={t('common.clear')}
+            aria-controls={inputId}
+            className={cn(actionButtonClassName, 'animate-fade-in')}
+          >
+            <X />
           </button>
         )}
       </div>

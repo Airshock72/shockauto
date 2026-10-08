@@ -12,6 +12,16 @@ export interface Profile {
     readonly mobilePhone: string | null
 }
 
+export interface ProfileParams {
+    readonly firstName: string
+    readonly lastName: string
+    readonly email: string
+    readonly birthDate: string | null
+    readonly personalNumber: string | null
+    readonly gender: Gender | null
+    readonly mobilePhone: string | null
+}
+
 export interface ProfileData {
     readonly data: Profile | null
     readonly status: ResponseStatuses

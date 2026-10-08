@@ -19,7 +19,13 @@ export const getTodayIso = (): string => {
   return toIsoDate({ year: today.getFullYear(), month: today.getMonth(), day: today.getDate() })
 }
 
-export const shiftMonth = (year: number, month: number, offset: number) => {
+export const getYearsAgoIso = (years: number): string => {
+  const today = new Date()
+  const date = new Date(today.getFullYear() - years, today.getMonth(), today.getDate())
+  return toIsoDate({ year: date.getFullYear(), month: date.getMonth(), day: date.getDate() })
+}
+
+export const shiftMonth =(year: number, month: number, offset: number) => {
   const date = new Date(year, month + offset, 1)
   return { year: date.getFullYear(), month: date.getMonth() }
 }

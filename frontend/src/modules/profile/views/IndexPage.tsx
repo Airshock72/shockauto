@@ -6,9 +6,8 @@ import DatePicker from 'src/core/components/inputs/DatePicker.tsx'
 import Button from 'src/core/components/buttons/Button.tsx'
 import Divider from 'src/core/components/dividers/Divider.tsx'
 import { normalizeDigits, normalizeEmail } from 'src/core/helpers/normalizers.ts'
-import { getTodayIso } from 'src/core/helpers/datePicker.ts'
 import useProfile from 'src/modules/profile/hooks/useProfile.ts'
-import { minBirthDate } from 'src/modules/profile/helpers'
+import { getMaxBirthDate, minBirthDate } from 'src/modules/profile/helpers'
 import GenderSelect from 'src/modules/profile/views/GenderSelect.tsx'
 import ActionCard from 'src/modules/profile/views/ActionCard.tsx'
 import ProfileSkeleton from 'src/modules/profile/views/ProfileSkeleton.tsx'
@@ -84,7 +83,7 @@ const IndexPage = () => {
               label={`${t('profile.birthDate')} *`}
               placeholder={t('profile.birthDatePlaceholder')}
               min={minBirthDate}
-              max={getTodayIso()}
+              max={getMaxBirthDate()}
               value={values.birthDate ?? ''}
               onValueChange={handleBirthDateChange}
               error={errors.birthDate && t(errors.birthDate)}

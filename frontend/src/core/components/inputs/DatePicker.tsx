@@ -68,6 +68,7 @@ const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, o
     isMonthDisabled,
     selectYear,
     selectDay,
+    clear,
     getDayState
   } = useDatePicker({ value, min, max, onChange: onValueChange })
 
@@ -89,6 +90,7 @@ const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, o
         aria-controls={popoverId}
         onClick={toggle}
         onKeyDown={handleInputKeyDown}
+        onClear={clear}
         className={cn('cursor-pointer caret-transparent', isOpen && 'border-primary ring-4 ring-primary/15')}
       />
 

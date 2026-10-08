@@ -2,6 +2,7 @@
   "common": {
     "loading": "Loading...",
     "or": "or",
+    "clear": "Clear",
     "changeLanguage": "Change language"
   },
   "header": {
@@ -50,7 +51,8 @@
       "title": "Delete account",
       "description": "Permanently remove your account and data"
     },
-    "save": "Save"
+    "save": "Save",
+    "updateSuccess": "Personal information updated successfully"
   },
   "errors": {
     "default": "Something went wrong, please try again later",
@@ -168,6 +170,7 @@
     "genderRequired": "Gender is required",
     "birthDateRequired": "Date of birth is required",
     "birthDateInvalid": "Enter a valid date of birth",
+    "birthDateUnderage": "You must be at least 18 years old",
     "personalNumberInvalid": "Personal number must be 11 digits",
     "phoneNumberInvalid": "Phone number must be 9 digits"
   },

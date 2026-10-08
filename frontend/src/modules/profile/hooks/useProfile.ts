@@ -1,30 +1,33 @@
-import { type AnimationEvent, type ChangeEvent, type SubmitEvent, useEffect } from 'react'
+import { type AnimationEvent, type ChangeEvent, type Dispatch, type SubmitEvent, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import { AccountApi } from 'src/api'
 import { ResponseStatuses } from 'src/api/types/apiGlobalTypes.ts'
-import { type ProfileFormValues, useProfileReducer } from 'src/modules/profile/store/profile.ts'
+import { type ProfileActions, type ProfileFormValues, useProfileReducer } from 'src/modules/profile/store/profile.ts'
 import { validateProfileForm } from 'src/modules/profile/validation'
-import { fieldOrder, nullableFields, transformProfileToFormValues } from 'src/modules/profile/helpers'
+import { fieldOrder, nullableFields, transformProfileParams, transformProfileToFormValues } from 'src/modules/profile/helpers'
 import { applyFormErrors } from 'src/core/helpers/forms.ts'
 import type { UserProfile } from 'src/modules/profile/types'
 
+const loadProfile = async (dispatch: Dispatch<ProfileActions>, isActive: () => boolean = () => true) => {
+  const response = await AccountApi.getProfile()
+  if (!isActive()) return
+
+  if (response.status === ResponseStatuses.SUCCESS && response.data) {
+    dispatch({ type: 'SET_VALUES', payload: transformProfileToFormValues(response.data) })
+  }
+  dispatch({ type: 'SET_LOADING', payload: false })
+}
+
 const useProfile = (): UserProfile => {
+  const { t } = useTranslation()
   const [state, dispatch] = useProfileReducer()
   const { values, errors, isSubmitted, formShaking, isLoading } = state
 
   useEffect(() => {
     let isActive = true
 
-    const loadProfile = async () => {
-      const response = await AccountApi.getProfile()
-      if (!isActive) return
-
-      if (response.status === ResponseStatuses.SUCCESS && response.data) {
-        dispatch({ type: 'SET_VALUES', payload: transformProfileToFormValues(response.data) })
-      }
-      dispatch({ type: 'SET_LOADING', payload: false })
-    }
-
-    loadProfile().then()
+    loadProfile(dispatch, () => isActive).then()
     return () => {
       isActive = false
     }
@@ -42,14 +45,20 @@ const useProfile = (): UserProfile => {
 
   const handleBirthDateChange = (value: string) => setValue('birthDate', value)
 
-  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (isLoading) return
 
     dispatch({ type: 'SET_SUBMITTED', payload: true })
 
     if (applyFormErrors(event.currentTarget, validateProfileForm(values), fieldOrder, dispatch)) return
 
-    console.info(values)
+    const response = await AccountApi.updateProfile(transformProfileParams(values))
+    if (response.status !== ResponseStatuses.SUCCESS) return
+
+    toast.success(t('profile.updateSuccess'))
+    dispatch({ type: 'SET_LOADING', payload: true })
+    await loadProfile(dispatch)
   }
 
   const handleFormAnimationEnd = (event: AnimationEvent<HTMLFormElement>) => {

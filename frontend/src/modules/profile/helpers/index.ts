@@ -1,8 +1,9 @@
 import { Mars, Venus } from 'lucide-react'
 import { cva } from 'class-variance-authority'
 import type { ProfileFormValues } from 'src/modules/profile/store/profile.ts'
-import type { Profile } from 'src/api/account/types.ts'
+import type { Gender, Profile, ProfileParams } from 'src/api/account/types.ts'
 import type { GenderOption } from 'src/modules/profile/types'
+import { getYearsAgoIso } from 'src/core/helpers/datePicker.ts'
 
 export const fieldOrder: Array<keyof ProfileFormValues> = [
   'firstName',
@@ -21,6 +22,10 @@ export const genderOptions: Array<GenderOption> = [
 
 export const minBirthDate = '1900-01-01'
 
+export const minAge = 18
+
+export const getMaxBirthDate = (): string => getYearsAgoIso(minAge)
+
 export const transformProfileToFormValues = (profile: Profile): ProfileFormValues => ({
   firstName: profile.firstName,
   lastName: profile.lastName,
@@ -29,6 +34,16 @@ export const transformProfileToFormValues = (profile: Profile): ProfileFormValue
   personalNumber: profile.personalNumber,
   email: profile.email,
   phoneNumber: profile.mobilePhone
+})
+
+export const transformProfileParams = (values: ProfileFormValues): ProfileParams => ({
+  firstName: values.firstName.trim(),
+  lastName: values.lastName.trim(),
+  email: values.email.trim(),
+  birthDate: values.birthDate,
+  personalNumber: values.personalNumber,
+  gender: values.gender as Gender | null,
+  mobilePhone: values.phoneNumber
 })
 
 export const nullableFields: Array<keyof ProfileFormValues> = ['gender', 'birthDate', 'personalNumber', 'phoneNumber']

@@ -103,6 +103,12 @@ const useDatePicker = ({ value, min, max, onChange }: UseDatePickerParams) => {
     inputRef.current?.focus()
   }
 
+  const clear = () => {
+    onChange('')
+    close()
+    inputRef.current?.focus()
+  }
+
   const getDayState = (day: number) => {
     const iso = toIsoDate({ year: viewYear, month: viewMonth, day })
     return {
@@ -138,6 +144,7 @@ const useDatePicker = ({ value, min, max, onChange }: UseDatePickerParams) => {
     isMonthDisabled,
     selectYear,
     selectDay,
+    clear,
     getDayState
   }
 }

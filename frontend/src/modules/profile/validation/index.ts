@@ -1,6 +1,6 @@
 import { isValidEmail } from 'src/core/helpers/validators.ts'
 import { getTodayIso } from 'src/core/helpers/datePicker.ts'
-import { minBirthDate } from 'src/modules/profile/helpers'
+import { getMaxBirthDate, minBirthDate } from 'src/modules/profile/helpers'
 import type { ProfileFormErrors, ProfileFormValues } from 'src/modules/profile/store/profile.ts'
 
 const validateName = (value: string, requiredKey: string): string | undefined => {
@@ -12,6 +12,7 @@ const validateName = (value: string, requiredKey: string): string | undefined =>
 const validateBirthDate = (value: string | null): string | undefined => {
   if (!value) return 'validation.birthDateRequired'
   if (value < minBirthDate || value > getTodayIso()) return 'validation.birthDateInvalid'
+  if (value > getMaxBirthDate()) return 'validation.birthDateUnderage'
   return undefined
 }
 
