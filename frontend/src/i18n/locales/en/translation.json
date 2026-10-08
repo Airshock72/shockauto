@@ -27,6 +27,31 @@
     "welcome": "Welcome back, {{name}}",
     "subtitle": "Here's an overview of your account"
   },
+  "profile": {
+    "title": "Personal information",
+    "subtitle": "Manage your personal details and account settings",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "gender": "Gender",
+    "genders": {
+      "male": "Male",
+      "female": "Female"
+    },
+    "birthDate": "Date of birth",
+    "birthDatePlaceholder": "e.g. Sep 4, 1997",
+    "personalNumber": "Personal number",
+    "email": "Email",
+    "phoneNumber": "Phone number",
+    "changePassword": {
+      "title": "Change password",
+      "description": "Update your account password"
+    },
+    "deleteAccount": {
+      "title": "Delete account",
+      "description": "Permanently remove your account and data"
+    },
+    "save": "Save"
+  },
   "errors": {
     "default": "Something went wrong, please try again later",
     "tooManyRequests": "Too many requests, please try again later",
@@ -138,7 +163,12 @@
     "passwordRequired": "Password is required",
     "passwordWeak": "Password doesn't meet the requirements below",
     "repeatPasswordRequired": "Repeat your password",
-    "passwordsMismatch": "Passwords don't match"
+    "passwordsMismatch": "Passwords don't match",
+    "genderRequired": "Gender is required",
+    "birthDateRequired": "Date of birth is required",
+    "birthDateInvalid": "Enter a valid date of birth",
+    "personalNumberInvalid": "Personal number must be 11 digits",
+    "phoneNumberInvalid": "Phone number must be 9 digits"
   },
   "password": {
     "show": "Show password",
@@ -158,6 +188,14 @@
       "number": "One number",
       "special": "One symbol"
     }
+  },
+  "datePicker": {
+    "chooseYear": "Choose year",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "monthsShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "weekdays": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
   },
   "slider": {
     "label": "Featured cars",
