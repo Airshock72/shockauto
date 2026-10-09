@@ -14,6 +14,7 @@ export interface UserProfile {
   readonly values: ProfileFormValues
   readonly errors: ProfileFormErrors
   readonly isLoading: boolean
+  readonly isSubmitting: boolean
   readonly handleChange: (event: ChangeEvent<HTMLInputElement>) => void
   readonly handleBirthDateChange: (value: string) => void
   readonly handleSubmit: (event: SubmitEvent<HTMLFormElement>) => void

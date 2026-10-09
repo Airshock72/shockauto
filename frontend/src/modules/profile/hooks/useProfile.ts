@@ -22,7 +22,7 @@ const loadProfile = async (dispatch: Dispatch<ProfileActions>, isActive: () => b
 const useProfile = (): UserProfile => {
   const { t } = useTranslation()
   const [state, dispatch] = useProfileReducer()
-  const { values, errors, isSubmitted, formShaking, isLoading } = state
+  const { values, errors, isSubmitted, formShaking, isLoading, isSubmitting } = state
 
   useEffect(() => {
     let isActive = true
@@ -47,13 +47,15 @@ const useProfile = (): UserProfile => {
 
   const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (isLoading) return
+    if (isLoading || isSubmitting) return
 
     dispatch({ type: 'SET_SUBMITTED', payload: true })
 
     if (applyFormErrors(event.currentTarget, validateProfileForm(values), fieldOrder, dispatch)) return
 
+    dispatch({ type: 'SET_SUBMITTING', payload: true })
     const response = await AccountApi.updateProfile(transformProfileParams(values))
+    dispatch({ type: 'SET_SUBMITTING', payload: false })
     if (response.status !== ResponseStatuses.SUCCESS) return
 
     toast.success(t('profile.updateSuccess'))
@@ -71,6 +73,7 @@ const useProfile = (): UserProfile => {
     values,
     errors,
     isLoading,
+    isSubmitting,
     handleChange,
     handleBirthDateChange,
     handleSubmit,

@@ -22,7 +22,7 @@ export const genderOptions: Array<GenderOption> = [
 
 export const minBirthDate = '1900-01-01'
 
-export const minAge = 18
+export const minAge = 13
 
 export const getMaxBirthDate = (): string => getYearsAgoIso(minAge)
 

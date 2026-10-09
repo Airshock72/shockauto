@@ -32,7 +32,8 @@ const GenderSelect = ({ name, label, value, error, shake = false, onChange }: Ge
         aria-describedby={error ? messageId : undefined}
         className={cn(
           'relative grid h-11 grid-cols-2 gap-1 rounded-lg border border-input bg-card p-1 shadow-soft short:h-10',
-          'transition-[border-color] duration-200 ease-fluid hover:border-primary/40',
+          'transition-[border-color,opacity] duration-200 ease-fluid hover:border-primary/40',
+          'has-disabled:pointer-events-none has-disabled:opacity-60 has-disabled:shadow-none',
           error && 'border-destructive hover:border-destructive',
           shake && 'animate-shake'
         )}

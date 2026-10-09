@@ -170,7 +170,7 @@
     "genderRequired": "სქესი სავალდებულოა",
     "birthDateRequired": "დაბადების თარიღი სავალდებულოა",
     "birthDateInvalid": "შეიყვანეთ სწორი დაბადების თარიღი",
-    "birthDateUnderage": "ასაკი უნდა იყოს მინიმუმ 18 წელი",
+    "birthDateUnderage": "ასაკი უნდა იყოს მინიმუმ 13 წელი",
     "personalNumberInvalid": "პირადი ნომერი უნდა შედგებოდეს 11 ციფრისგან",
     "phoneNumberInvalid": "ტელეფონის ნომერი უნდა შედგებოდეს 9 ციფრისგან"
   },
