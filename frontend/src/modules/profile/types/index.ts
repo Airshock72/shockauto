@@ -1,6 +1,7 @@
 import type { AnimationEvent, ChangeEvent, ComponentProps, SubmitEvent } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import type { VariantProps } from 'class-variance-authority'
+import type { GUID } from 'src/api/types/apiGlobalTypes.ts'
 import type { actionCardVariants } from 'src/modules/profile/helpers'
 import type { ProfileFormErrors, ProfileFormValues } from 'src/modules/profile/store/profile.ts'
 import type { ChangePasswordFormErrors, ChangePasswordFormValues } from 'src/modules/profile/store/changePassword.ts'
@@ -12,6 +13,7 @@ export interface GenderOption {
 }
 
 export interface UserProfile {
+  readonly userId: GUID
   readonly values: ProfileFormValues
   readonly errors: ProfileFormErrors
   readonly isLoading: boolean
@@ -30,6 +32,7 @@ export interface UserProfile {
 }
 
 export interface DeleteAccountAlertProps {
+  readonly userId: GUID
   readonly isOpen: boolean
   readonly onClose: () => void
 }

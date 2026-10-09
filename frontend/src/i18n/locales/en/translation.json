@@ -71,7 +71,8 @@
     "tooManyRequests": "Too many requests, please try again later",
     "network": "Could not connect to the server, please check your internet connection",
     "authExpired": "Please sign in again",
-    "invalidCredentials": "No user was found with the provided credentials"
+    "invalidCredentials": "The provided credentials are incorrect, please check them and try again",
+    "accountDisabled": "This account has been deleted or deactivated"
   },
   "notFound": {
     "title": "Page Not Found",

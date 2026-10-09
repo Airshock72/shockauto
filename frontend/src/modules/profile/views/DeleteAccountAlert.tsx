@@ -3,9 +3,9 @@ import Alert from 'src/core/components/alerts/Alert.tsx'
 import useDeleteAccount from 'src/modules/profile/hooks/useDeleteAccount.ts'
 import type { DeleteAccountAlertProps } from 'src/modules/profile/types'
 
-const DeleteAccountAlert = ({ isOpen, onClose }: DeleteAccountAlertProps) => {
+const DeleteAccountAlert = ({ userId, isOpen, onClose }: DeleteAccountAlertProps) => {
   const { t } = useTranslation()
-  const { isDeleting, handleConfirm, handleAfterClose } = useDeleteAccount(onClose)
+  const { isDeleting, handleConfirm, handleAfterClose } = useDeleteAccount(userId, onClose)
 
   return (
     <Alert

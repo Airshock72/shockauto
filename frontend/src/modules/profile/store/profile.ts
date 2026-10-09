@@ -1,4 +1,5 @@
 import { type Dispatch, useReducer } from 'react'
+import type { GUID } from 'src/api/types/apiGlobalTypes.ts'
 
 export interface ProfileFormValues {
   readonly firstName: string
@@ -13,6 +14,7 @@ export interface ProfileFormValues {
 export type ProfileFormErrors = Partial<Record<keyof ProfileFormValues, string>>
 
 export interface ProfileStore {
+  readonly userId: GUID
   readonly values: ProfileFormValues
   readonly errors: ProfileFormErrors
   readonly isSubmitted: boolean
@@ -23,6 +25,7 @@ export interface ProfileStore {
   readonly isDeleteAccountOpen: boolean
 }
 
+export type SET_USER_ID = 'SET_USER_ID'
 export type SET_VALUES = 'SET_VALUES'
 export type SET_ERRORS = 'SET_ERRORS'
 export type SET_SUBMITTED = 'SET_SUBMITTED'
@@ -33,6 +36,7 @@ export type SET_CHANGE_PASSWORD_OPEN = 'SET_CHANGE_PASSWORD_OPEN'
 export type SET_DELETE_ACCOUNT_OPEN = 'SET_DELETE_ACCOUNT_OPEN'
 
 export type ProfileActions =
+  | { type: SET_USER_ID, readonly payload: GUID }
   | { type: SET_VALUES, readonly payload: ProfileFormValues }
   | { type: SET_ERRORS, readonly payload: ProfileFormErrors }
   | { type: SET_SUBMITTED, readonly payload: boolean }
@@ -43,6 +47,7 @@ export type ProfileActions =
   | { type: SET_DELETE_ACCOUNT_OPEN, readonly payload: boolean }
 
 const initialProfileStore: ProfileStore = {
+  userId: '',
   values: {
     firstName: '',
     lastName: '',
@@ -70,6 +75,11 @@ export const profileReducer = (
   action: ProfileActions
 ): ProfileStore => {
   switch (action.type) {
+  case 'SET_USER_ID':
+    return {
+      ...state,
+      userId: action.payload
+    }
   case 'SET_VALUES':
     return {
       ...state,

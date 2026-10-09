@@ -1,8 +1,9 @@
-import type { ResponseStatuses } from 'src/api/types/apiGlobalTypes.ts'
+import type { GUID, ResponseStatuses } from 'src/api/types/apiGlobalTypes.ts'
 
 export type Gender = 'Male' | 'Female'
 
 export interface Profile {
+    readonly userId: GUID
     readonly firstName: string
     readonly lastName: string
     readonly email: string
@@ -20,6 +21,10 @@ export interface ProfileParams {
     readonly personalNumber: string | null
     readonly gender: Gender | null
     readonly mobilePhone: string | null
+}
+
+export interface DeleteProfileParams {
+    readonly userId: GUID
 }
 
 export interface ChangePasswordParams {

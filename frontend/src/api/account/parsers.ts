@@ -8,6 +8,7 @@ export const parseProfile = (response: GlobalResponse): ProfileData => {
   try {
     return {
       data: {
+        userId: profile.userId ?? '',
         firstName: profile.firstName ?? '',
         lastName: profile.lastName ?? '',
         email: profile.email ?? '',

@@ -17,6 +17,7 @@ import DeleteAccountAlert from 'src/modules/profile/views/DeleteAccountAlert.tsx
 const IndexPage = () => {
   const { t } = useTranslation()
   const {
+    userId,
     values,
     errors,
     isLoading,
@@ -182,6 +183,7 @@ const IndexPage = () => {
       />
 
       <DeleteAccountAlert
+        userId={userId}
         isOpen={isDeleteAccountOpen}
         onClose={closeDeleteAccount}
       />

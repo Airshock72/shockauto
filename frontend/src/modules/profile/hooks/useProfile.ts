@@ -14,6 +14,7 @@ const loadProfile = async (dispatch: Dispatch<ProfileActions>, isActive: () => b
   if (!isActive()) return
 
   if (response.status === ResponseStatuses.SUCCESS && response.data) {
+    dispatch({ type: 'SET_USER_ID', payload: response.data.userId })
     dispatch({ type: 'SET_VALUES', payload: transformProfileToFormValues(response.data) })
   }
   dispatch({ type: 'SET_LOADING', payload: false })
@@ -23,6 +24,7 @@ const useProfile = (): UserProfile => {
   const { t } = useTranslation()
   const [state, dispatch] = useProfileReducer()
   const {
+    userId,
     values,
     errors,
     isSubmitted,
@@ -87,6 +89,7 @@ const useProfile = (): UserProfile => {
   const closeDeleteAccount = () => dispatch({ type: 'SET_DELETE_ACCOUNT_OPEN', payload: false })
 
   return {
+    userId,
     values,
     errors,
     isLoading,
