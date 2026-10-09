@@ -57,7 +57,11 @@
     },
     "deleteAccount": {
       "title": "Delete account",
-      "description": "Permanently remove your account and data"
+      "description": "Permanently remove your account and data",
+      "alertTitle": "Delete account",
+      "alertDescription": "Are you sure you want to delete your account? This action cannot be undone",
+      "confirm": "Delete",
+      "success": "Your account has been deleted successfully"
     },
     "save": "Save",
     "updateSuccess": "Personal information updated successfully"

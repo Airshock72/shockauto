@@ -12,6 +12,7 @@ import GenderSelect from 'src/modules/profile/views/GenderSelect.tsx'
 import ActionCard from 'src/modules/profile/views/ActionCard.tsx'
 import ProfileSkeleton from 'src/modules/profile/views/ProfileSkeleton.tsx'
 import ChangePasswordModal from 'src/modules/profile/views/ChangePasswordModal.tsx'
+import DeleteAccountAlert from 'src/modules/profile/views/DeleteAccountAlert.tsx'
 
 const IndexPage = () => {
   const { t } = useTranslation()
@@ -27,7 +28,10 @@ const IndexPage = () => {
     shouldShake,
     isChangePasswordOpen,
     openChangePassword,
-    closeChangePassword
+    closeChangePassword,
+    isDeleteAccountOpen,
+    openDeleteAccount,
+    closeDeleteAccount
   } = useProfile()
 
   if (isLoading) {
@@ -155,6 +159,8 @@ const IndexPage = () => {
                 icon={Trash}
                 title={t('profile.deleteAccount.title')}
                 description={t('profile.deleteAccount.description')}
+                aria-haspopup='dialog'
+                onClick={openDeleteAccount}
                 style={{ animationDelay: '250ms' }}
               />
             </div>
@@ -173,6 +179,11 @@ const IndexPage = () => {
       <ChangePasswordModal
         isOpen={isChangePasswordOpen}
         onClose={closeChangePassword}
+      />
+
+      <DeleteAccountAlert
+        isOpen={isDeleteAccountOpen}
+        onClose={closeDeleteAccount}
       />
     </main>
   )

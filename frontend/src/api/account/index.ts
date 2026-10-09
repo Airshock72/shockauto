@@ -12,6 +12,10 @@ export const updateProfile = (params: ProfileParams): Promise<GlobalResponse> =>
   return PrivateApi.put('/Account/Profile', params)
 }
 
+export const deleteProfile = (): Promise<GlobalResponse> => {
+  return PrivateApi.deleteItem('/Account/Profile')
+}
+
 export const changePassword = (params: ChangePasswordParams): Promise<GlobalResponse> => {
   return PrivateApi.put('/Account/ChangePassword', params)
 }

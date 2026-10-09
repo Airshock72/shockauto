@@ -14,7 +14,9 @@ export const getFocusableElements = (container: HTMLElement): Array<HTMLElement>
 }
 
 export const getInitialFocusTarget = (container: HTMLElement): HTMLElement => {
-  return container.querySelector<HTMLElement>('input:not([disabled])') ?? container
+  return container.querySelector<HTMLElement>('[data-autofocus]')
+    ?? container.querySelector<HTMLElement>('input:not([disabled])')
+    ?? container
 }
 
 export const trapFocus = (event: KeyboardEvent, container: HTMLElement) => {

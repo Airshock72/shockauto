@@ -29,7 +29,8 @@ const useProfile = (): UserProfile => {
     formShaking,
     isLoading,
     isSubmitting,
-    isChangePasswordOpen
+    isChangePasswordOpen,
+    isDeleteAccountOpen
   } = state
 
   useEffect(() => {
@@ -81,6 +82,10 @@ const useProfile = (): UserProfile => {
 
   const closeChangePassword = () => dispatch({ type: 'SET_CHANGE_PASSWORD_OPEN', payload: false })
 
+  const openDeleteAccount = () => dispatch({ type: 'SET_DELETE_ACCOUNT_OPEN', payload: true })
+
+  const closeDeleteAccount = () => dispatch({ type: 'SET_DELETE_ACCOUNT_OPEN', payload: false })
+
   return {
     values,
     errors,
@@ -93,7 +98,10 @@ const useProfile = (): UserProfile => {
     shouldShake,
     isChangePasswordOpen,
     openChangePassword,
-    closeChangePassword
+    closeChangePassword,
+    isDeleteAccountOpen,
+    openDeleteAccount,
+    closeDeleteAccount
   }
 }
 

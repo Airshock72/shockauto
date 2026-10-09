@@ -1,0 +1,35 @@
+@keyframes alert-icon-pop {
+  0% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+  60% { opacity: 1; transform: scale(1.15) rotate(6deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes alert-icon-wiggle {
+  0%, 70%, 100% { transform: rotate(0); }
+  74% { transform: rotate(-12deg); }
+  78% { transform: rotate(10deg); }
+  82% { transform: rotate(-8deg); }
+  86% { transform: rotate(6deg); }
+  90% { transform: rotate(-3deg); }
+}
+
+@keyframes alert-ring {
+  0% { opacity: 0.55; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+
+.alert-icon {
+  animation: alert-icon-pop 0.6s var(--ease-spring) 0.1s both;
+}
+
+.alert-icon > svg {
+  animation: alert-icon-wiggle 2.8s var(--ease-fluid) 0.8s infinite;
+}
+
+.alert-ring {
+  animation: alert-ring 2s var(--ease-fluid) 0.4s infinite;
+}
+
+.alert-ring-delayed {
+  animation: alert-ring 2s var(--ease-fluid) 1.4s infinite;
+}

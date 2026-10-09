@@ -24,6 +24,20 @@ export interface UserProfile {
   readonly isChangePasswordOpen: boolean
   readonly openChangePassword: () => void
   readonly closeChangePassword: () => void
+  readonly isDeleteAccountOpen: boolean
+  readonly openDeleteAccount: () => void
+  readonly closeDeleteAccount: () => void
+}
+
+export interface DeleteAccountAlertProps {
+  readonly isOpen: boolean
+  readonly onClose: () => void
+}
+
+export interface DeleteAccount {
+  readonly isDeleting: boolean
+  readonly handleConfirm: () => void
+  readonly handleAfterClose: () => void
 }
 
 export interface ChangePasswordModalProps {
