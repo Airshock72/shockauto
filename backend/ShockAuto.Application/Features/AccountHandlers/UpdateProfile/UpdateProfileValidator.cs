@@ -11,8 +11,8 @@ public class UpdateProfileValidator : AbstractValidator<UpdateProfileCommand>
         RuleFor(x => x.BirthDate)
             .NotNull()
             .NotEmpty()
-            .LessThanOrEqualTo(_ => DateOnly.FromDateTime(DateTime.UtcNow).AddYears(-18))
-            .WithMessage("You must be at least 18 years old.");
+            .LessThanOrEqualTo(_ => DateOnly.FromDateTime(DateTime.UtcNow).AddYears(-13))
+            .WithMessage("You must be at least 13 years old.");
         RuleFor(x => x.Gender).NotNull().NotEmpty().IsInEnum(); 
     }
 }
