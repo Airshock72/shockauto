@@ -3,6 +3,7 @@ import type { LucideIcon } from 'lucide-react'
 import type { VariantProps } from 'class-variance-authority'
 import type { actionCardVariants } from 'src/modules/profile/helpers'
 import type { ProfileFormErrors, ProfileFormValues } from 'src/modules/profile/store/profile.ts'
+import type { ChangePasswordFormErrors, ChangePasswordFormValues } from 'src/modules/profile/store/changePassword.ts'
 
 export interface GenderOption {
   readonly value: string
@@ -20,6 +21,26 @@ export interface UserProfile {
   readonly handleSubmit: (event: SubmitEvent<HTMLFormElement>) => void
   readonly handleFormAnimationEnd: (event: AnimationEvent<HTMLFormElement>) => void
   readonly shouldShake: (field: keyof ProfileFormValues) => boolean
+  readonly isChangePasswordOpen: boolean
+  readonly openChangePassword: () => void
+  readonly closeChangePassword: () => void
+}
+
+export interface ChangePasswordModalProps {
+  readonly isOpen: boolean
+  readonly onClose: () => void
+}
+
+export interface ChangePassword {
+  readonly formId: string
+  readonly values: ChangePasswordFormValues
+  readonly errors: ChangePasswordFormErrors
+  readonly isSubmitting: boolean
+  readonly handleChange: (event: ChangeEvent<HTMLInputElement>) => void
+  readonly handleSubmit: (event: SubmitEvent<HTMLFormElement>) => void
+  readonly handleFormAnimationEnd: (event: AnimationEvent<HTMLFormElement>) => void
+  readonly shouldShake: (field: keyof ChangePasswordFormValues) => boolean
+  readonly reset: () => void
 }
 
 export interface ActionCardProps extends ComponentProps<'button'>, VariantProps<typeof actionCardVariants> {

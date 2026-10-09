@@ -1,6 +1,7 @@
 import { Mars, Venus } from 'lucide-react'
 import { cva } from 'class-variance-authority'
 import type { ProfileFormValues } from 'src/modules/profile/store/profile.ts'
+import type { ChangePasswordFormValues } from 'src/modules/profile/store/changePassword.ts'
 import type { Gender, Profile, ProfileParams } from 'src/api/account/types.ts'
 import type { GenderOption } from 'src/modules/profile/types'
 import { getYearsAgoIso } from 'src/core/helpers/datePicker.ts'
@@ -14,6 +15,8 @@ export const fieldOrder: Array<keyof ProfileFormValues> = [
   'email',
   'phoneNumber'
 ]
+
+export const changePasswordFieldOrder: Array<keyof ChangePasswordFormValues> = ['newPassword', 'repeatPassword']
 
 export const genderOptions: Array<GenderOption> = [
   { value: 'Male', label: 'profile.genders.male', icon: Mars },

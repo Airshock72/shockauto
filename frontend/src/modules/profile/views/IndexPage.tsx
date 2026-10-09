@@ -11,6 +11,7 @@ import { getMaxBirthDate, minBirthDate } from 'src/modules/profile/helpers'
 import GenderSelect from 'src/modules/profile/views/GenderSelect.tsx'
 import ActionCard from 'src/modules/profile/views/ActionCard.tsx'
 import ProfileSkeleton from 'src/modules/profile/views/ProfileSkeleton.tsx'
+import ChangePasswordModal from 'src/modules/profile/views/ChangePasswordModal.tsx'
 
 const IndexPage = () => {
   const { t } = useTranslation()
@@ -23,7 +24,10 @@ const IndexPage = () => {
     handleBirthDateChange,
     handleSubmit,
     handleFormAnimationEnd,
-    shouldShake
+    shouldShake,
+    isChangePasswordOpen,
+    openChangePassword,
+    closeChangePassword
   } = useProfile()
 
   if (isLoading) {
@@ -142,6 +146,8 @@ const IndexPage = () => {
                 icon={KeyRound}
                 title={t('profile.changePassword.title')}
                 description={t('profile.changePassword.description')}
+                aria-haspopup='dialog'
+                onClick={openChangePassword}
                 style={{ animationDelay: '150ms' }}
               />
               <ActionCard
@@ -163,6 +169,11 @@ const IndexPage = () => {
           </fieldset>
         </form>
       </Card>
+
+      <ChangePasswordModal
+        isOpen={isChangePasswordOpen}
+        onClose={closeChangePassword}
+      />
     </main>
   )
 }

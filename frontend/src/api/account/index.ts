@@ -1,5 +1,5 @@
 import * as PrivateApi from 'src/api/privateRequest'
-import type { ProfileData, ProfileParams } from 'src/api/account/types.ts'
+import type { ChangePasswordParams, ProfileData, ProfileParams } from 'src/api/account/types.ts'
 import type { GlobalResponse } from 'src/api/types/apiGlobalTypes.ts'
 import { parseProfile } from 'src/api/account/parsers.ts'
 
@@ -10,4 +10,8 @@ export const getProfile = async (): Promise<ProfileData> => {
 
 export const updateProfile = (params: ProfileParams): Promise<GlobalResponse> => {
   return PrivateApi.put('/Account/Profile', params)
+}
+
+export const changePassword = (params: ChangePasswordParams): Promise<GlobalResponse> => {
+  return PrivateApi.put('/Account/ChangePassword', params)
 }

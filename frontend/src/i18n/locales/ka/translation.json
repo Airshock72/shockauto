@@ -3,6 +3,8 @@
     "loading": "იტვირთება...",
     "or": "ან",
     "clear": "გასუფთავება",
+    "cancel": "გაუქმება",
+    "close": "დახურვა",
     "changeLanguage": "ენის შეცვლა"
   },
   "header": {
@@ -45,7 +47,13 @@
     "phoneNumber": "ტელეფონის ნომერი",
     "changePassword": {
       "title": "პაროლის შეცვლა",
-      "description": "განაახლეთ თქვენი ანგარიშის პაროლი"
+      "description": "განაახლეთ თქვენი ანგარიშის პაროლი",
+      "newPassword": "ახალი პაროლი",
+      "newPasswordPlaceholder": "შეიყვანეთ ახალი პაროლი",
+      "repeatPassword": "გაიმეორეთ ახალი პაროლი",
+      "repeatPasswordPlaceholder": "გაიმეორეთ თქვენი ახალი პაროლი",
+      "submit": "განახლება",
+      "success": "თქვენი პაროლი წარმატებით განახლდა"
     },
     "deleteAccount": {
       "title": "ანგარიშის წაშლა",

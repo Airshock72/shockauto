@@ -22,6 +22,10 @@ export interface ProfileParams {
     readonly mobilePhone: string | null
 }
 
+export interface ChangePasswordParams {
+    readonly newPassword: string
+}
+
 export interface ProfileData {
     readonly data: Profile | null
     readonly status: ResponseStatuses

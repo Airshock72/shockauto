@@ -3,6 +3,8 @@
     "loading": "Loading...",
     "or": "or",
     "clear": "Clear",
+    "cancel": "Cancel",
+    "close": "Close",
     "changeLanguage": "Change language"
   },
   "header": {
@@ -45,7 +47,13 @@
     "phoneNumber": "Phone number",
     "changePassword": {
       "title": "Change password",
-      "description": "Update your account password"
+      "description": "Update your account password",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "Enter a new password",
+      "repeatPassword": "Repeat new password",
+      "repeatPasswordPlaceholder": "Repeat your new password",
+      "submit": "Update",
+      "success": "Your password has been updated successfully"
     },
     "deleteAccount": {
       "title": "Delete account",

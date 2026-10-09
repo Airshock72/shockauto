@@ -1,7 +1,8 @@
-import { isValidEmail } from 'src/core/helpers/validators.ts'
+import { isStrongPassword, isValidEmail } from 'src/core/helpers/validators.ts'
 import { getTodayIso } from 'src/core/helpers/datePicker.ts'
 import { getMaxBirthDate, minBirthDate } from 'src/modules/profile/helpers'
 import type { ProfileFormErrors, ProfileFormValues } from 'src/modules/profile/store/profile.ts'
+import type { ChangePasswordFormErrors, ChangePasswordFormValues } from 'src/modules/profile/store/changePassword.ts'
 
 const validateName = (value: string, requiredKey: string): string | undefined => {
   if (!value.trim()) return requiredKey
@@ -31,6 +32,18 @@ export const validateProfileForm = (values: ProfileFormValues): ProfileFormError
   else if (!isValidEmail(values.email)) errors.email = 'validation.emailInvalid'
 
   if (values.phoneNumber && !/^\d{9}$/.test(values.phoneNumber)) errors.phoneNumber = 'validation.phoneNumberInvalid'
+
+  return errors
+}
+
+export const validateChangePasswordForm = (values: ChangePasswordFormValues): ChangePasswordFormErrors => {
+  const errors: ChangePasswordFormErrors = {}
+
+  if (!values.newPassword) errors.newPassword = 'validation.passwordRequired'
+  else if (!isStrongPassword(values.newPassword)) errors.newPassword = 'validation.passwordWeak'
+
+  if (!values.repeatPassword) errors.repeatPassword = 'validation.repeatPasswordRequired'
+  else if (values.repeatPassword !== values.newPassword) errors.repeatPassword = 'validation.passwordsMismatch'
 
   return errors
 }

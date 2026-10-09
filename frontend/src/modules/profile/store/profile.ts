@@ -19,6 +19,7 @@ export interface ProfileStore {
   readonly formShaking: boolean
   readonly isLoading: boolean
   readonly isSubmitting: boolean
+  readonly isChangePasswordOpen: boolean
 }
 
 export type SET_VALUES = 'SET_VALUES'
@@ -27,6 +28,7 @@ export type SET_SUBMITTED = 'SET_SUBMITTED'
 export type SET_FORM_SHAKING = 'SET_FORM_SHAKING'
 export type SET_LOADING = 'SET_LOADING'
 export type SET_SUBMITTING = 'SET_SUBMITTING'
+export type SET_CHANGE_PASSWORD_OPEN = 'SET_CHANGE_PASSWORD_OPEN'
 
 export type ProfileActions =
   | { type: SET_VALUES, readonly payload: ProfileFormValues }
@@ -35,6 +37,7 @@ export type ProfileActions =
   | { type: SET_FORM_SHAKING, readonly payload: boolean }
   | { type: SET_LOADING, readonly payload: boolean }
   | { type: SET_SUBMITTING, readonly payload: boolean }
+  | { type: SET_CHANGE_PASSWORD_OPEN, readonly payload: boolean }
 
 const initialProfileStore: ProfileStore = {
   values: {
@@ -50,7 +53,8 @@ const initialProfileStore: ProfileStore = {
   isSubmitted: false,
   formShaking: false,
   isLoading: true,
-  isSubmitting: false
+  isSubmitting: false,
+  isChangePasswordOpen: false
 }
 
 export const useProfileReducer = (): [ProfileStore, Dispatch<ProfileActions>] => {
@@ -91,6 +95,11 @@ export const profileReducer = (
     return {
       ...state,
       isSubmitting: action.payload
+    }
+  case 'SET_CHANGE_PASSWORD_OPEN':
+    return {
+      ...state,
+      isChangePasswordOpen: action.payload
     }
   default:
     return state

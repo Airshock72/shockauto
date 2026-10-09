@@ -22,7 +22,15 @@ const loadProfile = async (dispatch: Dispatch<ProfileActions>, isActive: () => b
 const useProfile = (): UserProfile => {
   const { t } = useTranslation()
   const [state, dispatch] = useProfileReducer()
-  const { values, errors, isSubmitted, formShaking, isLoading, isSubmitting } = state
+  const {
+    values,
+    errors,
+    isSubmitted,
+    formShaking,
+    isLoading,
+    isSubmitting,
+    isChangePasswordOpen
+  } = state
 
   useEffect(() => {
     let isActive = true
@@ -69,6 +77,10 @@ const useProfile = (): UserProfile => {
 
   const shouldShake = (field: keyof ProfileFormValues) => formShaking && Boolean(errors[field])
 
+  const openChangePassword = () => dispatch({ type: 'SET_CHANGE_PASSWORD_OPEN', payload: true })
+
+  const closeChangePassword = () => dispatch({ type: 'SET_CHANGE_PASSWORD_OPEN', payload: false })
+
   return {
     values,
     errors,
@@ -78,7 +90,10 @@ const useProfile = (): UserProfile => {
     handleBirthDateChange,
     handleSubmit,
     handleFormAnimationEnd,
-    shouldShake
+    shouldShake,
+    isChangePasswordOpen,
+    openChangePassword,
+    closeChangePassword
   }
 }
 
