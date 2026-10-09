@@ -8,7 +8,7 @@ public class User
     public required string Email { get; init; }
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
-    public required string PasswordHash { get; init; }
+    public required string PasswordHash { get; set; }
     
     public DateOnly? DateOfBirth { get; set; }
     public string? PersonalNumber { get; set; }
