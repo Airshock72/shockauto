@@ -21,8 +21,10 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
 
     public async ValueTask<Result> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
     {
-        User user = (await _userRepository.Get(request.UserId, cancellationToken))!;
-        
+        User? user = await _userRepository.Get(request.UserId, cancellationToken);
+        if (user is null)
+            return Result.NotFound("accountDisabled");
+
         user.PasswordHash = _passwordHasher.HashPassword(request.NewPassword);
         
         await _unitOfWork.Commit(cancellationToken);

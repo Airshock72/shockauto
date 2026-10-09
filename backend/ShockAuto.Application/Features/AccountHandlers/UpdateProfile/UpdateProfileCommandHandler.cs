@@ -19,7 +19,9 @@ public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand,
 
     public async ValueTask<Result> Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
     {
-        User user = (await _userRepository.Get(request.UserId, cancellationToken))!;
+        User? user = await _userRepository.Get(request.UserId, cancellationToken);
+        if (user is null)
+            return Result.NotFound("accountDisabled");
         
         user.FirstName = request.FirstName;
         user.LastName = request.LastName;

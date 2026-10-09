@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using ShockAuto.Api.Extensions;
 using ShockAuto.Api.Middleware;
+using ShockAuto.Application.Interfaces.Services;
 
 namespace ShockAuto.Api;
 

@@ -16,7 +16,10 @@ public class GetProfileQueryHandler : IRequestHandler<GetProfileQuery, Result>
 
     public async ValueTask<Result> Handle(GetProfileQuery request, CancellationToken cancellationToken)
     {
-        User user = (await _userRepository.Get(request.UserId, cancellationToken))!;
+        User? user = await _userRepository.Get(request.UserId, cancellationToken);
+        if (user is null)
+            return Result.NotFound("accountDisabled");
+        
         GetProfileResponse response = new()
         {
             UserId = user.Id,

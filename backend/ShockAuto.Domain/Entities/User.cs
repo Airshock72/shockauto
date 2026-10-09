@@ -14,4 +14,6 @@ public class User
     public string? PersonalNumber { get; set; }
     public Gender? Gender { get; set; }
     public string? MobilePhone { get; set; }
+
+    public bool IsDeleted { get; set; } = false;
 }

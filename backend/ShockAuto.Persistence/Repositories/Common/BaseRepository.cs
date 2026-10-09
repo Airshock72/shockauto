@@ -8,7 +8,7 @@ internal abstract class BaseRepository<T, TKey>(AppDbContext context) : IBaseRep
 {
     protected readonly AppDbContext _context = context;
     
-    public async Task<T?> Get(TKey id, CancellationToken cancellationToken = default)
+    public virtual async Task<T?> Get(TKey id, CancellationToken cancellationToken = default)
     {
         return await _context.Set<T>().FindAsync([id], cancellationToken);
     }

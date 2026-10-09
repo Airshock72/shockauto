@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShockAuto.Api.Extensions;
 using ShockAuto.Application.Common;
 using ShockAuto.Application.Features.AccountHandlers.ChangePassword;
+using ShockAuto.Application.Features.AccountHandlers.DeleteProfile;
 using ShockAuto.Application.Features.AccountHandlers.GetProfile;
 using ShockAuto.Application.Features.AccountHandlers.UpdateProfile;
 
@@ -51,6 +52,17 @@ public class AccountController : ControllerBase
     {
         User.SetClaims(command);
 
+        Result result = await _sender.Send(command, cancellationToken);
+        return StatusCode(result.StatusCode, result.Data);
+    }
+
+    [HttpDelete("Profile")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> DeleteProfile(DeleteProfileCommand command, CancellationToken cancellationToken)
+    {
+        User.SetClaims(command);
+        
         Result result = await _sender.Send(command, cancellationToken);
         return StatusCode(result.StatusCode, result.Data);
     }

@@ -30,7 +30,10 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, Result>
 
         if (user is null || !_passwordHasher.VerifyHashedPassword(request.Password, user.PasswordHash))
             return Result.NotFound("invalidCredentials");
-        
+
+        if (user.IsDeleted)
+            return Result.Forbidden("accountDisabled");
+
         Claim[] userClaims = [new(ClaimTypes.Email, request.Email)];
         
         string accessToken = _jwtService.CreateToken(user.Id, false, userClaims);
