@@ -66,13 +66,57 @@
     "save": "Save",
     "updateSuccess": "Personal information updated successfully"
   },
+  "applications": {
+    "title": "Create application",
+    "subtitle": "Fill in the details and publish your listing",
+    "categoryLabel": "Vehicle type",
+    "stepsLabel": "Application steps",
+    "sectionPlaceholder": "Fields will appear here soon",
+    "categories": {
+      "car": "Car",
+      "specialEquipment": "Special equipment",
+      "motorcycle": "Motorcycle"
+    },
+    "steps": {
+      "characteristics": {
+        "title": "Main characteristics",
+        "description": "Make, model, year and specifications"
+      },
+      "location": {
+        "title": "Location",
+        "description": "Where the vehicle is located"
+      },
+      "media": {
+        "title": "Photo / Video",
+        "description": "Upload photos and videos"
+      },
+      "price": {
+        "title": "Price",
+        "description": "Set the price and currency"
+      },
+      "contact": {
+        "title": "Contact",
+        "description": "How buyers can reach you"
+      }
+    },
+    "specs": {
+      "engine": "Engine",
+      "mileage": "Mileage",
+      "transmission": "Transmission",
+      "steeringWheel": "Steering wheel",
+      "color": "Color"
+    },
+    "preview": {
+      "noImage": "No photo yet"
+    }
+  },
   "errors": {
     "default": "Something went wrong, please try again later",
     "tooManyRequests": "Too many requests, please try again later",
     "network": "Could not connect to the server, please check your internet connection",
     "authExpired": "Please sign in again",
     "invalidCredentials": "The provided credentials are incorrect, please check them and try again",
-    "accountDisabled": "This account has been deleted or deactivated"
+    "accountDisabled": "This account has been deleted or deactivated. Please contact administrator for assistance"
   },
   "notFound": {
     "title": "Page Not Found",

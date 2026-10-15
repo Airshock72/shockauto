@@ -6,7 +6,7 @@ import TextInput from 'src/core/components/inputs/TextInput.tsx'
 import PasswordStrength from 'src/core/components/inputs/PasswordStrength.tsx'
 import Button from 'src/core/components/buttons/Button.tsx'
 import Divider from 'src/core/components/dividers/Divider.tsx'
-import GoogleIcon from 'src/core/components/icons/GoogleIcon.tsx'
+import GoogleIcon from 'src/assets/media/svgs/google.svg?react'
 import CarShowcase from 'src/modules/auth/register/views/CarShowcase.tsx'
 import useRegister from 'src/modules/auth/register/hooks/useRegister.ts'
 import useCarAccent from 'src/core/hooks/useCarAccent.ts'
@@ -112,7 +112,7 @@ const Register = () => {
 
           <Divider label={t('common.or')} className='my-6 short:my-1.5 tight:my-1' />
 
-          <Button variant='outline' size='lg' fullWidth leftIcon={<GoogleIcon />} className='short:h-10'
+          <Button variant='outline' size='lg' fullWidth leftIcon={<GoogleIcon aria-hidden='true' />} className='short:h-10'
           >{t('register.google')}
           </Button>
 
