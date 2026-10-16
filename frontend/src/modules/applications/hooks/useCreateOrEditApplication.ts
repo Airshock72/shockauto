@@ -1,9 +1,12 @@
+import type { ID } from 'src/api/types/apiGlobalTypes.ts'
+import useManufacturers from 'src/modules/lists/manufacturers/hooks/useManufacturers.ts'
 import { useCreateOrEditApplicationReducer } from 'src/modules/applications/store/createOrEditApplication.ts'
 import type { ApplicationCategory, ApplicationStep, CreateOrEditApplication } from 'src/modules/applications/types'
 
 const useCreateOrEditApplication = (): CreateOrEditApplication => {
   const [state, dispatch] = useCreateOrEditApplicationReducer()
-  const { category, activeStep, expandedSteps, preview } = state
+  const { category, activeStep, expandedSteps, preview, values } = state
+  const manufacturers = useManufacturers()
 
   const changeCategory = (value: ApplicationCategory) => {
     if (value === category) return
@@ -19,14 +22,21 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
     dispatch({ type: 'TOGGLE_STEP', payload: step })
   }
 
+  const handleManufacturerChange = (manufacturerId: ID | null) => {
+    dispatch({ type: 'SET_VALUES', payload: { ...values, manufacturerId } })
+  }
+
   return {
     category,
     activeStep,
     expandedSteps,
     preview,
+    values,
+    manufacturers,
     changeCategory,
     selectStep,
-    toggleStep
+    toggleStep,
+    handleManufacturerChange
   }
 }
 

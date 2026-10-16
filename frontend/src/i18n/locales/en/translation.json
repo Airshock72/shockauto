@@ -7,6 +7,9 @@
     "close": "Close",
     "changeLanguage": "Change language"
   },
+  "select": {
+    "noOptions": "No results found"
+  },
   "header": {
     "tagline": "Find your perfect car",
     "menu": "Main menu",
@@ -72,6 +75,10 @@
     "categoryLabel": "Vehicle type",
     "stepsLabel": "Application steps",
     "sectionPlaceholder": "Fields will appear here soon",
+    "fields": {
+      "manufacturer": "Manufacturer",
+      "manufacturerPlaceholder": "Select manufacturer"
+    },
     "categories": {
       "car": "Car",
       "specialEquipment": "Special equipment",

@@ -7,6 +7,9 @@
     "close": "დახურვა",
     "changeLanguage": "ენის შეცვლა"
   },
+  "select": {
+    "noOptions": "მონაცემები ვერ მოიძებნა"
+  },
   "header": {
     "tagline": "იპოვე შენი იდეალური ავტომობილი",
     "menu": "მთავარი მენიუ",
@@ -72,6 +75,10 @@
     "categoryLabel": "ტრანსპორტის ტიპი",
     "stepsLabel": "განცხადების ეტაპები",
     "sectionPlaceholder": "ველები მალე დაემატება",
+    "fields": {
+      "manufacturer": "მწარმოებელი",
+      "manufacturerPlaceholder": "აირჩიეთ მწარმოებელი"
+    },
     "categories": {
       "car": "ავტომობილი",
       "specialEquipment": "სპეცტექნიკა",

@@ -12,7 +12,7 @@ const ExpandableSection = ({ index, step, isExpanded, isActive, onToggle, childr
     <section
       id={`application-step-${value}`}
       className={cn(
-        'scroll-mt-24 animate-fade-up overflow-hidden rounded-xl border bg-card/60 shadow-soft',
+        'relative scroll-mt-24 animate-fade-up rounded-xl border bg-card/60 shadow-soft focus-within:z-10',
         'transition-[border-color,box-shadow,background-color] duration-300 ease-fluid',
         isActive ? 'border-primary/40 bg-card shadow-glow' : 'hover:border-primary/25'
       )}
@@ -58,7 +58,12 @@ const ExpandableSection = ({ index, step, isExpanded, isActive, onToggle, childr
           isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
         )}
       >
-        <div className='min-h-0'>
+        <div
+          className={cn(
+            'min-h-0 transition-discrete',
+            isExpanded ? 'overflow-visible transition-[overflow] delay-400' : 'overflow-hidden'
+          )}
+        >
           <div className='border-t px-4 py-5 sm:px-5'>
             {children ?? (
               <div className='flex min-h-24 items-center justify-center rounded-lg border border-dashed text-xs text-muted-foreground'>

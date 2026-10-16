@@ -8,6 +8,8 @@ import ApplicationStepper from 'src/modules/applications/views/ApplicationSteppe
 import ApplicationPreviewCard from 'src/modules/applications/views/ApplicationPreviewCard.tsx'
 import CategoryTabs from 'src/modules/applications/views/CategoryTabs.tsx'
 import ExpandableSection from 'src/modules/applications/views/ExpandableSection.tsx'
+import CharacteristicsFields from 'src/modules/applications/views/CharacteristicsFields.tsx'
+import { ApplicationStep } from 'src/modules/applications/types'
 
 const CreateOrEditApplication = () => {
   const { t } = useTranslation()
@@ -16,9 +18,12 @@ const CreateOrEditApplication = () => {
     activeStep,
     expandedSteps,
     preview,
+    values,
+    manufacturers,
     changeCategory,
     selectStep,
-    toggleStep
+    toggleStep,
+    handleManufacturerChange
   } = useCreateOrEditApplication()
 
   return (
@@ -56,7 +61,15 @@ const CreateOrEditApplication = () => {
                 isActive={step.value === activeStep}
                 isExpanded={expandedSteps.includes(step.value)}
                 onToggle={toggleStep}
-              />
+              >
+                {step.value === ApplicationStep.Characteristics && (
+                  <CharacteristicsFields
+                    values={values}
+                    manufacturers={manufacturers}
+                    onManufacturerChange={handleManufacturerChange}
+                  />
+                )}
+              </ExpandableSection>
             ))}
           </div>
         </Card>

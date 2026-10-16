@@ -1,5 +1,8 @@
 import type { ComponentProps, ComponentType, ReactNode, RefObject } from 'react'
 import type { LucideIcon } from 'lucide-react'
+import type { ID } from 'src/api/types/apiGlobalTypes.ts'
+import type { Manufacturers } from 'src/modules/lists/manufacturers/types'
+import type { ApplicationFormValues } from 'src/modules/applications/store/createOrEditApplication.ts'
 
 export enum ApplicationCategory {
   Car = 'Car',
@@ -56,9 +59,18 @@ export interface CreateOrEditApplication {
   readonly activeStep: ApplicationStep
   readonly expandedSteps: ReadonlyArray<ApplicationStep>
   readonly preview: ApplicationPreview
+  readonly values: ApplicationFormValues
+  readonly manufacturers: Manufacturers
   readonly changeCategory: (category: ApplicationCategory) => void
   readonly selectStep: (step: ApplicationStep) => void
   readonly toggleStep: (step: ApplicationStep) => void
+  readonly handleManufacturerChange: (manufacturerId: ID | null) => void
+}
+
+export interface CharacteristicsFieldsProps {
+  readonly values: ApplicationFormValues
+  readonly manufacturers: Manufacturers
+  readonly onManufacturerChange: (manufacturerId: ID | null) => void
 }
 
 export interface ApplicationStepperProps {
