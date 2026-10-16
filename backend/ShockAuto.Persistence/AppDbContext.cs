@@ -6,6 +6,8 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
 {
     public DbSet<User> Users { get; set; }
     
+    public DbSet<Manufacturer> Manufacturers { get; set; }
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseLazyLoadingProxies();

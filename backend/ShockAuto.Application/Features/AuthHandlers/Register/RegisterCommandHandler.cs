@@ -1,5 +1,6 @@
 ﻿using Mediator;
 using ShockAuto.Application.Common;
+using ShockAuto.Application.Interfaces.Repositories;
 using ShockAuto.Application.Interfaces.Repositories.Common;
 using ShockAuto.Application.Interfaces.Services;
 using ShockAuto.Domain.Entities;

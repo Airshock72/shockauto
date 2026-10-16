@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ShockAuto.Application.Interfaces.Repositories;
 using ShockAuto.Application.Interfaces.Repositories.Common;
 using ShockAuto.Persistence.Repositories;
 using ShockAuto.Persistence.Repositories.Common;
@@ -20,6 +21,8 @@ public static class DependencyInjection
         //Repositories
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
 
         return services;
     }

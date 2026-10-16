@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShockAuto.Application.Interfaces.Repositories;
 using ShockAuto.Application.Interfaces.Repositories.Common;
 using ShockAuto.Domain.Entities;
 using ShockAuto.Persistence.Repositories.Common;
