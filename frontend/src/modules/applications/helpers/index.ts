@@ -71,7 +71,7 @@ export const getStepIndex = (step: ApplicationStep): number =>
 export const dustPuffCount = 5
 
 export const stepRequiredFields: Record<ApplicationStep, Array<keyof ApplicationFormValues>> = {
-  [ApplicationStep.Characteristics]: ['manufacturerId'],
+  [ApplicationStep.Characteristics]: ['manufacturerId', 'modelId'],
   [ApplicationStep.Location]: [],
   [ApplicationStep.Media]: [],
   [ApplicationStep.Price]: [],

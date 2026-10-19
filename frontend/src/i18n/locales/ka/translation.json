@@ -80,7 +80,10 @@
     },
     "fields": {
       "manufacturer": "მწარმოებელი",
-      "manufacturerPlaceholder": "აირჩიეთ მწარმოებელი"
+      "manufacturerPlaceholder": "აირჩიეთ მწარმოებელი",
+      "model": "მოდელი",
+      "modelPlaceholder": "აირჩიეთ მოდელი",
+      "modelHint": "გთხოვთ აირჩიოთ მწარმოებელი პირველ რიგში"
     },
     "categories": {
       "car": "ავტომობილი",

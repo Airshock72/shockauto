@@ -2,6 +2,7 @@ import type { ComponentProps, ComponentType, ReactNode, RefObject } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import type { ID } from 'src/api/types/apiGlobalTypes.ts'
 import type { Manufacturers } from 'src/modules/lists/manufacturers/types'
+import type { Models } from 'src/modules/lists/models/types'
 import type { ApplicationFormValues } from 'src/modules/applications/store/createOrEditApplication.ts'
 
 export enum ApplicationCategory {
@@ -67,16 +68,20 @@ export interface CreateOrEditApplication {
   readonly values: ApplicationFormValues
   readonly stepProgress: Record<ApplicationStep, StepProgress>
   readonly manufacturers: Manufacturers
+  readonly models: Models
   readonly changeCategory: (category: ApplicationCategory) => void
   readonly selectStep: (step: ApplicationStep) => void
   readonly toggleStep: (step: ApplicationStep) => void
   readonly handleManufacturerChange: (manufacturerId: ID | null) => void
+  readonly handleModelChange: (modelId: ID | null) => void
 }
 
 export interface CharacteristicsFieldsProps {
   readonly values: ApplicationFormValues
   readonly manufacturers: Manufacturers
+  readonly models: Models
   readonly onManufacturerChange: (manufacturerId: ID | null) => void
+  readonly onModelChange: (modelId: ID | null) => void
 }
 
 export interface ApplicationStepperProps {

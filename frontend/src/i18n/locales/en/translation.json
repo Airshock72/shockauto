@@ -80,7 +80,10 @@
     },
     "fields": {
       "manufacturer": "Manufacturer",
-      "manufacturerPlaceholder": "Select manufacturer"
+      "manufacturerPlaceholder": "Select manufacturer",
+      "model": "Model",
+      "modelPlaceholder": "Select model",
+      "modelHint": "Please select a manufacturer first"
     },
     "categories": {
       "car": "Car",

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { cn } from 'src/core/lib/utils'
 import type { SelectOption } from 'src/core/types/select.ts'
 import useSelect from 'src/core/hooks/inputs/select.ts'
+import InputHint from 'src/core/components/inputs/InputHint.tsx'
 
 interface SelectProps<T> {
   readonly name: string
@@ -12,6 +13,7 @@ interface SelectProps<T> {
   readonly id?: string
   readonly label?: string
   readonly placeholder?: string
+  readonly hint?: string
   readonly error?: string
   readonly required?: boolean
   readonly disabled?: boolean
@@ -29,6 +31,7 @@ const Select = <T, >({
   id,
   label,
   placeholder,
+  hint,
   error,
   required = false,
   disabled = false,
@@ -113,13 +116,15 @@ const Select = <T, >({
             'focus-visible:border-primary focus-visible:ring-4 focus-visible:ring-primary/15',
             'disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:shadow-none disabled:hover:border-input',
             'aria-invalid:border-destructive aria-invalid:hover:border-destructive aria-invalid:focus-visible:ring-destructive/15',
-            isClearable ? 'pr-18' : 'pr-11',
+            isClearable && hint ? 'pr-26' : isClearable || hint ? 'pr-18' : 'pr-11',
             selectedIcon && 'pl-11',
             isOpen && 'cursor-text border-primary ring-4 ring-primary/15'
           )}
         />
 
         <div className='pointer-events-none absolute inset-y-0 right-1.5 flex items-center gap-0.5'>
+          {hint && <InputHint text={hint} />}
+
           {isClearable && (
             <button
               type='button'

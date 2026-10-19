@@ -21,10 +21,12 @@ const CreateOrEditApplication = () => {
     values,
     stepProgress,
     manufacturers,
+    models,
     changeCategory,
     selectStep,
     toggleStep,
-    handleManufacturerChange
+    handleManufacturerChange,
+    handleModelChange
   } = useCreateOrEditApplication()
 
   return (
@@ -72,7 +74,9 @@ const CreateOrEditApplication = () => {
                   <CharacteristicsFields
                     values={values}
                     manufacturers={manufacturers}
+                    models={models}
                     onManufacturerChange={handleManufacturerChange}
+                    onModelChange={handleModelChange}
                   />
                 )}
               </ExpandableSection>

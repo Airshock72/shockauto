@@ -3,7 +3,7 @@ import Select from 'src/core/components/inputs/Select.tsx'
 import type { CharacteristicsFieldsProps } from 'src/modules/applications/types'
 import { featuredManufacturerIds } from 'src/modules/lists/manufacturers/helpers'
 
-const CharacteristicsFields = ({ values, manufacturers, onManufacturerChange }: CharacteristicsFieldsProps) => {
+const CharacteristicsFields = ({ values, manufacturers, models, onManufacturerChange, onModelChange }: CharacteristicsFieldsProps) => {
   const { t } = useTranslation()
 
   return (
@@ -19,6 +19,18 @@ const CharacteristicsFields = ({ values, manufacturers, onManufacturerChange }: 
         loading={manufacturers.isLoading}
         disabled={manufacturers.isLoading}
         onValueChange={onManufacturerChange}
+      />
+      <Select
+        required
+        name='modelId'
+        label={t('applications.fields.model')}
+        placeholder={t('applications.fields.modelPlaceholder')}
+        hint={values.modelId === null ? t('applications.fields.modelHint') : undefined}
+        value={values.modelId}
+        options={models.options}
+        loading={models.isLoading}
+        disabled={values.manufacturerId === null}
+        onValueChange={onModelChange}
       />
     </div>
   )
