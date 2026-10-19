@@ -3,7 +3,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import type { SelectOption } from 'src/core/types/select.ts'
 import { useSelectReducer } from 'src/core/store/inputs/select.ts'
-import { filterOptions, getNextIndex } from 'src/core/helpers/select.ts'
+import { filterOptions, getFeaturedOptions, getNextIndex, getRegularOptions } from 'src/core/helpers/select.ts'
 import { openKeys } from 'src/core/helpers/datePicker.ts'
 import { prefersReducedMotion } from 'src/core/helpers/languageSwitcher.ts'
 
@@ -13,10 +13,11 @@ interface UseSelectParams<T> {
   readonly id?: string
   readonly value: T | null
   readonly options: Array<SelectOption<T>>
+  readonly featuredValues?: Array<T>
   readonly onChange: (value: T | null) => void
 }
 
-const useSelect = <T>({ id, value, options, onChange }: UseSelectParams<T>) => {
+const useSelect = <T>({ id, value, options, featuredValues = [], onChange }: UseSelectParams<T>) => {
   const generatedId = useId()
   const [state, dispatch] = useSelectReducer()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -28,7 +29,10 @@ const useSelect = <T>({ id, value, options, onChange }: UseSelectParams<T>) => {
   const listboxId = `${inputId}-listbox`
   const messageId = `${inputId}-message`
   const selectedOption = options.find((option) => option.value === value) ?? null
-  const filteredOptions = isOpen ? filterOptions(options, query) : options
+  const matchedOptions = isOpen ? filterOptions(options, query) : options
+  const featuredOptions = getFeaturedOptions(matchedOptions, featuredValues)
+  const regularOptions = getRegularOptions(matchedOptions, featuredValues)
+  const filteredOptions = [...featuredOptions, ...regularOptions]
   const getOptionId = (index: number) => `${listboxId}-${index}`
 
   useEffect(() => {
@@ -60,7 +64,7 @@ const useSelect = <T>({ id, value, options, onChange }: UseSelectParams<T>) => {
     { dependencies: [highlightedIndex, isOpen], scope: listRef }
   )
 
-  const open = () => dispatch({ type: 'OPEN', payload: Math.max(options.findIndex((option) => option.value === value), 0) })
+  const open = () => dispatch({ type: 'OPEN', payload: Math.max(filteredOptions.findIndex((option) => option.value === value), 0) })
 
   const close = () => dispatch({ type: 'CLOSE' })
 
@@ -129,6 +133,8 @@ const useSelect = <T>({ id, value, options, onChange }: UseSelectParams<T>) => {
     highlightedIndex,
     selectedOption,
     filteredOptions,
+    featuredOptions,
+    regularOptions,
     inputValue: isOpen ? query : selectedOption?.label ?? '',
     getOptionId,
     toggle,

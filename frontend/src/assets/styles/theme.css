@@ -86,6 +86,12 @@
   --animate-aurora: aurora 18s ease-in-out infinite alternate;
   --animate-spin-slow: spin 3s linear infinite;
   --animate-shake: shake 0.45s var(--ease-snappy) both;
+  --animate-ring-burst: ring-burst 0.9s var(--ease-fluid) both;
+
+  @keyframes ring-burst {
+    from { opacity: 1; box-shadow: 0 0 0 0 var(--primary), 0 0 0 0 var(--neon); }
+    to { opacity: 0; box-shadow: 0 0 0 6px transparent, 0 0 0 14px transparent; }
+  }
 
   @keyframes shake {
     0%, 100% { transform: translateX(0); }

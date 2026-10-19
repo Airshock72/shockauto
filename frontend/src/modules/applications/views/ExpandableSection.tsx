@@ -1,12 +1,15 @@
 import { ChevronDown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from 'src/core/lib/utils'
+import CircularProgress from 'src/core/components/progress/CircularProgress.tsx'
+import { isStepCompleted } from 'src/modules/applications/helpers'
 import type { ExpandableSectionProps } from 'src/modules/applications/types'
 
-const ExpandableSection = ({ index, step, isExpanded, isActive, onToggle, children }: ExpandableSectionProps) => {
+const ExpandableSection = ({ index, step, progress, isExpanded, isActive, onToggle, children }: ExpandableSectionProps) => {
   const { t } = useTranslation()
   const { value, title, description, icon: Icon } = step
   const contentId = `application-step-${value}-content`
+  const isCompleted = isStepCompleted(progress)
 
   return (
     <section
@@ -14,10 +17,13 @@ const ExpandableSection = ({ index, step, isExpanded, isActive, onToggle, childr
       className={cn(
         'relative scroll-mt-24 animate-fade-up rounded-xl border bg-card/60 shadow-soft focus-within:z-10',
         'transition-[border-color,box-shadow,background-color] duration-300 ease-fluid',
-        isActive ? 'border-primary/40 bg-card shadow-glow' : 'hover:border-primary/25'
+        isActive ? 'border-primary/40 bg-card shadow-glow' : 'hover:border-primary/25',
+        isCompleted && 'border-primary ring-2 ring-primary/25 hover:border-primary'
       )}
       style={{ animationDelay: `${index * 60}ms` }}
     >
+      {isCompleted && <span aria-hidden='true' className='pointer-events-none absolute inset-0 animate-ring-burst rounded-xl' />}
+
       <button
         type='button'
         aria-expanded={isExpanded}
@@ -39,6 +45,14 @@ const ExpandableSection = ({ index, step, isExpanded, isActive, onToggle, childr
           <span className='block font-semibold'>{t(title)}</span>
           <span className='mt-0.5 block truncate text-xs text-muted-foreground'>{t(description)}</span>
         </span>
+
+        {progress.total > 0 && (
+          <span className='flex shrink-0 items-center gap-2 text-xs'>
+            <span className='hidden text-muted-foreground sm:inline'>{t('applications.progress.label')}</span>
+            <span className='font-semibold tabular-nums'>{progress.filled} / {progress.total}</span>
+            <CircularProgress value={progress.filled} max={progress.total} />
+          </span>
+        )}
 
         <ChevronDown
           aria-hidden='true'

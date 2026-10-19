@@ -1,13 +1,15 @@
 import { Banknote, Car, Cog, Engine, Gauge, Images, MapPin, Motorbike, Palette, Phone, SlidersHorizontal, Tractor } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import SteeringWheelIcon from 'src/assets/media/svgs/steering-wheel.svg?react'
+import type { ApplicationFormValues } from 'src/modules/applications/store/createOrEditApplication.ts'
 import {
   ApplicationCategory,
   ApplicationSpec,
   ApplicationStep,
   type CategoryOption,
   type SpecOption,
-  type StepOption
+  type StepOption,
+  type StepProgress
 } from 'src/modules/applications/types'
 
 export const categoryOptions: Array<CategoryOption> = [
@@ -67,3 +69,18 @@ export const getStepIndex = (step: ApplicationStep): number =>
   stepOptions.findIndex(({ value }) => value === step)
 
 export const dustPuffCount = 5
+
+export const stepRequiredFields: Record<ApplicationStep, Array<keyof ApplicationFormValues>> = {
+  [ApplicationStep.Characteristics]: ['manufacturerId'],
+  [ApplicationStep.Location]: [],
+  [ApplicationStep.Media]: [],
+  [ApplicationStep.Price]: [],
+  [ApplicationStep.Contact]: []
+}
+
+export const getStepProgress = (step: ApplicationStep, values: ApplicationFormValues): StepProgress => {
+  const fields = stepRequiredFields[step]
+  return { filled: fields.filter((field) => values[field] !== null).length, total: fields.length }
+}
+
+export const isStepCompleted = ({ filled, total }: StepProgress): boolean => total > 0 && filled === total

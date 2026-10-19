@@ -75,6 +75,9 @@
     "categoryLabel": "Vehicle type",
     "stepsLabel": "Application steps",
     "sectionPlaceholder": "Fields will appear here soon",
+    "progress": {
+      "label": "Information"
+    },
     "fields": {
       "manufacturer": "Manufacturer",
       "manufacturerPlaceholder": "Select manufacturer"

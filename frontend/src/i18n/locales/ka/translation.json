@@ -75,6 +75,9 @@
     "categoryLabel": "ტრანსპორტის ტიპი",
     "stepsLabel": "განცხადების ეტაპები",
     "sectionPlaceholder": "ველები მალე დაემატება",
+    "progress": {
+      "label": "ინფორმაცია"
+    },
     "fields": {
       "manufacturer": "მწარმოებელი",
       "manufacturerPlaceholder": "აირჩიეთ მწარმოებელი"

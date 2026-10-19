@@ -8,6 +8,7 @@ interface SelectProps<T> {
   readonly name: string
   readonly value: T | null
   readonly options: Array<SelectOption<T>>
+  readonly featuredValues?: Array<T>
   readonly id?: string
   readonly label?: string
   readonly placeholder?: string
@@ -24,6 +25,7 @@ const Select = <T, >({
   name,
   value,
   options,
+  featuredValues,
   id,
   label,
   placeholder,
@@ -47,6 +49,8 @@ const Select = <T, >({
     highlightedIndex,
     selectedOption,
     filteredOptions,
+    featuredOptions,
+    regularOptions,
     inputValue,
     getOptionId,
     toggle,
@@ -55,7 +59,7 @@ const Select = <T, >({
     highlight,
     handleQueryChange,
     handleKeyDown
-  } = useSelect({ id, value, options, onChange: onValueChange })
+  } = useSelect({ id, value, options, featuredValues, onChange: onValueChange })
   const isDisabled = disabled || loading
   const isClearable = Boolean(selectedOption) && !isDisabled
   const selectedIcon = isOpen ? null : selectedOption?.icon
@@ -155,8 +159,55 @@ const Select = <T, >({
             aria-label={label}
             className='absolute top-full left-0 z-30 mt-2 max-h-72 w-full origin-top animate-scale-in overflow-y-auto rounded-xl border bg-popover/95 p-1.5 text-popover-foreground shadow-elevated backdrop-blur-xl'
           >
+            {featuredOptions.length > 0 && (
+              <li role='none' className='flex flex-wrap gap-2 px-1 py-1.5'>
+                {featuredOptions.map((option, index) => {
+                  const isSelected = option.value === value
+                  const isHighlighted = index === highlightedIndex
+
+                  return (
+                    <span
+                      key={String(option.value)}
+                      id={getOptionId(index)}
+                      role='option'
+                      title={option.label}
+                      aria-label={option.label}
+                      aria-selected={isSelected}
+                      data-highlighted={isHighlighted || undefined}
+                      onPointerDown={(event) => event.preventDefault()}
+                      onPointerMove={() => highlight(index)}
+                      onClick={() => selectOption(option)}
+                      className={cn(
+                        'flex size-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white ring-2 ring-transparent select-none',
+                        'transition-shadow duration-150',
+                        isHighlighted && 'ring-primary/40',
+                        isSelected && 'ring-primary'
+                      )}
+                    >
+                      {option.icon
+                        ? <img
+                          data-option-icon
+                          src={option.icon}
+                          alt=''
+                          aria-hidden='true'
+                          loading='lazy'
+                          className='size-full rounded-full object-contain p-2 will-change-transform'
+                        />
+                        : <span className='truncate px-1 text-2xs font-bold text-black'>{option.label}</span>
+                      }
+                    </span>
+                  )
+                })}
+              </li>
+            )}
+
+            {featuredOptions.length > 0 && regularOptions.length > 0 && (
+              <li role='separator' className='-mx-1.5 my-1.5 h-px bg-border' />
+            )}
+
             {filteredOptions.length
-              ? filteredOptions.map((option, index) => {
+              ? regularOptions.map((option, regularIndex) => {
+                const index = featuredOptions.length + regularIndex
                 const isSelected = option.value === value
                 const isHighlighted = index === highlightedIndex
 

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import Select from 'src/core/components/inputs/Select.tsx'
 import type { CharacteristicsFieldsProps } from 'src/modules/applications/types'
+import { featuredManufacturerIds } from 'src/modules/lists/manufacturers/helpers'
 
 const CharacteristicsFields = ({ values, manufacturers, onManufacturerChange }: CharacteristicsFieldsProps) => {
   const { t } = useTranslation()
@@ -14,6 +15,7 @@ const CharacteristicsFields = ({ values, manufacturers, onManufacturerChange }: 
         placeholder={t('applications.fields.manufacturerPlaceholder')}
         value={values.manufacturerId}
         options={manufacturers.options}
+        featuredValues={featuredManufacturerIds}
         loading={manufacturers.isLoading}
         disabled={manufacturers.isLoading}
         onValueChange={onManufacturerChange}

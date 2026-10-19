@@ -1,12 +1,17 @@
 import type { ID } from 'src/api/types/apiGlobalTypes.ts'
 import useManufacturers from 'src/modules/lists/manufacturers/hooks/useManufacturers.ts'
 import { useCreateOrEditApplicationReducer } from 'src/modules/applications/store/createOrEditApplication.ts'
-import type { ApplicationCategory, ApplicationStep, CreateOrEditApplication } from 'src/modules/applications/types'
+import { getStepProgress, stepOptions } from 'src/modules/applications/helpers'
+import type { ApplicationCategory, ApplicationStep, CreateOrEditApplication, StepProgress } from 'src/modules/applications/types'
 
 const useCreateOrEditApplication = (): CreateOrEditApplication => {
   const [state, dispatch] = useCreateOrEditApplicationReducer()
   const { category, activeStep, expandedSteps, preview, values } = state
   const manufacturers = useManufacturers()
+  const manufacturerLabel = manufacturers.options.find((option) => option.value === values.manufacturerId)?.label ?? null
+  const stepProgress = Object.fromEntries(
+    stepOptions.map(({ value }) => [value, getStepProgress(value, values)])
+  ) as Record<ApplicationStep, StepProgress>
 
   const changeCategory = (value: ApplicationCategory) => {
     if (value === category) return
@@ -30,8 +35,9 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
     category,
     activeStep,
     expandedSteps,
-    preview,
+    preview: { ...preview, title: manufacturerLabel ?? preview.title },
     values,
+    stepProgress,
     manufacturers,
     changeCategory,
     selectStep,

@@ -1,10 +1,10 @@
 import { Check } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from 'src/core/lib/utils'
-import { getStepIndex, stepOptions } from 'src/modules/applications/helpers'
+import { getStepIndex, isStepCompleted, stepOptions } from 'src/modules/applications/helpers'
 import type { ApplicationStepperProps } from 'src/modules/applications/types'
 
-const ApplicationStepper = ({ activeStep, onSelect }: ApplicationStepperProps) => {
+const ApplicationStepper = ({ activeStep, stepProgress, onSelect }: ApplicationStepperProps) => {
   const { t } = useTranslation()
   const activeIndex = getStepIndex(activeStep)
 
@@ -12,7 +12,7 @@ const ApplicationStepper = ({ activeStep, onSelect }: ApplicationStepperProps) =
     <nav aria-label={t('applications.stepsLabel')}>
       <ol className='flex flex-col'>
         {stepOptions.map(({ value, title, description }, index) => {
-          const isCompleted = index < activeIndex
+          const isCompleted = isStepCompleted(stepProgress[value])
           const isActive = index === activeIndex
           const isLast = index === stepOptions.length - 1
 
@@ -44,7 +44,7 @@ const ApplicationStepper = ({ activeStep, onSelect }: ApplicationStepperProps) =
                     'relative flex size-9 shrink-0 items-center justify-center rounded-full border-2 text-sm font-semibold',
                     'transition-[background-color,border-color,color,box-shadow,scale] duration-300 ease-spring group-hover:scale-110 group-active:scale-95',
                     isCompleted && 'border-transparent bg-linear-to-br from-primary to-neon text-primary-foreground',
-                    isActive && 'border-primary bg-primary/10 text-primary shadow-[0_0_14px_-3px_var(--neon)]',
+                    isActive && !isCompleted && 'border-primary bg-primary/10 text-primary shadow-[0_0_14px_-3px_var(--neon)]',
                     !isCompleted && !isActive && 'border-border bg-card text-muted-foreground group-hover:border-primary/40'
                   )}
                 >

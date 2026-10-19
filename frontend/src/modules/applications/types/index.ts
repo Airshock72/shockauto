@@ -47,6 +47,11 @@ export interface SpecOption {
   readonly icon: SpecIcon
 }
 
+export interface StepProgress {
+  readonly filled: number
+  readonly total: number
+}
+
 export interface ApplicationPreview {
   readonly imageUrl: string | null
   readonly title: string | null
@@ -60,6 +65,7 @@ export interface CreateOrEditApplication {
   readonly expandedSteps: ReadonlyArray<ApplicationStep>
   readonly preview: ApplicationPreview
   readonly values: ApplicationFormValues
+  readonly stepProgress: Record<ApplicationStep, StepProgress>
   readonly manufacturers: Manufacturers
   readonly changeCategory: (category: ApplicationCategory) => void
   readonly selectStep: (step: ApplicationStep) => void
@@ -75,6 +81,7 @@ export interface CharacteristicsFieldsProps {
 
 export interface ApplicationStepperProps {
   readonly activeStep: ApplicationStep
+  readonly stepProgress: Record<ApplicationStep, StepProgress>
   readonly onSelect: (step: ApplicationStep) => void
 }
 
@@ -96,6 +103,7 @@ export interface CategoryTabs {
 export interface ExpandableSectionProps {
   readonly index: number
   readonly step: StepOption
+  readonly progress: StepProgress
   readonly isExpanded: boolean
   readonly isActive: boolean
   readonly onToggle: (step: ApplicationStep) => void
