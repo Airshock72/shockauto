@@ -167,7 +167,7 @@ const Select = <T, >({
             className='absolute top-full left-0 z-30 mt-2 max-h-72 w-full origin-top animate-scale-in overflow-y-auto rounded-xl border bg-popover/95 p-1.5 text-popover-foreground shadow-elevated backdrop-blur-xl'
           >
             {featuredOptions.length > 0 && (
-              <li role='none' className={cn('px-1 py-1.5', hasFeaturedIcons ? 'grid grid-cols-6 justify-items-center gap-2' : 'flex flex-wrap gap-1.5')}>
+              <li role='none' className={cn('px-1 py-1.5', hasFeaturedIcons ? 'grid grid-cols-5 justify-items-center gap-3' : 'flex flex-wrap gap-1.5')}>
                 {hasFeaturedIcons
                   ? featuredOptions.map((option, index) => {
                     const isSelected = option.value === value
@@ -185,7 +185,7 @@ const Select = <T, >({
                         onPointerMove={() => highlight(index)}
                         onClick={() => selectOption(option)}
                         className={cn(
-                          'flex size-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white ring-2 ring-transparent select-none',
+                          'flex aspect-square w-full max-w-16 cursor-pointer items-center justify-center rounded-full bg-white ring-2 ring-transparent select-none',
                           'transition-shadow duration-150',
                           isHighlighted && 'ring-primary/40',
                           isSelected && 'ring-primary'
@@ -198,7 +198,7 @@ const Select = <T, >({
                             alt=''
                             aria-hidden='true'
                             loading='lazy'
-                            className='size-full rounded-full object-contain p-2 will-change-transform'
+                            className='size-full rounded-full object-contain p-1.5 will-change-transform'
                           />
                         )}
                       </span>
