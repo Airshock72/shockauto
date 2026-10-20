@@ -219,12 +219,16 @@ const Select = <T, >({
                         onPointerMove={() => highlight(index)}
                         onClick={() => selectOption(option)}
                         className={cn(
-                          'flex max-w-full min-w-0 cursor-pointer items-center rounded-lg border bg-card px-3 py-2 shadow-soft select-none',
+                          'flex max-w-full min-w-0 cursor-pointer items-center gap-2 rounded-lg border bg-card px-3 py-2 shadow-soft select-none',
                           'transition-[border-color,background-color,box-shadow] duration-150',
                           isHighlighted && 'border-primary/40 bg-accent',
                           isSelected && 'border-primary bg-primary/5 ring-2 ring-primary/15'
                         )}
                       >
+                        <span aria-hidden='true' className='relative flex size-1.5 shrink-0'>
+                          <span className='absolute inset-0 rounded-full bg-primary opacity-75 motion-safe:animate-ping' />
+                          <span className='relative size-full rounded-full bg-primary shadow-[0_0_6px_var(--color-primary)]' />
+                        </span>
                         <span className={cn('truncate text-xs font-semibold', isSelected && 'text-primary')}>{option.label}</span>
                       </span>
                     )
