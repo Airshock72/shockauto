@@ -4,6 +4,7 @@ import type { SelectOption } from 'src/core/types/select.ts'
 
 export interface ModelsStore {
   readonly manufacturerId: ID | null
+  readonly topOptions: Array<SelectOption<ID>>
   readonly options: Array<SelectOption<ID>>
 }
 
@@ -14,6 +15,7 @@ export type ModelsActions =
 
 const initialModelsStore: ModelsStore = {
   manufacturerId: null,
+  topOptions: [],
   options: []
 }
 

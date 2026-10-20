@@ -9,8 +9,15 @@ const loadModels = async (manufacturerId: ID, dispatch: Dispatch<ModelsActions>,
   const response = await ModelsApi.getModels(manufacturerId)
   if (!isActive()) return
 
-  const options = response.status === ResponseStatuses.SUCCESS ? transformModelsToOptions(response.data) : []
-  dispatch({ type: 'SET_MODELS', payload: { manufacturerId, options } })
+  const isSuccess = response.status === ResponseStatuses.SUCCESS
+  dispatch({
+    type: 'SET_MODELS',
+    payload: {
+      manufacturerId,
+      topOptions: isSuccess ? transformModelsToOptions(response.data.topModels) : [],
+      options: isSuccess ? transformModelsToOptions(response.data.models) : []
+    }
+  })
 }
 
 const useModels = (manufacturerId: ID | null): Models => {
@@ -29,6 +36,7 @@ const useModels = (manufacturerId: ID | null): Models => {
   }, [manufacturerId, dispatch])
 
   return {
+    topOptions: isLoaded ? state.topOptions : [],
     options: isLoaded ? state.options : [],
     isLoading: manufacturerId !== null && !isLoaded
   }

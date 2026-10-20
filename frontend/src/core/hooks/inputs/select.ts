@@ -3,7 +3,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import type { SelectOption } from 'src/core/types/select.ts'
 import { useSelectReducer } from 'src/core/store/inputs/select.ts'
-import { filterOptions, getFeaturedOptions, getNextIndex, getRegularOptions } from 'src/core/helpers/select.ts'
+import { filterOptions, getNextIndex } from 'src/core/helpers/select.ts'
 import { openKeys } from 'src/core/helpers/datePicker.ts'
 import { prefersReducedMotion } from 'src/core/helpers/languageSwitcher.ts'
 
@@ -13,11 +13,11 @@ interface UseSelectParams<T> {
   readonly id?: string
   readonly value: T | null
   readonly options: Array<SelectOption<T>>
-  readonly featuredValues?: Array<T>
+  readonly topOptions?: Array<SelectOption<T>>
   readonly onChange: (value: T | null) => void
 }
 
-const useSelect = <T>({ id, value, options, featuredValues = [], onChange }: UseSelectParams<T>) => {
+const useSelect = <T>({ id, value, options, topOptions = [], onChange }: UseSelectParams<T>) => {
   const generatedId = useId()
   const [state, dispatch] = useSelectReducer()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -28,10 +28,9 @@ const useSelect = <T>({ id, value, options, featuredValues = [], onChange }: Use
   const inputId = id ?? generatedId
   const listboxId = `${inputId}-listbox`
   const messageId = `${inputId}-message`
-  const selectedOption = options.find((option) => option.value === value) ?? null
-  const matchedOptions = isOpen ? filterOptions(options, query) : options
-  const featuredOptions = getFeaturedOptions(matchedOptions, featuredValues)
-  const regularOptions = getRegularOptions(matchedOptions, featuredValues)
+  const selectedOption = [...topOptions, ...options].find((option) => option.value === value) ?? null
+  const featuredOptions = isOpen ? filterOptions(topOptions, query) : topOptions
+  const regularOptions = isOpen ? filterOptions(options, query) : options
   const filteredOptions = [...featuredOptions, ...regularOptions]
   const getOptionId = (index: number) => `${listboxId}-${index}`
 

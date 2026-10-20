@@ -83,7 +83,7 @@
       "manufacturerPlaceholder": "აირჩიეთ მწარმოებელი",
       "model": "მოდელი",
       "modelPlaceholder": "აირჩიეთ მოდელი",
-      "modelHint": "გთხოვთ აირჩიოთ მწარმოებელი პირველ რიგში"
+      "modelHint": "გთხოვთ პირველ რიგში აირჩიოთ მწარმოებელი"
     },
     "categories": {
       "car": "ავტომობილი",

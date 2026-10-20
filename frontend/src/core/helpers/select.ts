@@ -10,9 +10,3 @@ export const getNextIndex = (current: number, offset: number, length: number): n
   if (length === 0) return 0
   return (current + offset + length) % length
 }
-
-export const getFeaturedOptions = <T>(options: Array<SelectOption<T>>, featuredValues: Array<T>): Array<SelectOption<T>> =>
-  featuredValues.flatMap((value) => options.filter((option) => option.value === value))
-
-export const getRegularOptions = <T>(options: Array<SelectOption<T>>, featuredValues: Array<T>): Array<SelectOption<T>> =>
-  options.filter((option) => !featuredValues.includes(option.value))

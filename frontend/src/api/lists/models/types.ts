@@ -5,7 +5,12 @@ export interface ModelResponse {
     readonly name: string
 }
 
+export interface ModelsResponse {
+    readonly topModels: Array<ModelResponse>
+    readonly models: Array<ModelResponse>
+}
+
 export interface ModelsData {
-    readonly data: Array<ModelResponse>
+    readonly data: ModelsResponse
     readonly status: ResponseStatuses
 }

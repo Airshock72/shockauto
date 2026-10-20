@@ -10,14 +10,20 @@ const loadManufacturers = async (dispatch: Dispatch<ManufacturersActions>, isAct
   if (!isActive()) return
 
   if (response.status === ResponseStatuses.SUCCESS) {
-    dispatch({ type: 'SET_OPTIONS', payload: transformManufacturersToOptions(response.data) })
+    dispatch({
+      type: 'SET_OPTIONS',
+      payload: {
+        topOptions: transformManufacturersToOptions(response.data.topManufacturers),
+        options: transformManufacturersToOptions(response.data.manufacturers)
+      }
+    })
   }
   dispatch({ type: 'SET_LOADING', payload: false })
 }
 
 const useManufacturers = (): Manufacturers => {
   const [state, dispatch] = useManufacturersReducer()
-  const { options, isLoading } = state
+  const { topOptions, options, isLoading } = state
 
   useEffect(() => {
     let isActive = true
@@ -29,6 +35,7 @@ const useManufacturers = (): Manufacturers => {
   }, [dispatch])
 
   return {
+    topOptions,
     options,
     isLoading
   }

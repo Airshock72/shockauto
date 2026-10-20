@@ -5,11 +5,19 @@ export interface ManufacturerResponse {
     readonly name: string
 }
 
+export interface ManufacturersResponse {
+    readonly topManufacturers: Array<ManufacturerResponse>
+    readonly manufacturers: Array<ManufacturerResponse>
+}
+
 export interface Manufacturer extends ManufacturerResponse {
     readonly logo: string | null
 }
 
 export interface ManufacturersData {
-    readonly data: Array<Manufacturer>
+    readonly data: {
+        readonly topManufacturers: Array<Manufacturer>
+        readonly manufacturers: Array<Manufacturer>
+    }
     readonly status: ResponseStatuses
 }

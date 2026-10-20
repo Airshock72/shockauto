@@ -9,7 +9,7 @@ interface SelectProps<T> {
   readonly name: string
   readonly value: T | null
   readonly options: Array<SelectOption<T>>
-  readonly featuredValues?: Array<T>
+  readonly topOptions?: Array<SelectOption<T>>
   readonly id?: string
   readonly label?: string
   readonly placeholder?: string
@@ -27,7 +27,7 @@ const Select = <T, >({
   name,
   value,
   options,
-  featuredValues,
+  topOptions,
   id,
   label,
   placeholder,
@@ -62,10 +62,11 @@ const Select = <T, >({
     highlight,
     handleQueryChange,
     handleKeyDown
-  } = useSelect({ id, value, options, featuredValues, onChange: onValueChange })
+  } = useSelect({ id, value, options, topOptions, onChange: onValueChange })
   const isDisabled = disabled || loading
   const isClearable = Boolean(selectedOption) && !isDisabled
   const selectedIcon = isOpen ? null : selectedOption?.icon
+  const hasFeaturedIcons = featuredOptions.some((option) => option.icon)
 
   return (
     <div ref={containerRef} className={cn('relative flex flex-col gap-1.5 short:gap-1', containerClassName)}>
@@ -116,7 +117,7 @@ const Select = <T, >({
             'focus-visible:border-primary focus-visible:ring-4 focus-visible:ring-primary/15',
             'disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:shadow-none disabled:hover:border-input',
             'aria-invalid:border-destructive aria-invalid:hover:border-destructive aria-invalid:focus-visible:ring-destructive/15',
-            isClearable && hint ? 'pr-26' : isClearable || hint ? 'pr-18' : 'pr-11',
+            isClearable && hint ? 'pr-26' : isClearable || hint ? 'pr-sidebar-collapsed' : 'pr-11',
             selectedIcon && 'pl-11',
             isOpen && 'cursor-text border-primary ring-4 ring-primary/15'
           )}
@@ -147,7 +148,7 @@ const Select = <T, >({
             disabled={isDisabled}
             onPointerDown={(event) => event.preventDefault()}
             onClick={toggle}
-            className='pointer-events-auto flex size-8 cursor-pointer items-center justify-center text-muted-foreground disabled:cursor-not-allowed [&_svg]:size-4.5'
+            className='pointer-events-auto flex size-8 cursor-pointer items-center justify-center text-muted-foreground'
           >
             {loading
               ? <LoaderCircle className='animate-spin' />
@@ -162,47 +163,73 @@ const Select = <T, >({
             id={listboxId}
             role='listbox'
             aria-label={label}
+            onPointerDown={(event) => event.preventDefault()}
             className='absolute top-full left-0 z-30 mt-2 max-h-72 w-full origin-top animate-scale-in overflow-y-auto rounded-xl border bg-popover/95 p-1.5 text-popover-foreground shadow-elevated backdrop-blur-xl'
           >
             {featuredOptions.length > 0 && (
-              <li role='none' className='flex flex-wrap gap-2 px-1 py-1.5'>
-                {featuredOptions.map((option, index) => {
-                  const isSelected = option.value === value
-                  const isHighlighted = index === highlightedIndex
+              <li role='none' className={cn('px-1 py-1.5', hasFeaturedIcons ? 'grid grid-cols-6 justify-items-center gap-2' : 'flex flex-wrap gap-1.5')}>
+                {hasFeaturedIcons
+                  ? featuredOptions.map((option, index) => {
+                    const isSelected = option.value === value
+                    const isHighlighted = index === highlightedIndex
 
-                  return (
-                    <span
-                      key={String(option.value)}
-                      id={getOptionId(index)}
-                      role='option'
-                      title={option.label}
-                      aria-label={option.label}
-                      aria-selected={isSelected}
-                      data-highlighted={isHighlighted || undefined}
-                      onPointerDown={(event) => event.preventDefault()}
-                      onPointerMove={() => highlight(index)}
-                      onClick={() => selectOption(option)}
-                      className={cn(
-                        'flex size-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white ring-2 ring-transparent select-none',
-                        'transition-shadow duration-150',
-                        isHighlighted && 'ring-primary/40',
-                        isSelected && 'ring-primary'
-                      )}
-                    >
-                      {option.icon
-                        ? <img
-                          data-option-icon
-                          src={option.icon}
-                          alt=''
-                          aria-hidden='true'
-                          loading='lazy'
-                          className='size-full rounded-full object-contain p-2 will-change-transform'
-                        />
-                        : <span className='truncate px-1 text-2xs font-bold text-black'>{option.label}</span>
-                      }
-                    </span>
-                  )
-                })}
+                    return (
+                      <span
+                        key={String(option.value)}
+                        id={getOptionId(index)}
+                        role='option'
+                        title={option.label}
+                        aria-label={option.label}
+                        aria-selected={isSelected}
+                        data-highlighted={isHighlighted || undefined}
+                        onPointerMove={() => highlight(index)}
+                        onClick={() => selectOption(option)}
+                        className={cn(
+                          'flex size-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white ring-2 ring-transparent select-none',
+                          'transition-shadow duration-150',
+                          isHighlighted && 'ring-primary/40',
+                          isSelected && 'ring-primary'
+                        )}
+                      >
+                        {option.icon && (
+                          <img
+                            data-option-icon
+                            src={option.icon}
+                            alt=''
+                            aria-hidden='true'
+                            loading='lazy'
+                            className='size-full rounded-full object-contain p-2 will-change-transform'
+                          />
+                        )}
+                      </span>
+                    )
+                  })
+                  : featuredOptions.map((option, index) => {
+                    const isSelected = option.value === value
+                    const isHighlighted = index === highlightedIndex
+
+                    return (
+                      <span
+                        key={String(option.value)}
+                        id={getOptionId(index)}
+                        role='option'
+                        title={option.label}
+                        aria-selected={isSelected}
+                        data-highlighted={isHighlighted || undefined}
+                        onPointerMove={() => highlight(index)}
+                        onClick={() => selectOption(option)}
+                        className={cn(
+                          'flex max-w-full min-w-0 cursor-pointer items-center rounded-lg border bg-card px-3 py-2 shadow-soft select-none',
+                          'transition-[border-color,background-color,box-shadow] duration-150',
+                          isHighlighted && 'border-primary/40 bg-accent',
+                          isSelected && 'border-primary bg-primary/5 ring-2 ring-primary/15'
+                        )}
+                      >
+                        <span className={cn('truncate text-xs font-semibold', isSelected && 'text-primary')}>{option.label}</span>
+                      </span>
+                    )
+                  })
+                }
               </li>
             )}
 
@@ -223,7 +250,6 @@ const Select = <T, >({
                     role='option'
                     aria-selected={isSelected}
                     data-highlighted={isHighlighted || undefined}
-                    onPointerDown={(event) => event.preventDefault()}
                     onPointerMove={() => highlight(index)}
                     onClick={() => selectOption(option)}
                     className={cn(

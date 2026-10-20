@@ -10,8 +10,8 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
   const { category, activeStep, expandedSteps, preview, values } = state
   const manufacturers = useManufacturers()
   const models = useModels(values.manufacturerId)
-  const manufacturerLabel = manufacturers.options.find((option) => option.value === values.manufacturerId)?.label ?? null
-  const modelLabel = models.options.find((option) => option.value === values.modelId)?.label ?? null
+  const manufacturerLabel = [...manufacturers.topOptions, ...manufacturers.options].find((option) => option.value === values.manufacturerId)?.label ?? null
+  const modelLabel = [...models.topOptions, ...models.options].find((option) => option.value === values.modelId)?.label ?? null
   const title = [manufacturerLabel, modelLabel].filter(Boolean).join(' ') || null
   const stepProgress = Object.fromEntries(
     stepOptions.map(({ value }) => [value, getStepProgress(value, values)])
