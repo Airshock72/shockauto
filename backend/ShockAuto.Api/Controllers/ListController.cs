@@ -22,7 +22,7 @@ public class ListController : ControllerBase
     }
 
     [HttpGet("Manufacturers")]
-    [ProducesResponseType(typeof(GetManufacturersResponse[]), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetManufacturersResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetManufacturers(CancellationToken cancellationToken)
     {
@@ -32,7 +32,7 @@ public class ListController : ControllerBase
     }
 
     [HttpGet("Models")]
-    [ProducesResponseType(typeof(GetModelsResponse[]), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetModelsResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetModels([FromQuery] int manufacturerId, CancellationToken cancellationToken)
     {

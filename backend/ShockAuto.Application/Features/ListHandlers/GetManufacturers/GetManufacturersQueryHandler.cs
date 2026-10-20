@@ -7,6 +7,8 @@ namespace ShockAuto.Application.Features.ListHandlers.GetManufacturers;
 
 public class GetManufacturersQueryHandler : IRequestHandler<GetManufacturersQuery, Result>
 {
+    private static readonly int[] TopManufacturerIds = [40, 25, 3, 16, 14, 12, 77, 29, 2, 5];
+    
     private readonly IManufacturerRepository _manufacturerRepository;
 
     public GetManufacturersQueryHandler(IManufacturerRepository manufacturerRepository)
@@ -18,12 +20,27 @@ public class GetManufacturersQueryHandler : IRequestHandler<GetManufacturersQuer
     public async ValueTask<Result> Handle(GetManufacturersQuery request, CancellationToken cancellationToken)
     {
         IEnumerable<Manufacturer> manufacturers = await _manufacturerRepository.GetAll(cancellationToken);
-        GetManufacturersResponse[] response = manufacturers.Select(m => new GetManufacturersResponse
-            {
-                Id = m.Id,
-                Name = m.Name,
-            }).OrderBy(m => m.Name).ToArray();
+
+        GetManufacturersResponse response = new()
+        {
+            TopManufacturers = manufacturers
+                .Where(m => TopManufacturerIds.Contains(m.Id))
+                .OrderBy(m => Array.IndexOf(TopManufacturerIds, m.Id))
+                .Select(ToManufacturerItem)
+                .ToArray(),
+            Manufacturers = manufacturers
+                .Where(m => !TopManufacturerIds.Contains(m.Id))
+                .OrderBy(m => m.Name)
+                .Select(ToManufacturerItem)
+                .ToArray()
+        };
         
         return Result.Ok(response);
     }
+
+    private static ManufacturerItem ToManufacturerItem(Manufacturer manufacturer) => new()
+    {
+        Id = manufacturer.Id,
+        Name = manufacturer.Name
+    };
 }
