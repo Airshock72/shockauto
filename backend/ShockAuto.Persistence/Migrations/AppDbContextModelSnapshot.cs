@@ -33,13 +33,16 @@ namespace ShockAuto.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsTop")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Manufacturers", (string)null);
+                    b.ToTable("Manufacturers");
                 });
 
             modelBuilder.Entity("ShockAuto.Domain.Entities.Model", b =>
@@ -49,6 +52,9 @@ namespace ShockAuto.Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsTop")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ManufacturerId")
                         .HasColumnType("int");
@@ -61,7 +67,7 @@ namespace ShockAuto.Persistence.Migrations
 
                     b.HasIndex("ManufacturerId");
 
-                    b.ToTable("Models", (string)null);
+                    b.ToTable("Models");
                 });
 
             modelBuilder.Entity("ShockAuto.Domain.Entities.User", b =>
@@ -109,7 +115,7 @@ namespace ShockAuto.Persistence.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ShockAuto.Domain.Entities.Model", b =>

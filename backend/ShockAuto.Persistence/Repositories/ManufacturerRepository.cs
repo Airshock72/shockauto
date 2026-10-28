@@ -11,4 +11,18 @@ internal class ManufacturerRepository(AppDbContext context) : BaseRepository<Man
     {
         return await _context.Manufacturers.FirstOrDefaultAsync(m => m.Name == manufacturerName, cancellationToken);
     }
+
+    public async Task<IEnumerable<Manufacturer>> GetManufacturers(bool isTop = false, CancellationToken cancellationToken = default)
+    {
+        IQueryable<Manufacturer> query = _context.Manufacturers;
+
+        if (isTop)
+        {
+            query = query.Where(m => m.IsTop);
+        }
+
+        return await query
+            .OrderBy(m => m.Name)
+            .ToListAsync(cancellationToken);
+    }
 }

@@ -31,10 +31,10 @@ public class ListController : ControllerBase
         return StatusCode(result.StatusCode, result.Data);
     }
 
-    [HttpGet("Models")]
+    [HttpGet("Models/{manufacturerId:int}")]
     [ProducesResponseType(typeof(GetModelsResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> GetModels([FromQuery] int manufacturerId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetModels([FromRoute] int manufacturerId, CancellationToken cancellationToken)
     {
         GetModelsQuery query = new() { ManufacturerId = manufacturerId };
         Result result = await _sender.Send(query, cancellationToken);

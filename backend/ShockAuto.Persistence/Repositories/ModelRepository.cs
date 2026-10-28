@@ -7,10 +7,11 @@ namespace ShockAuto.Persistence.Repositories;
 
 internal class ModelRepository(AppDbContext context) : BaseRepository<Model, int>(context), IModelRepository
 {
-    public async Task<List<Model>> GetModelsByManufacturerId(int manufacturerId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Model>> GetModelsByManufacturerId(int manufacturerId, bool isTop, CancellationToken cancellationToken)
     {
         return await _context.Models
-            .Where(m => m.ManufacturerId == manufacturerId)
+            .Where(m => m.ManufacturerId == manufacturerId && m.IsTop == isTop)
+            .OrderBy(m => m.Name)
             .ToListAsync(cancellationToken);
     }
 }

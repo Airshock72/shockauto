@@ -5,5 +5,5 @@ namespace ShockAuto.Application.Interfaces.Repositories;
 
 public interface IModelRepository : IBaseRepository<Model, int>
 {
-    public Task<List<Model>> GetModelsByManufacturerId(int manufacturerId, CancellationToken cancellationToken);
+    public Task<IEnumerable<Model>> GetModelsByManufacturerId(int manufacturerId, bool isTop, CancellationToken cancellationToken);
 }
