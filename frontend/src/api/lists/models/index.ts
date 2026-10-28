@@ -4,6 +4,6 @@ import type { ModelsData } from 'src/api/lists/models/types.ts'
 import { parseModels } from 'src/api/lists/models/parsers.ts'
 
 export const getModels = async (manufacturerId: ID): Promise<ModelsData> => {
-  const response = await PrivateApi.get('/List/Models', { manufacturerId })
+  const response = await PrivateApi.get(`/List/Models/${manufacturerId}`)
   return parseModels(response)
 }
