@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { Check, ChevronDown, LoaderCircle, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from 'src/core/lib/utils'
@@ -67,6 +68,7 @@ const Select = <T, >({
   const isClearable = Boolean(selectedOption) && !isDisabled
   const selectedIcon = isOpen ? null : selectedOption?.icon
   const hasFeaturedIcons = featuredOptions.some((option) => option.icon)
+  const hasGroups = options.some((option) => option.group)
 
   return (
     <div ref={containerRef} className={cn('relative flex flex-col gap-1.5 short:gap-1', containerClassName)}>
@@ -246,38 +248,48 @@ const Select = <T, >({
                 const index = featuredOptions.length + regularIndex
                 const isSelected = option.value === value
                 const isHighlighted = index === highlightedIndex
+                const isGroupStart = Boolean(option.group) && option.group !== regularOptions[regularIndex - 1]?.group
 
                 return (
-                  <li
-                    key={String(option.value)}
-                    id={getOptionId(index)}
-                    role='option'
-                    aria-selected={isSelected}
-                    data-highlighted={isHighlighted || undefined}
-                    onPointerMove={() => highlight(index)}
-                    onClick={() => selectOption(option)}
-                    className={cn(
-                      'flex cursor-pointer items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-base font-semibold select-none',
-                      'transition-colors duration-150',
-                      isHighlighted && 'bg-accent text-accent-foreground',
-                      isSelected && 'font-bold text-primary'
+                  <Fragment key={String(option.value)}>
+                    {isGroupStart && (
+                      <li role='presentation' className='flex items-center gap-2 px-2.5 pt-3 pb-1.5 text-xs font-semibold text-primary select-none'>
+                        {option.group}
+                        <span aria-hidden='true' className='h-px flex-1 bg-linear-to-r from-primary/30 to-transparent' />
+                      </li>
                     )}
-                  >
-                    <span className='flex min-w-0 items-center gap-3'>
-                      {option.icon && (
-                        <img
-                          data-option-icon
-                          src={option.icon}
-                          alt=''
-                          aria-hidden='true'
-                          loading='lazy'
-                          className='size-14 shrink-0 rounded-xl bg-white object-contain p-1.5 will-change-transform'
-                        />
+                    <li
+                      id={getOptionId(index)}
+                      role='option'
+                      aria-selected={isSelected}
+                      data-highlighted={isHighlighted || undefined}
+                      onPointerMove={() => highlight(index)}
+                      onClick={() => selectOption(option)}
+                      className={cn(
+                        'flex cursor-pointer items-center justify-between gap-2 rounded-lg px-2.5 select-none',
+                        'transition-colors duration-150',
+                        hasGroups ? 'py-2 text-sm font-medium' : 'py-1.5 text-base font-semibold',
+                        option.group && 'pl-6',
+                        isHighlighted && 'bg-accent text-accent-foreground',
+                        isSelected && 'font-bold text-primary'
                       )}
-                      <span className='truncate'>{option.label}</span>
-                    </span>
-                    {isSelected && <Check aria-hidden='true' className='size-4 shrink-0' />}
-                  </li>
+                    >
+                      <span className='flex min-w-0 items-center gap-3'>
+                        {option.icon && (
+                          <img
+                            data-option-icon
+                            src={option.icon}
+                            alt=''
+                            aria-hidden='true'
+                            loading='lazy'
+                            className='size-14 shrink-0 rounded-xl bg-white object-contain p-1.5 will-change-transform'
+                          />
+                        )}
+                        <span className='truncate'>{option.label}</span>
+                      </span>
+                      {isSelected && <Check aria-hidden='true' className='size-4 shrink-0' />}
+                    </li>
+                  </Fragment>
                 )
               })
               : <li role='presentation' className='px-3 py-6 text-center text-xs text-muted-foreground'>

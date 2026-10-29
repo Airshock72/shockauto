@@ -3,6 +3,7 @@ import type { LucideIcon } from 'lucide-react'
 import type { ID } from 'src/api/types/apiGlobalTypes.ts'
 import type { Manufacturers } from 'src/modules/lists/manufacturers/types'
 import type { Models } from 'src/modules/lists/models/types'
+import type { GasolineTypes } from 'src/modules/lists/gasolineTypes/types'
 import type { ApplicationFormValues } from 'src/modules/applications/store/createOrEditApplication.ts'
 
 export enum ApplicationCategory {
@@ -21,6 +22,7 @@ export enum ApplicationStep {
 
 export enum ApplicationSpec {
   Year = 'Year',
+  GasolineType = 'GasolineType',
   Engine = 'Engine',
   Mileage = 'Mileage',
   Transmission = 'Transmission',
@@ -70,6 +72,7 @@ export interface CreateOrEditApplication {
   readonly stepProgress: Record<ApplicationStep, StepProgress>
   readonly manufacturers: Manufacturers
   readonly models: Models
+  readonly gasolineTypes: GasolineTypes
   readonly changeCategory: (category: ApplicationCategory) => void
   readonly selectStep: (step: ApplicationStep) => void
   readonly toggleStep: (step: ApplicationStep) => void
@@ -77,16 +80,19 @@ export interface CreateOrEditApplication {
   readonly handleModelChange: (modelId: ID | null) => void
   readonly handleYearChange: (year: number | null) => void
   readonly handleTrimChange: (trim: string) => void
+  readonly handleGasolineTypeChange: (gasolineTypeId: ID | null) => void
 }
 
 export interface CharacteristicsFieldsProps {
   readonly values: ApplicationFormValues
   readonly manufacturers: Manufacturers
   readonly models: Models
+  readonly gasolineTypes: GasolineTypes
   readonly onManufacturerChange: (manufacturerId: ID | null) => void
   readonly onModelChange: (modelId: ID | null) => void
   readonly onYearChange: (year: number | null) => void
   readonly onTrimChange: (trim: string) => void
+  readonly onGasolineTypeChange: (gasolineTypeId: ID | null) => void
 }
 
 export interface ApplicationStepperProps {

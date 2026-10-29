@@ -1,6 +1,7 @@
 import type { ID } from 'src/api/types/apiGlobalTypes.ts'
 import useManufacturers from 'src/modules/lists/manufacturers/hooks/useManufacturers.ts'
 import useModels from 'src/modules/lists/models/hooks/useModels.ts'
+import useGasolineTypes from 'src/modules/lists/gasolineTypes/hooks/useGasolineTypes.ts'
 import { useCreateOrEditApplicationReducer } from 'src/modules/applications/store/createOrEditApplication.ts'
 import { getStepProgress, stepOptions } from 'src/modules/applications/helpers'
 import { type ApplicationCategory, ApplicationSpec, type ApplicationStep, type CreateOrEditApplication, type StepProgress } from 'src/modules/applications/types'
@@ -10,10 +11,16 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
   const { category, activeStep, expandedSteps, preview, values } = state
   const manufacturers = useManufacturers()
   const models = useModels(values.manufacturerId)
+  const gasolineTypes = useGasolineTypes()
   const manufacturerLabel = [...manufacturers.topOptions, ...manufacturers.options].find((option) => option.value === values.manufacturerId)?.label ?? null
   const modelLabel = [...models.topOptions, ...models.options].find((option) => option.value === values.modelId)?.label ?? null
   const title = [manufacturerLabel, modelLabel].filter(Boolean).join(' ') || null
-  const specs = values.year === null ? preview.specs : { ...preview.specs, [ApplicationSpec.Year]: String(values.year) }
+  const gasolineTypeLabel = gasolineTypes.options.find((option) => option.value === values.gasolineTypeId)?.label
+  const specs = {
+    ...preview.specs,
+    ...(values.year !== null && { [ApplicationSpec.Year]: String(values.year) }),
+    ...(gasolineTypeLabel && { [ApplicationSpec.GasolineType]: gasolineTypeLabel })
+  }
   const stepProgress = Object.fromEntries(
     stepOptions.map(({ value }) => [value, getStepProgress(value, values)])
   ) as Record<ApplicationStep, StepProgress>
@@ -49,6 +56,10 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
     dispatch({ type: 'SET_VALUES', payload: { ...values, trim } })
   }
 
+  const handleGasolineTypeChange = (gasolineTypeId: ID | null) => {
+    dispatch({ type: 'SET_VALUES', payload: { ...values, gasolineTypeId } })
+  }
+
   return {
     category,
     activeStep,
@@ -58,13 +69,15 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
     stepProgress,
     manufacturers,
     models,
+    gasolineTypes,
     changeCategory,
     selectStep,
     toggleStep,
     handleManufacturerChange,
     handleModelChange,
     handleYearChange,
-    handleTrimChange
+    handleTrimChange,
+    handleGasolineTypeChange
   }
 }
 

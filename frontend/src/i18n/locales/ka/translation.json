@@ -7,6 +7,10 @@
     "close": "დახურვა",
     "changeLanguage": "ენის შეცვლა"
   },
+  "gasolineTypes": {
+    "hybrid": "ჰიბრიდი",
+    "gas": "გაზი/ბენზინი"
+  },
   "select": {
     "noOptions": "მონაცემები ვერ მოიძებნა"
   },
@@ -87,7 +91,9 @@
       "year": "წელი",
       "yearPlaceholder": "აირჩიეთ წელი",
       "trim": "კომპლექტაცია",
-      "trimPlaceholder": "შეიყვანეთ კომპლექტაცია"
+      "trimPlaceholder": "შეიყვანეთ კომპლექტაცია",
+      "gasolineType": "საწვავის ტიპი",
+      "gasolineTypePlaceholder": "აირჩიეთ საწვავის ტიპი"
     },
     "categories": {
       "car": "ავტომობილი",
@@ -118,6 +124,7 @@
     },
     "specs": {
       "year": "წელი",
+      "gasolineType": "საწვავის ტიპი",
       "engine": "ძრავი",
       "mileage": "გარბენი",
       "transmission": "გადაცემათა კოლოფი",

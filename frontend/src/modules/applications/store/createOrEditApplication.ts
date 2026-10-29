@@ -6,6 +6,7 @@ export interface ApplicationFormValues {
   readonly manufacturerId: ID | null
   readonly modelId: ID | null
   readonly year: number | null
+  readonly gasolineTypeId: ID | null
   readonly trim: string
 }
 
@@ -42,6 +43,7 @@ const initialCreateOrEditApplicationStore: CreateOrEditApplicationStore = {
     manufacturerId: null,
     modelId: null,
     year: null,
+    gasolineTypeId: null,
     trim: ''
   }
 }

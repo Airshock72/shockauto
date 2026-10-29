@@ -6,8 +6,19 @@ import { getTodayIso } from 'src/core/helpers/datePicker.ts'
 import { minYearDate, toYear, trimMaxLength } from 'src/modules/applications/helpers'
 import type { CharacteristicsFieldsProps } from 'src/modules/applications/types'
 
-const CharacteristicsFields = ({ values, manufacturers, models, onManufacturerChange, onModelChange, onYearChange, onTrimChange }: CharacteristicsFieldsProps) => {
+const CharacteristicsFields = ({
+  values,
+  manufacturers,
+  models,
+  gasolineTypes,
+  onManufacturerChange,
+  onModelChange,
+  onYearChange,
+  onTrimChange,
+  onGasolineTypeChange
+}: CharacteristicsFieldsProps) => {
   const { t } = useTranslation()
+  const gasolineTypeOptions = gasolineTypes.options.map((option) => ({ ...option, group: option.group && t(option.group) }))
 
   return (
     <div className='grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2'>
@@ -55,6 +66,17 @@ const CharacteristicsFields = ({ values, manufacturers, models, onManufacturerCh
         value={values.trim}
         onChange={(event) => onTrimChange(event.target.value)}
         onClear={() => onTrimChange('')}
+      />
+      <Select
+        required
+        name='gasolineTypeId'
+        label={t('applications.fields.gasolineType')}
+        placeholder={t('applications.fields.gasolineTypePlaceholder')}
+        value={values.gasolineTypeId}
+        options={gasolineTypeOptions}
+        loading={gasolineTypes.isLoading}
+        disabled={gasolineTypes.isLoading}
+        onValueChange={onGasolineTypeChange}
       />
     </div>
   )

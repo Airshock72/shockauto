@@ -7,6 +7,10 @@
     "close": "Close",
     "changeLanguage": "Change language"
   },
+  "gasolineTypes": {
+    "hybrid": "Hybrid",
+    "gas": "Gas/Petrol"
+  },
   "select": {
     "noOptions": "No results found"
   },
@@ -87,7 +91,9 @@
       "year": "Year",
       "yearPlaceholder": "Select year",
       "trim": "Trim",
-      "trimPlaceholder": "Enter trim"
+      "trimPlaceholder": "Enter trim",
+      "gasolineType": "Fuel type",
+      "gasolineTypePlaceholder": "Select fuel type"
     },
     "categories": {
       "car": "Car",
@@ -118,6 +124,7 @@
     },
     "specs": {
       "year": "Year",
+      "gasolineType": "Fuel type",
       "engine": "Engine",
       "mileage": "Mileage",
       "transmission": "Transmission",
