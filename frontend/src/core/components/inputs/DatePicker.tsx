@@ -3,15 +3,17 @@ import { useTranslation } from 'react-i18next'
 import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from 'src/core/lib/utils'
 import TextInput from 'src/core/components/inputs/TextInput.tsx'
-import useDatePicker from 'src/core/hooks/inputs/datePicker.ts'
+import useDatePicker, { type DatePickerMode } from 'src/core/hooks/inputs/datePicker.ts'
 
 interface DatePickerProps {
   readonly name: string
+  readonly mode?: DatePickerMode
   readonly value: string
   readonly min: string
   readonly max: string
   readonly label?: string
   readonly placeholder?: string
+  readonly required?: boolean
   readonly error?: string
   readonly shake?: boolean
   readonly onValueChange: (value: string) => void
@@ -39,7 +41,7 @@ const chevronClassName = 'size-4 text-muted-foreground transition-transform dura
 
 const activeCellClassName = 'bg-primary font-semibold text-primary-foreground shadow-glow hover:bg-primary/90 hover:text-primary-foreground'
 
-const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, onValueChange }: DatePickerProps) => {
+const DatePicker = ({ name, mode = 'date', value, min, max, label, placeholder, required, error, shake, onValueChange }: DatePickerProps) => {
   const { t } = useTranslation()
   const popoverId = useId()
   const {
@@ -70,7 +72,7 @@ const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, o
     selectDay,
     clear,
     getDayState
-  } = useDatePicker({ value, min, max, onChange: onValueChange })
+  } = useDatePicker({ mode, value, min, max, onChange: onValueChange })
 
   return (
     <div ref={containerRef} className='relative' onKeyDown={handleContainerKeyDown} onBlur={handleBlur}>
@@ -80,6 +82,7 @@ const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, o
         name={name}
         label={label}
         placeholder={placeholder}
+        required={required}
         value={displayValue}
         leftIcon={<CalendarDays />}
         error={error}
@@ -101,55 +104,59 @@ const DatePicker = ({ name, value, min, max, label, placeholder, error, shake, o
           aria-label={label}
           className='absolute top-full left-0 z-30 mt-2 w-full min-w-72 origin-top animate-scale-in rounded-xl border bg-popover/95 p-3 text-popover-foreground shadow-elevated backdrop-blur-xl sm:w-80'
         >
-          <div className='mb-2 flex items-center justify-between gap-2'>
-            <div className='flex items-center gap-0.5'>
-              <button
-                type='button'
-                onClick={() => toggleView('months')}
-                aria-expanded={view === 'months'}
-                aria-label={t('datePicker.chooseMonth')}
-                className={cn(headerButtonClassName, view === 'months' && 'bg-accent')}
-              >
-                {monthLabel}
-                <ChevronDown aria-hidden='true' className={cn(chevronClassName, view === 'months' && 'rotate-180')} />
-              </button>
-              <button
-                type='button'
-                onClick={() => toggleView('years')}
-                aria-expanded={view === 'years'}
-                aria-label={t('datePicker.chooseYear')}
-                className={cn(headerButtonClassName, view === 'years' && 'bg-accent')}
-              >
-                <span className='text-gradient'>{viewYear}</span>
-                <ChevronDown aria-hidden='true' className={cn(chevronClassName, view === 'years' && 'rotate-180')} />
-              </button>
-            </div>
+          {mode === 'date' && (
+            <>
+              <div className='mb-2 flex items-center justify-between gap-2'>
+                <div className='flex items-center gap-0.5'>
+                  <button
+                    type='button'
+                    onClick={() => toggleView('months')}
+                    aria-expanded={view === 'months'}
+                    aria-label={t('datePicker.chooseMonth')}
+                    className={cn(headerButtonClassName, view === 'months' && 'bg-accent')}
+                  >
+                    {monthLabel}
+                    <ChevronDown aria-hidden='true' className={cn(chevronClassName, view === 'months' && 'rotate-180')} />
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => toggleView('years')}
+                    aria-expanded={view === 'years'}
+                    aria-label={t('datePicker.chooseYear')}
+                    className={cn(headerButtonClassName, view === 'years' && 'bg-accent')}
+                  >
+                    <span className='text-gradient'>{viewYear}</span>
+                    <ChevronDown aria-hidden='true' className={cn(chevronClassName, view === 'years' && 'rotate-180')} />
+                  </button>
+                </div>
 
-            {view === 'days' && (
-              <div className='flex gap-1'>
-                <button
-                  type='button'
-                  disabled={!canShowPrevious}
-                  onClick={() => showMonth(-1)}
-                  aria-label={t('datePicker.previousMonth')}
-                  className={navButtonClassName}
-                >
-                  <ChevronLeft aria-hidden='true' />
-                </button>
-                <button
-                  type='button'
-                  disabled={!canShowNext}
-                  onClick={() => showMonth(1)}
-                  aria-label={t('datePicker.nextMonth')}
-                  className={navButtonClassName}
-                >
-                  <ChevronRight aria-hidden='true' />
-                </button>
+                {view === 'days' && (
+                  <div className='flex gap-1'>
+                    <button
+                      type='button'
+                      disabled={!canShowPrevious}
+                      onClick={() => showMonth(-1)}
+                      aria-label={t('datePicker.previousMonth')}
+                      className={navButtonClassName}
+                    >
+                      <ChevronLeft aria-hidden='true' />
+                    </button>
+                    <button
+                      type='button'
+                      disabled={!canShowNext}
+                      onClick={() => showMonth(1)}
+                      aria-label={t('datePicker.nextMonth')}
+                      className={navButtonClassName}
+                    >
+                      <ChevronRight aria-hidden='true' />
+                    </button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          <div aria-hidden='true' className='mb-2 h-px bg-linear-to-r from-transparent via-neon/40 to-transparent' />
+              <div aria-hidden='true' className='mb-2 h-px bg-linear-to-r from-transparent via-neon/40 to-transparent' />
+            </>
+          )}
 
           {view === 'days'
             ? <div key={`${viewYear}-${monthLabel}`} className='grid animate-fade-in grid-cols-7 gap-1'>

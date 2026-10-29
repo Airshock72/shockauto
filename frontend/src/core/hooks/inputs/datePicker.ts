@@ -13,14 +13,17 @@ import {
   toIsoDate
 } from 'src/core/helpers/datePicker.ts'
 
+export type DatePickerMode = 'date' | 'year'
+
 interface UseDatePickerParams {
+  readonly mode: DatePickerMode
   readonly value: string
   readonly min: string
   readonly max: string
   readonly onChange: (value: string) => void
 }
 
-const useDatePicker = ({ value, min, max, onChange }: UseDatePickerParams) => {
+const useDatePicker = ({ mode, value, min, max, onChange }: UseDatePickerParams) => {
   const { t } = useTranslation()
   const [state, dispatch] = useDatePickerReducer()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -54,8 +57,13 @@ const useDatePicker = ({ value, min, max, onChange }: UseDatePickerParams) => {
   }, [view])
 
   const open = () => {
+    if (mode === 'year') {
+      dispatch({ type: 'OPEN', payload: { year: Number(value) || maxDate.year, month: 0, view: 'years' } })
+      return
+    }
+
     const anchor = parseIsoDate(value) ?? maxDate
-    dispatch({ type: 'OPEN', payload: { year: anchor.year, month: anchor.month } })
+    dispatch({ type: 'OPEN', payload: { year: anchor.year, month: anchor.month, view: 'days' } })
   }
 
   const close = () => dispatch({ type: 'CLOSE' })
@@ -94,6 +102,13 @@ const useDatePicker = ({ value, min, max, onChange }: UseDatePickerParams) => {
   }
 
   const selectYear = (year: number) => {
+    if (mode === 'year') {
+      onChange(String(year))
+      close()
+      inputRef.current?.focus()
+      return
+    }
+
     dispatch({ type: 'SET_VIEW_DATE', payload: { year, month: clampMonth(year, viewMonth, minDate, maxDate) } })
   }
 
@@ -128,7 +143,7 @@ const useDatePicker = ({ value, min, max, onChange }: UseDatePickerParams) => {
     viewMonth,
     monthLabel: months[viewMonth],
     monthsShort,
-    displayValue: formatDisplayDate(value, monthsShort),
+    displayValue: mode === 'year' ? value : formatDisplayDate(value, monthsShort),
     weekdays,
     days: getMonthDays(viewYear, viewMonth),
     years: getYearRange(minDate.year, maxDate.year),

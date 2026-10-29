@@ -83,7 +83,11 @@
       "manufacturerPlaceholder": "Select manufacturer",
       "model": "Model",
       "modelPlaceholder": "Select model",
-      "modelHint": "Please select a manufacturer first"
+      "modelHint": "Please select a manufacturer first",
+      "year": "Year",
+      "yearPlaceholder": "Select year",
+      "trim": "Trim",
+      "trimPlaceholder": "Enter trim"
     },
     "categories": {
       "car": "Car",
@@ -113,6 +117,7 @@
       }
     },
     "specs": {
+      "year": "Year",
       "engine": "Engine",
       "mileage": "Mileage",
       "transmission": "Transmission",

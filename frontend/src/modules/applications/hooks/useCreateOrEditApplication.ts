@@ -3,7 +3,7 @@ import useManufacturers from 'src/modules/lists/manufacturers/hooks/useManufactu
 import useModels from 'src/modules/lists/models/hooks/useModels.ts'
 import { useCreateOrEditApplicationReducer } from 'src/modules/applications/store/createOrEditApplication.ts'
 import { getStepProgress, stepOptions } from 'src/modules/applications/helpers'
-import type { ApplicationCategory, ApplicationStep, CreateOrEditApplication, StepProgress } from 'src/modules/applications/types'
+import { type ApplicationCategory, ApplicationSpec, type ApplicationStep, type CreateOrEditApplication, type StepProgress } from 'src/modules/applications/types'
 
 const useCreateOrEditApplication = (): CreateOrEditApplication => {
   const [state, dispatch] = useCreateOrEditApplicationReducer()
@@ -13,6 +13,7 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
   const manufacturerLabel = [...manufacturers.topOptions, ...manufacturers.options].find((option) => option.value === values.manufacturerId)?.label ?? null
   const modelLabel = [...models.topOptions, ...models.options].find((option) => option.value === values.modelId)?.label ?? null
   const title = [manufacturerLabel, modelLabel].filter(Boolean).join(' ') || null
+  const specs = values.year === null ? preview.specs : { ...preview.specs, [ApplicationSpec.Year]: String(values.year) }
   const stepProgress = Object.fromEntries(
     stepOptions.map(({ value }) => [value, getStepProgress(value, values)])
   ) as Record<ApplicationStep, StepProgress>
@@ -40,11 +41,19 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
     dispatch({ type: 'SET_VALUES', payload: { ...values, modelId } })
   }
 
+  const handleYearChange = (year: number | null) => {
+    dispatch({ type: 'SET_VALUES', payload: { ...values, year } })
+  }
+
+  const handleTrimChange = (trim: string) => {
+    dispatch({ type: 'SET_VALUES', payload: { ...values, trim } })
+  }
+
   return {
     category,
     activeStep,
     expandedSteps,
-    preview: { ...preview, title: title ?? preview.title },
+    preview: { ...preview, title: title ?? preview.title, specs },
     values,
     stepProgress,
     manufacturers,
@@ -53,7 +62,9 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
     selectStep,
     toggleStep,
     handleManufacturerChange,
-    handleModelChange
+    handleModelChange,
+    handleYearChange,
+    handleTrimChange
   }
 }
 

@@ -14,13 +14,17 @@ interface ViewDate {
   readonly month: number
 }
 
+interface OpenPayload extends ViewDate {
+  readonly view: DatePickerView
+}
+
 export type OPEN = 'OPEN'
 export type CLOSE = 'CLOSE'
 export type SET_VIEW = 'SET_VIEW'
 export type SET_VIEW_DATE = 'SET_VIEW_DATE'
 
 export type DatePickerActions =
-  | { type: OPEN, readonly payload: ViewDate }
+  | { type: OPEN, readonly payload: OpenPayload }
   | { type: CLOSE }
   | { type: SET_VIEW, readonly payload: DatePickerView }
   | { type: SET_VIEW_DATE, readonly payload: ViewDate }
@@ -45,7 +49,7 @@ export const datePickerReducer = (
     return {
       ...state,
       isOpen: true,
-      view: 'days',
+      view: action.payload.view,
       viewYear: action.payload.year,
       viewMonth: action.payload.month
     }

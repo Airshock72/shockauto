@@ -5,6 +5,8 @@ import { ApplicationCategory, type ApplicationPreview, ApplicationStep } from 's
 export interface ApplicationFormValues {
   readonly manufacturerId: ID | null
   readonly modelId: ID | null
+  readonly year: number | null
+  readonly trim: string
 }
 
 export interface CreateOrEditApplicationStore {
@@ -38,7 +40,9 @@ const initialCreateOrEditApplicationStore: CreateOrEditApplicationStore = {
   },
   values: {
     manufacturerId: null,
-    modelId: null
+    modelId: null,
+    year: null,
+    trim: ''
   }
 }
 

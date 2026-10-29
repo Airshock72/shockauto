@@ -54,7 +54,7 @@ const ApplicationPreviewCard = ({ category, preview }: ApplicationPreviewCardPro
           {specOptions.map(({ value, label, icon: Icon }, index) => (
             <div
               key={value}
-              className='flex animate-fade-up items-center gap-2.5 rounded-lg p-1.5 last:col-span-2'
+              className='flex animate-fade-up items-center gap-2.5 rounded-lg p-1.5 odd:last:col-span-2'
               style={{ animationDelay: `${300 + index * 60}ms` }}
             >
               <span className='flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary'>

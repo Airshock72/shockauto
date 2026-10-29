@@ -1,8 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import Select from 'src/core/components/inputs/Select.tsx'
+import TextInput from 'src/core/components/inputs/TextInput.tsx'
+import DatePicker from 'src/core/components/inputs/DatePicker.tsx'
+import { getTodayIso } from 'src/core/helpers/datePicker.ts'
+import { minYearDate, toYear, trimMaxLength } from 'src/modules/applications/helpers'
 import type { CharacteristicsFieldsProps } from 'src/modules/applications/types'
 
-const CharacteristicsFields = ({ values, manufacturers, models, onManufacturerChange, onModelChange }: CharacteristicsFieldsProps) => {
+const CharacteristicsFields = ({ values, manufacturers, models, onManufacturerChange, onModelChange, onYearChange, onTrimChange }: CharacteristicsFieldsProps) => {
   const { t } = useTranslation()
 
   return (
@@ -31,6 +35,26 @@ const CharacteristicsFields = ({ values, manufacturers, models, onManufacturerCh
         loading={models.isLoading}
         disabled={values.manufacturerId === null}
         onValueChange={onModelChange}
+      />
+      <DatePicker
+        required
+        mode='year'
+        name='year'
+        label={t('applications.fields.year')}
+        placeholder={t('applications.fields.yearPlaceholder')}
+        min={minYearDate}
+        max={getTodayIso()}
+        value={values.year?.toString() ?? ''}
+        onValueChange={(value) => onYearChange(toYear(value))}
+      />
+      <TextInput
+        name='trim'
+        label={t('applications.fields.trim')}
+        placeholder={t('applications.fields.trimPlaceholder')}
+        maxLength={trimMaxLength}
+        value={values.trim}
+        onChange={(event) => onTrimChange(event.target.value)}
+        onClear={() => onTrimChange('')}
       />
     </div>
   )

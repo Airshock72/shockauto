@@ -26,7 +26,9 @@ const CreateOrEditApplication = () => {
     selectStep,
     toggleStep,
     handleManufacturerChange,
-    handleModelChange
+    handleModelChange,
+    handleYearChange,
+    handleTrimChange
   } = useCreateOrEditApplication()
 
   return (
@@ -77,6 +79,8 @@ const CreateOrEditApplication = () => {
                     models={models}
                     onManufacturerChange={handleManufacturerChange}
                     onModelChange={handleModelChange}
+                    onYearChange={handleYearChange}
+                    onTrimChange={handleTrimChange}
                   />
                 )}
               </ExpandableSection>

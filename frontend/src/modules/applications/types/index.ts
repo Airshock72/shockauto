@@ -20,6 +20,7 @@ export enum ApplicationStep {
 }
 
 export enum ApplicationSpec {
+  Year = 'Year',
   Engine = 'Engine',
   Mileage = 'Mileage',
   Transmission = 'Transmission',
@@ -74,6 +75,8 @@ export interface CreateOrEditApplication {
   readonly toggleStep: (step: ApplicationStep) => void
   readonly handleManufacturerChange: (manufacturerId: ID | null) => void
   readonly handleModelChange: (modelId: ID | null) => void
+  readonly handleYearChange: (year: number | null) => void
+  readonly handleTrimChange: (trim: string) => void
 }
 
 export interface CharacteristicsFieldsProps {
@@ -82,6 +85,8 @@ export interface CharacteristicsFieldsProps {
   readonly models: Models
   readonly onManufacturerChange: (manufacturerId: ID | null) => void
   readonly onModelChange: (modelId: ID | null) => void
+  readonly onYearChange: (year: number | null) => void
+  readonly onTrimChange: (trim: string) => void
 }
 
 export interface ApplicationStepperProps {

@@ -83,7 +83,11 @@
       "manufacturerPlaceholder": "აირჩიეთ მწარმოებელი",
       "model": "მოდელი",
       "modelPlaceholder": "აირჩიეთ მოდელი",
-      "modelHint": "გთხოვთ პირველ რიგში აირჩიოთ მწარმოებელი"
+      "modelHint": "გთხოვთ პირველ რიგში აირჩიოთ მწარმოებელი",
+      "year": "წელი",
+      "yearPlaceholder": "აირჩიეთ წელი",
+      "trim": "კომპლექტაცია",
+      "trimPlaceholder": "შეიყვანეთ კომპლექტაცია"
     },
     "categories": {
       "car": "ავტომობილი",
@@ -113,6 +117,7 @@
       }
     },
     "specs": {
+      "year": "წელი",
       "engine": "ძრავი",
       "mileage": "გარბენი",
       "transmission": "გადაცემათა კოლოფი",

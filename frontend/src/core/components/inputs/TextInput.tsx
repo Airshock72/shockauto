@@ -35,6 +35,7 @@ const TextInput = ({
   id,
   type = 'text',
   disabled,
+  required = false,
   value,
   onChange,
   ...props
@@ -56,6 +57,7 @@ const TextInput = ({
       {label && (
         <label htmlFor={inputId} className='text-sm font-medium text-foreground short:text-xs'>
           {label}
+          {required && <span aria-hidden='true' className='ml-0.5 text-destructive'>*</span>}
         </label>
       )}
 
@@ -76,6 +78,7 @@ const TextInput = ({
           id={inputId}
           type={isPassword && isPasswordVisible ? 'text' : type}
           disabled={disabled}
+          required={required}
           aria-invalid={error ? true : undefined}
           aria-describedby={message ? messageId : undefined}
           className={cn(
