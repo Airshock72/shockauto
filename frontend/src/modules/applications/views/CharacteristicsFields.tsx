@@ -3,8 +3,11 @@ import Select from 'src/core/components/inputs/Select.tsx'
 import TextInput from 'src/core/components/inputs/TextInput.tsx'
 import DatePicker from 'src/core/components/inputs/DatePicker.tsx'
 import Switch from 'src/core/components/switchers/Switch.tsx'
+import Divider from 'src/core/components/dividers/Divider.tsx'
+import InputGroup from 'src/core/components/inputs/InputGroup.tsx'
+import { normalizeDigits } from 'src/core/helpers/normalizers.ts'
 import { getTodayIso } from 'src/core/helpers/datePicker.ts'
-import { cylinderOptions, engineVolumeOptions, minYearDate, toYear, trimMaxLength } from 'src/modules/applications/helpers'
+import { cylinderOptions, engineVolumeOptions, mileageUnitOptions, minYearDate, toMileage, toYear, trimMaxLength } from 'src/modules/applications/helpers'
 import type { CharacteristicsFieldsProps } from 'src/modules/applications/types'
 
 const CharacteristicsFields = ({
@@ -17,6 +20,7 @@ const CharacteristicsFields = ({
 }: CharacteristicsFieldsProps) => {
   const { t } = useTranslation()
   const gasolineTypeOptions = gasolineTypes.options.map((option) => ({ ...option, group: option.group && t(option.group) }))
+  const mileageUnitSelectOptions = mileageUnitOptions.map((option) => ({ ...option, label: t(option.label) }))
 
   return (
     <div className='grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2'>
@@ -115,6 +119,30 @@ const CharacteristicsFields = ({
           onCheckedChange={(isTurbo) => onValueChange('isTurbo', isTurbo)}
         />
       </div>
+      <Divider className='my-1 sm:col-span-2' />
+      <InputGroup required htmlFor='mileage' label={t('applications.fields.mileage')}>
+        <TextInput
+          required
+          id='mileage'
+          name='mileage'
+          inputMode='numeric'
+          containerClassName='flex-1'
+          placeholder={t('applications.fields.mileagePlaceholder')}
+          normalizer={normalizeDigits}
+          value={values.mileage?.toString() ?? ''}
+          onChange={(event) => onValueChange('mileage', toMileage(event.target.value))}
+          onClear={() => onValueChange('mileage', null)}
+        />
+        <Select
+          required
+          name='mileageUnit'
+          containerClassName='w-40 shrink-0'
+          placeholder={t('applications.fields.mileageUnit')}
+          value={values.mileageUnit}
+          options={mileageUnitSelectOptions}
+          onValueChange={(mileageUnit) => onValueChange('mileageUnit', mileageUnit)}
+        />
+      </InputGroup>
     </div>
   )
 }

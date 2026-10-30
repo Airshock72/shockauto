@@ -8,6 +8,7 @@ import {
   ApplicationSpec,
   ApplicationStep,
   type CategoryOption,
+  MileageUnit,
   type SpecOption,
   type StepOption,
   type StepProgress
@@ -96,8 +97,22 @@ export const engineVolumeOptions: Array<SelectOption<number>> = [
 
 export const toYear = (value: string): number | null => value ? Number(value) : null
 
+export const maxMileage = 1_000_000
+
+export const toMileage = (value: string): number | null => value ? Math.min(Number(value), maxMileage) : null
+
+export const mileageUnitOptions: Array<SelectOption<MileageUnit>> = [
+  { label: 'applications.mileageUnits.kilometer', value: MileageUnit.Kilometer },
+  { label: 'applications.mileageUnits.mile', value: MileageUnit.Mile }
+]
+
+export const mileageUnitShortLabels: Record<MileageUnit, string> = {
+  [MileageUnit.Kilometer]: 'applications.mileageUnitsShort.kilometer',
+  [MileageUnit.Mile]: 'applications.mileageUnitsShort.mile'
+}
+
 export const stepRequiredFields: Record<ApplicationStep, Array<keyof ApplicationFormValues>> = {
-  [ApplicationStep.Characteristics]: ['manufacturerId', 'modelId', 'year', 'gasolineTypeId', 'carCategoryId', 'cylinders', 'engineVolume'],
+  [ApplicationStep.Characteristics]: ['manufacturerId', 'modelId', 'year', 'gasolineTypeId', 'carCategoryId', 'cylinders', 'engineVolume', 'mileage', 'mileageUnit'],
   [ApplicationStep.Location]: [],
   [ApplicationStep.Media]: [],
   [ApplicationStep.Price]: [],

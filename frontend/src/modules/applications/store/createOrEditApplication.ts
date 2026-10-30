@@ -1,6 +1,6 @@
 import { type Dispatch, useReducer } from 'react'
 import type { ID } from 'src/api/types/apiGlobalTypes.ts'
-import { ApplicationCategory, type ApplicationPreview, ApplicationStep } from 'src/modules/applications/types'
+import { ApplicationCategory, type ApplicationPreview, ApplicationStep, type MileageUnit } from 'src/modules/applications/types'
 
 export interface ApplicationFormValues {
   readonly manufacturerId: ID | null
@@ -11,6 +11,8 @@ export interface ApplicationFormValues {
   readonly cylinders: number | null
   readonly engineVolume: number | null
   readonly isTurbo: boolean
+  readonly mileage: number | null
+  readonly mileageUnit: MileageUnit | null
   readonly trim: string
 }
 
@@ -52,6 +54,8 @@ const initialCreateOrEditApplicationStore: CreateOrEditApplicationStore = {
     cylinders: null,
     engineVolume: null,
     isTurbo: false,
+    mileage: null,
+    mileageUnit: null,
     trim: ''
   }
 }

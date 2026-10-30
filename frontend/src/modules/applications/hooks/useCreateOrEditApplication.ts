@@ -4,7 +4,7 @@ import useModels from 'src/modules/lists/models/hooks/useModels.ts'
 import useGasolineTypes from 'src/modules/lists/gasolineTypes/hooks/useGasolineTypes.ts'
 import useCarCategories from 'src/modules/lists/carCategories/hooks/useCarCategories.ts'
 import { useCreateOrEditApplicationReducer } from 'src/modules/applications/store/createOrEditApplication.ts'
-import { engineVolumeOptions, getStepProgress, stepOptions } from 'src/modules/applications/helpers'
+import { engineVolumeOptions, getStepProgress, mileageUnitShortLabels, stepOptions } from 'src/modules/applications/helpers'
 import { type ApplicationCategory, ApplicationSpec, type ApplicationValueChange, type ApplicationStep, type CreateOrEditApplication, type StepProgress } from 'src/modules/applications/types'
 
 const useCreateOrEditApplication = (): CreateOrEditApplication => {
@@ -22,12 +22,14 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
   const carCategoryLabel = carCategories.options.find((option) => option.value === values.carCategoryId)?.label
   const engineVolumeLabel = engineVolumeOptions.find((option) => option.value === values.engineVolume)?.label
   const engineLabel = engineVolumeLabel && [engineVolumeLabel, values.isTurbo && t('applications.fields.turbo')].filter(Boolean).join(' ')
+  const mileageLabel = values.mileage !== null && [values.mileage.toLocaleString(), values.mileageUnit && t(mileageUnitShortLabels[values.mileageUnit])].filter(Boolean).join(' ')
   const specs = {
     ...preview.specs,
     ...(values.year !== null && { [ApplicationSpec.Year]: String(values.year) }),
     ...(gasolineTypeLabel && { [ApplicationSpec.GasolineType]: gasolineTypeLabel }),
     ...(carCategoryLabel && { [ApplicationSpec.CarCategory]: carCategoryLabel }),
-    ...(engineLabel && { [ApplicationSpec.Engine]: engineLabel })
+    ...(engineLabel && { [ApplicationSpec.Engine]: engineLabel }),
+    ...(mileageLabel && { [ApplicationSpec.Mileage]: mileageLabel })
   }
   const stepProgress = Object.fromEntries(
     stepOptions.map(({ value }) => [value, getStepProgress(value, values)])

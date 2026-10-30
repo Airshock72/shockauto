@@ -31,6 +31,11 @@ export enum ApplicationSpec {
   Color = 'Color'
 }
 
+export enum MileageUnit {
+  Kilometer = 'Kilometer',
+  Mile = 'Mile'
+}
+
 export type SpecIcon = LucideIcon | ComponentType<ComponentProps<'svg'>>
 
 export type ApplicationValueChange = <K extends keyof ApplicationFormValues>(field: K, value: ApplicationFormValues[K]) => void

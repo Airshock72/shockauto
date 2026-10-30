@@ -100,7 +100,18 @@
       "cylindersPlaceholder": "Select number of cylinders",
       "engineVolume": "Engine volume",
       "engineVolumePlaceholder": "Select engine volume",
-      "turbo": "Turbo"
+      "turbo": "Turbo",
+      "mileage": "Mileage",
+      "mileagePlaceholder": "Enter mileage",
+      "mileageUnit": "km/mi"
+    },
+    "mileageUnits": {
+      "kilometer": "Kilometer",
+      "mile": "Mile"
+    },
+    "mileageUnitsShort": {
+      "kilometer": "km",
+      "mile": "mi"
     },
     "categories": {
       "car": "Car",

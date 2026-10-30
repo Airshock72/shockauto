@@ -100,7 +100,18 @@
       "cylindersPlaceholder": "აირჩიეთ ცილინდრების რაოდენობა",
       "engineVolume": "ძრავის მოცულობა",
       "engineVolumePlaceholder": "აირჩიეთ ძრავის მოცულობა",
-      "turbo": "ტურბო"
+      "turbo": "ტურბო",
+      "mileage": "გარბენი",
+      "mileagePlaceholder": "ჩაწერე გარბენი",
+      "mileageUnit": "კმ/მილი"
+    },
+    "mileageUnits": {
+      "kilometer": "კილომეტრი",
+      "mile": "მილი"
+    },
+    "mileageUnitsShort": {
+      "kilometer": "კმ",
+      "mile": "მილი"
     },
     "categories": {
       "car": "ავტომობილი",
