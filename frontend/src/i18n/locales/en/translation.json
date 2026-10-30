@@ -95,7 +95,12 @@
       "gasolineType": "Fuel type",
       "gasolineTypePlaceholder": "Select fuel type",
       "carCategory": "Category",
-      "carCategoryPlaceholder": "Select category"
+      "carCategoryPlaceholder": "Select category",
+      "cylinders": "Number of cylinders",
+      "cylindersPlaceholder": "Select number of cylinders",
+      "engineVolume": "Engine volume",
+      "engineVolumePlaceholder": "Select engine volume",
+      "turbo": "Turbo"
     },
     "categories": {
       "car": "Car",

@@ -2,8 +2,9 @@ import { useTranslation } from 'react-i18next'
 import Select from 'src/core/components/inputs/Select.tsx'
 import TextInput from 'src/core/components/inputs/TextInput.tsx'
 import DatePicker from 'src/core/components/inputs/DatePicker.tsx'
+import Switch from 'src/core/components/switchers/Switch.tsx'
 import { getTodayIso } from 'src/core/helpers/datePicker.ts'
-import { minYearDate, toYear, trimMaxLength } from 'src/modules/applications/helpers'
+import { cylinderOptions, engineVolumeOptions, minYearDate, toYear, trimMaxLength } from 'src/modules/applications/helpers'
 import type { CharacteristicsFieldsProps } from 'src/modules/applications/types'
 
 const CharacteristicsFields = ({
@@ -86,6 +87,34 @@ const CharacteristicsFields = ({
         disabled={carCategories.isLoading}
         onValueChange={(carCategoryId) => onValueChange('carCategoryId', carCategoryId)}
       />
+      <Select
+        required
+        name='cylinders'
+        label={t('applications.fields.cylinders')}
+        placeholder={t('applications.fields.cylindersPlaceholder')}
+        value={values.cylinders}
+        options={cylinderOptions}
+        onValueChange={(cylinders) => onValueChange('cylinders', cylinders)}
+      />
+      <div className='flex items-end gap-3'>
+        <Select
+          required
+          name='engineVolume'
+          label={t('applications.fields.engineVolume')}
+          placeholder={t('applications.fields.engineVolumePlaceholder')}
+          value={values.engineVolume}
+          options={engineVolumeOptions}
+          containerClassName='min-w-0 flex-1'
+          onValueChange={(engineVolume) => onValueChange('engineVolume', engineVolume)}
+        />
+        <Switch
+          name='isTurbo'
+          label={t('applications.fields.turbo')}
+          checked={values.isTurbo}
+          className='shrink-0'
+          onCheckedChange={(isTurbo) => onValueChange('isTurbo', isTurbo)}
+        />
+      </div>
     </div>
   )
 }

@@ -1,12 +1,14 @@
+import { useTranslation } from 'react-i18next'
 import useManufacturers from 'src/modules/lists/manufacturers/hooks/useManufacturers.ts'
 import useModels from 'src/modules/lists/models/hooks/useModels.ts'
 import useGasolineTypes from 'src/modules/lists/gasolineTypes/hooks/useGasolineTypes.ts'
 import useCarCategories from 'src/modules/lists/carCategories/hooks/useCarCategories.ts'
 import { useCreateOrEditApplicationReducer } from 'src/modules/applications/store/createOrEditApplication.ts'
-import { getStepProgress, stepOptions } from 'src/modules/applications/helpers'
+import { engineVolumeOptions, getStepProgress, stepOptions } from 'src/modules/applications/helpers'
 import { type ApplicationCategory, ApplicationSpec, type ApplicationValueChange, type ApplicationStep, type CreateOrEditApplication, type StepProgress } from 'src/modules/applications/types'
 
 const useCreateOrEditApplication = (): CreateOrEditApplication => {
+  const { t } = useTranslation()
   const [state, dispatch] = useCreateOrEditApplicationReducer()
   const { category, activeStep, expandedSteps, preview, values } = state
   const manufacturers = useManufacturers()
@@ -18,11 +20,14 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
   const title = [manufacturerLabel, modelLabel].filter(Boolean).join(' ') || null
   const gasolineTypeLabel = gasolineTypes.options.find((option) => option.value === values.gasolineTypeId)?.label
   const carCategoryLabel = carCategories.options.find((option) => option.value === values.carCategoryId)?.label
+  const engineVolumeLabel = engineVolumeOptions.find((option) => option.value === values.engineVolume)?.label
+  const engineLabel = engineVolumeLabel && [engineVolumeLabel, values.isTurbo && t('applications.fields.turbo')].filter(Boolean).join(' ')
   const specs = {
     ...preview.specs,
     ...(values.year !== null && { [ApplicationSpec.Year]: String(values.year) }),
     ...(gasolineTypeLabel && { [ApplicationSpec.GasolineType]: gasolineTypeLabel }),
-    ...(carCategoryLabel && { [ApplicationSpec.CarCategory]: carCategoryLabel })
+    ...(carCategoryLabel && { [ApplicationSpec.CarCategory]: carCategoryLabel }),
+    ...(engineLabel && { [ApplicationSpec.Engine]: engineLabel })
   }
   const stepProgress = Object.fromEntries(
     stepOptions.map(({ value }) => [value, getStepProgress(value, values)])

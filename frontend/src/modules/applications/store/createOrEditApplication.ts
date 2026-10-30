@@ -8,6 +8,9 @@ export interface ApplicationFormValues {
   readonly year: number | null
   readonly gasolineTypeId: ID | null
   readonly carCategoryId: ID | null
+  readonly cylinders: number | null
+  readonly engineVolume: number | null
+  readonly isTurbo: boolean
   readonly trim: string
 }
 
@@ -46,6 +49,9 @@ const initialCreateOrEditApplicationStore: CreateOrEditApplicationStore = {
     year: null,
     gasolineTypeId: null,
     carCategoryId: null,
+    cylinders: null,
+    engineVolume: null,
+    isTurbo: false,
     trim: ''
   }
 }

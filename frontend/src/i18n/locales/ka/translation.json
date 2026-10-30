@@ -95,7 +95,12 @@
       "gasolineType": "საწვავის ტიპი",
       "gasolineTypePlaceholder": "აირჩიეთ საწვავის ტიპი",
       "carCategory": "კატეგორია",
-      "carCategoryPlaceholder": "აირჩიეთ კატეგორია"
+      "carCategoryPlaceholder": "აირჩიეთ კატეგორია",
+      "cylinders": "ცილინდრების რაოდენობა",
+      "cylindersPlaceholder": "აირჩიეთ ცილინდრების რაოდენობა",
+      "engineVolume": "ძრავის მოცულობა",
+      "engineVolumePlaceholder": "აირჩიეთ ძრავის მოცულობა",
+      "turbo": "ტურბო"
     },
     "categories": {
       "car": "ავტომობილი",

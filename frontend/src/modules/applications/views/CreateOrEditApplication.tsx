@@ -32,7 +32,7 @@ const CreateOrEditApplication = () => {
 
   return (
     <main className='container flex-1 py-8 md:py-12'>
-      <div className='mx-auto grid w-full max-w-6xl grid-cols-1 items-start gap-6 lg:grid-cols-[20rem_minmax(0,1fr)] xl:grid-cols-[22rem_minmax(0,1fr)]'>
+      <div className='mx-auto grid w-full max-w-8xl grid-cols-1 items-start gap-6 lg:grid-cols-[20rem_minmax(0,1fr)] xl:grid-cols-[22rem_minmax(0,1fr)]'>
         <aside className='flex flex-col gap-6 lg:sticky lg:top-[calc(var(--spacing-header)+1.5rem)]'>
           <Card className='animate-fade-up p-5 sm:p-6'>
             <ApplicationStepper
