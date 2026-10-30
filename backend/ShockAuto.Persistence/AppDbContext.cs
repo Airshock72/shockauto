@@ -9,6 +9,7 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
     public DbSet<Manufacturer> Manufacturers { get; set; }
     public DbSet<Model> Models { get; set; }
     public DbSet<GasolineType> GasolineTypes { get; set; }
+    public DbSet<CarCategory> CarCategories { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

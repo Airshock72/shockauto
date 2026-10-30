@@ -23,7 +23,8 @@ public class GetGasolineTypesQueryHandler: IRequestHandler<GetGasolineTypesQuery
             {
                 Id = x.Id,
                 Name = x.Name,
-                Type = x.Type
+                Type = x.Type,
+                NameKa = x.NameKa
             })
             .OrderBy(x => x.Name).ToArray();
 
