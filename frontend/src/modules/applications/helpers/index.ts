@@ -1,4 +1,4 @@
-import { Banknote, CalendarDays, Car, Cog, Engine, Fuel, Gauge, Images, MapPin, Motorbike, Palette, Phone, SlidersHorizontal, Tractor } from 'lucide-react'
+import { Banknote, CalendarDays, Car, CarFront, Cog, Engine, Fuel, Gauge, Images, MapPin, Motorbike, Palette, Phone, SlidersHorizontal, Tractor } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import SteeringWheelIcon from 'src/assets/media/svgs/steering-wheel.svg?react'
 import type { ApplicationFormValues } from 'src/modules/applications/store/createOrEditApplication.ts'
@@ -60,6 +60,7 @@ export const stepOptions: Array<StepOption> = [
 export const specOptions: Array<SpecOption> = [
   { value: ApplicationSpec.Year, label: 'applications.specs.year', icon: CalendarDays },
   { value: ApplicationSpec.GasolineType, label: 'applications.specs.gasolineType', icon: Fuel },
+  { value: ApplicationSpec.CarCategory, label: 'applications.specs.carCategory', icon: CarFront },
   { value: ApplicationSpec.Engine, label: 'applications.specs.engine', icon: Engine },
   { value: ApplicationSpec.Mileage, label: 'applications.specs.mileage', icon: Gauge },
   { value: ApplicationSpec.Transmission, label: 'applications.specs.transmission', icon: Cog },
@@ -79,7 +80,7 @@ export const trimMaxLength = 32
 export const toYear = (value: string): number | null => value ? Number(value) : null
 
 export const stepRequiredFields: Record<ApplicationStep, Array<keyof ApplicationFormValues>> = {
-  [ApplicationStep.Characteristics]: ['manufacturerId', 'modelId', 'year', 'gasolineTypeId'],
+  [ApplicationStep.Characteristics]: ['manufacturerId', 'modelId', 'year', 'gasolineTypeId', 'carCategoryId'],
   [ApplicationStep.Location]: [],
   [ApplicationStep.Media]: [],
   [ApplicationStep.Price]: [],

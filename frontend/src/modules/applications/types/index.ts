@@ -1,9 +1,9 @@
 import type { ComponentProps, ComponentType, ReactNode, RefObject } from 'react'
 import type { LucideIcon } from 'lucide-react'
-import type { ID } from 'src/api/types/apiGlobalTypes.ts'
 import type { Manufacturers } from 'src/modules/lists/manufacturers/types'
 import type { Models } from 'src/modules/lists/models/types'
 import type { GasolineTypes } from 'src/modules/lists/gasolineTypes/types'
+import type { CarCategories } from 'src/modules/lists/carCategories/types'
 import type { ApplicationFormValues } from 'src/modules/applications/store/createOrEditApplication.ts'
 
 export enum ApplicationCategory {
@@ -23,6 +23,7 @@ export enum ApplicationStep {
 export enum ApplicationSpec {
   Year = 'Year',
   GasolineType = 'GasolineType',
+  CarCategory = 'CarCategory',
   Engine = 'Engine',
   Mileage = 'Mileage',
   Transmission = 'Transmission',
@@ -31,6 +32,8 @@ export enum ApplicationSpec {
 }
 
 export type SpecIcon = LucideIcon | ComponentType<ComponentProps<'svg'>>
+
+export type ApplicationValueChange = <K extends keyof ApplicationFormValues>(field: K, value: ApplicationFormValues[K]) => void
 
 export interface CategoryOption {
   readonly value: ApplicationCategory
@@ -73,14 +76,11 @@ export interface CreateOrEditApplication {
   readonly manufacturers: Manufacturers
   readonly models: Models
   readonly gasolineTypes: GasolineTypes
+  readonly carCategories: CarCategories
   readonly changeCategory: (category: ApplicationCategory) => void
   readonly selectStep: (step: ApplicationStep) => void
   readonly toggleStep: (step: ApplicationStep) => void
-  readonly handleManufacturerChange: (manufacturerId: ID | null) => void
-  readonly handleModelChange: (modelId: ID | null) => void
-  readonly handleYearChange: (year: number | null) => void
-  readonly handleTrimChange: (trim: string) => void
-  readonly handleGasolineTypeChange: (gasolineTypeId: ID | null) => void
+  readonly handleValueChange: ApplicationValueChange
 }
 
 export interface CharacteristicsFieldsProps {
@@ -88,11 +88,8 @@ export interface CharacteristicsFieldsProps {
   readonly manufacturers: Manufacturers
   readonly models: Models
   readonly gasolineTypes: GasolineTypes
-  readonly onManufacturerChange: (manufacturerId: ID | null) => void
-  readonly onModelChange: (modelId: ID | null) => void
-  readonly onYearChange: (year: number | null) => void
-  readonly onTrimChange: (trim: string) => void
-  readonly onGasolineTypeChange: (gasolineTypeId: ID | null) => void
+  readonly carCategories: CarCategories
+  readonly onValueChange: ApplicationValueChange
 }
 
 export interface ApplicationStepperProps {

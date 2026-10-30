@@ -14,5 +14,5 @@ export const transformGasolineTypesToOptions = (gasolineTypes: Array<GasolineTyp
   gasolineTypeKindOrder.flatMap((kind) =>
     gasolineTypes
       .filter(({ type }) => type === kind)
-      .map(({ id, name }) => ({ label: name, value: id, group: gasolineTypeKindGroups[kind] }))
+      .map(({ id, nameKa }) => ({ label: nameKa, value: id, group: gasolineTypeKindGroups[kind] }))
   )

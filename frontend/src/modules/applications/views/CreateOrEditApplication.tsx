@@ -23,14 +23,11 @@ const CreateOrEditApplication = () => {
     manufacturers,
     models,
     gasolineTypes,
+    carCategories,
     changeCategory,
     selectStep,
     toggleStep,
-    handleManufacturerChange,
-    handleModelChange,
-    handleYearChange,
-    handleTrimChange,
-    handleGasolineTypeChange
+    handleValueChange
   } = useCreateOrEditApplication()
 
   return (
@@ -80,11 +77,8 @@ const CreateOrEditApplication = () => {
                     manufacturers={manufacturers}
                     models={models}
                     gasolineTypes={gasolineTypes}
-                    onManufacturerChange={handleManufacturerChange}
-                    onModelChange={handleModelChange}
-                    onYearChange={handleYearChange}
-                    onTrimChange={handleTrimChange}
-                    onGasolineTypeChange={handleGasolineTypeChange}
+                    carCategories={carCategories}
+                    onValueChange={handleValueChange}
                   />
                 )}
               </ExpandableSection>

@@ -93,7 +93,9 @@
       "trim": "კომპლექტაცია",
       "trimPlaceholder": "შეიყვანეთ კომპლექტაცია",
       "gasolineType": "საწვავის ტიპი",
-      "gasolineTypePlaceholder": "აირჩიეთ საწვავის ტიპი"
+      "gasolineTypePlaceholder": "აირჩიეთ საწვავის ტიპი",
+      "carCategory": "კატეგორია",
+      "carCategoryPlaceholder": "აირჩიეთ კატეგორია"
     },
     "categories": {
       "car": "ავტომობილი",
@@ -125,6 +127,7 @@
     "specs": {
       "year": "წელი",
       "gasolineType": "საწვავის ტიპი",
+      "carCategory": "კატეგორია",
       "engine": "ძრავი",
       "mileage": "გარბენი",
       "transmission": "გადაცემათა კოლოფი",

@@ -93,7 +93,9 @@
       "trim": "Trim",
       "trimPlaceholder": "Enter trim",
       "gasolineType": "Fuel type",
-      "gasolineTypePlaceholder": "Select fuel type"
+      "gasolineTypePlaceholder": "Select fuel type",
+      "carCategory": "Category",
+      "carCategoryPlaceholder": "Select category"
     },
     "categories": {
       "car": "Car",
@@ -125,6 +127,7 @@
     "specs": {
       "year": "Year",
       "gasolineType": "Fuel type",
+      "carCategory": "Category",
       "engine": "Engine",
       "mileage": "Mileage",
       "transmission": "Transmission",

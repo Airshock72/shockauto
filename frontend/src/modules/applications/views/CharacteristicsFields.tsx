@@ -11,11 +11,8 @@ const CharacteristicsFields = ({
   manufacturers,
   models,
   gasolineTypes,
-  onManufacturerChange,
-  onModelChange,
-  onYearChange,
-  onTrimChange,
-  onGasolineTypeChange
+  carCategories,
+  onValueChange
 }: CharacteristicsFieldsProps) => {
   const { t } = useTranslation()
   const gasolineTypeOptions = gasolineTypes.options.map((option) => ({ ...option, group: option.group && t(option.group) }))
@@ -32,7 +29,7 @@ const CharacteristicsFields = ({
         options={manufacturers.options}
         loading={manufacturers.isLoading}
         disabled={manufacturers.isLoading}
-        onValueChange={onManufacturerChange}
+        onValueChange={(manufacturerId) => onValueChange('manufacturerId', manufacturerId)}
       />
       <Select
         required
@@ -45,7 +42,7 @@ const CharacteristicsFields = ({
         options={models.options}
         loading={models.isLoading}
         disabled={values.manufacturerId === null}
-        onValueChange={onModelChange}
+        onValueChange={(modelId) => onValueChange('modelId', modelId)}
       />
       <DatePicker
         required
@@ -56,7 +53,7 @@ const CharacteristicsFields = ({
         min={minYearDate}
         max={getTodayIso()}
         value={values.year?.toString() ?? ''}
-        onValueChange={(value) => onYearChange(toYear(value))}
+        onValueChange={(value) => onValueChange('year', toYear(value))}
       />
       <TextInput
         name='trim'
@@ -64,8 +61,8 @@ const CharacteristicsFields = ({
         placeholder={t('applications.fields.trimPlaceholder')}
         maxLength={trimMaxLength}
         value={values.trim}
-        onChange={(event) => onTrimChange(event.target.value)}
-        onClear={() => onTrimChange('')}
+        onChange={(event) => onValueChange('trim', event.target.value)}
+        onClear={() => onValueChange('trim', '')}
       />
       <Select
         required
@@ -76,7 +73,18 @@ const CharacteristicsFields = ({
         options={gasolineTypeOptions}
         loading={gasolineTypes.isLoading}
         disabled={gasolineTypes.isLoading}
-        onValueChange={onGasolineTypeChange}
+        onValueChange={(gasolineTypeId) => onValueChange('gasolineTypeId', gasolineTypeId)}
+      />
+      <Select
+        required
+        name='carCategoryId'
+        label={t('applications.fields.carCategory')}
+        placeholder={t('applications.fields.carCategoryPlaceholder')}
+        value={values.carCategoryId}
+        options={carCategories.options}
+        loading={carCategories.isLoading}
+        disabled={carCategories.isLoading}
+        onValueChange={(carCategoryId) => onValueChange('carCategoryId', carCategoryId)}
       />
     </div>
   )
