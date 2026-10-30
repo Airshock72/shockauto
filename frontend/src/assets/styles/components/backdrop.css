@@ -1,0 +1,60 @@
+@keyframes backdrop-road {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 0 4rem, 0 0; }
+}
+
+@keyframes backdrop-twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.9; }
+}
+
+.backdrop-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  will-change: transform;
+}
+
+.backdrop-road {
+  position: absolute;
+  inset-inline: -50%;
+  bottom: -10%;
+  height: 60%;
+  transform: perspective(28rem) rotateX(62deg);
+  transform-origin: bottom center;
+  background-image:
+    linear-gradient(to bottom, color-mix(in oklch, var(--primary) 22%, transparent) 1px, transparent 1px),
+    linear-gradient(to right, color-mix(in oklch, var(--neon) 18%, transparent) 1px, transparent 1px);
+  background-size: 100% 4rem, 4rem 100%;
+  mask-image: linear-gradient(to top, black 10%, transparent 85%);
+  animation: backdrop-road 2.4s linear infinite;
+}
+
+.backdrop-streak {
+  position: absolute;
+  left: 0;
+  height: 1px;
+  width: 22rem;
+  border-radius: 9999px;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent, var(--neon), var(--primary), transparent);
+  box-shadow: 0 0 12px var(--neon);
+  will-change: transform, opacity;
+}
+
+.backdrop-spark {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 9999px;
+  background-color: var(--neon);
+  box-shadow: 0 0 6px var(--neon);
+  animation: backdrop-twinkle 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop-road,
+  .backdrop-spark {
+    animation: none;
+  }
+}

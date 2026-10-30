@@ -45,3 +45,22 @@ export const avatarVariants = cva(
     }
   }
 )
+
+export const headerFloatOffset = 24
+
+export const headerFloatMaxWidth = 1200
+
+export const headerFloatMinGap = 12
+
+const getHeaderFloatGap = () => Math.max(headerFloatMinGap, (window.innerWidth - headerFloatMaxWidth) / 2)
+
+export const createHeaderFloat = (shell: HTMLElement) => {
+  return gsap.timeline({ paused: true, defaults: { duration: 0.55, ease: 'power3.out' } })
+    .to(shell, {
+      marginTop: 10,
+      marginLeft: getHeaderFloatGap,
+      marginRight: getHeaderFloatGap,
+      borderRadius: 18
+    })
+    .fromTo(shell, { y: -6 }, { y: 0, duration: 0.4, ease: 'back.out(2)' }, 0.1)
+}
