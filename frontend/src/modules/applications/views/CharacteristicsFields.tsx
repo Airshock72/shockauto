@@ -6,11 +6,14 @@ import Switch from 'src/core/components/switchers/Switch.tsx'
 import Divider from 'src/core/components/dividers/Divider.tsx'
 import InputGroup from 'src/core/components/inputs/InputGroup.tsx'
 import RadioGroup from 'src/core/components/inputs/RadioGroup.tsx'
+import CheckboxGroup from 'src/core/components/inputs/CheckboxGroup.tsx'
+import TextArea from 'src/core/components/inputs/TextArea.tsx'
 import type { RadioOption, RadioValue } from 'src/core/types/radioGroup.ts'
 import { normalizeDigits } from 'src/core/helpers/normalizers.ts'
 import { getTodayIso } from 'src/core/helpers/datePicker.ts'
 import {
   airbagOptions,
+  commentMaxLength,
   cylinderOptions,
   defaultUpholstery,
   doorCountOptions,
@@ -27,6 +30,7 @@ import {
   transmissionOptions,
   trimMaxLength,
   vehicleColorSwatches,
+  vehicleFeatureOptions,
   yesNoOptions
 } from 'src/modules/applications/helpers'
 import MaterialSwatch from 'src/modules/applications/views/MaterialSwatch.tsx'
@@ -253,6 +257,24 @@ const CharacteristicsFields = ({
         options={translate(interiorColorOptions)}
         className='sm:col-span-2'
         onValueChange={(interiorColor) => onValueChange('interiorColor', interiorColor)}
+      />
+      <CheckboxGroup
+        name='features'
+        label={t('applications.fields.features')}
+        values={values.features}
+        options={vehicleFeatureOptions.map((option) => ({ ...option, label: t(option.label) }))}
+        className='sm:col-span-2'
+        onValuesChange={(features) => onValueChange('features', features)}
+      />
+      <Divider className='my-1 sm:col-span-2' />
+      <TextArea
+        name='comment'
+        label={t('applications.fields.comment')}
+        placeholder={t('applications.fields.commentPlaceholder')}
+        maxLength={commentMaxLength}
+        value={values.comment}
+        containerClassName='sm:col-span-2'
+        onChange={(event) => onValueChange('comment', event.target.value)}
       />
     </div>
   )

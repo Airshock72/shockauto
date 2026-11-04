@@ -89,6 +89,33 @@ export enum InteriorMaterial {
   Alcantara = 'Alcantara'
 }
 
+export enum VehicleFeature {
+  PowerSteering = 'PowerSteering',
+  OnboardComputer = 'OnboardComputer',
+  AirConditioning = 'AirConditioning',
+  ParkingControl = 'ParkingControl',
+  RearViewCamera = 'RearViewCamera',
+  ElectricWindows = 'ElectricWindows',
+  ClimateControl = 'ClimateControl',
+  CruiseControl = 'CruiseControl',
+  StartStop = 'StartStop',
+  Sunroof = 'Sunroof',
+  HeatedSeats = 'HeatedSeats',
+  SeatMemory = 'SeatMemory',
+  Abs = 'Abs',
+  TractionControl = 'TractionControl',
+  CentralLocking = 'CentralLocking',
+  Alarm = 'Alarm',
+  FogLights = 'FogLights',
+  Navigation = 'Navigation',
+  Aux = 'Aux',
+  Bluetooth = 'Bluetooth',
+  MultifunctionSteeringWheel = 'MultifunctionSteeringWheel',
+  Rims = 'Rims',
+  SpareTire = 'SpareTire',
+  DisabilityAdapted = 'DisabilityAdapted'
+}
+
 export type SpecIcon = LucideIcon | ComponentType<ComponentProps<'svg'>>
 
 export type ApplicationValueChange = <K extends keyof ApplicationFormValues>(field: K, value: ApplicationFormValues[K]) => void

@@ -19,7 +19,7 @@ export const sendPrivateRequest = async (
     const storedToken = localStorage.getItem('token')
     const token = storedToken ? JSON.parse(storedToken) : null
 
-    const urlParams = stringify(params, { encode: true })
+    const urlParams = stringify(params)
     const headersObject: Record<string, string> = {
       Authorization: token ? `Bearer ${token.accessToken}` : '',
       'Accept-Language': i18n.resolvedLanguage ?? 'ka',

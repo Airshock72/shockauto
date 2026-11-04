@@ -1,7 +1,46 @@
-import { Banknote, CalendarDays, Car, CarFront, Cog, Engine, Fuel, Gauge, Images, MapPin, Motorbike, Palette, Phone, SlidersHorizontal, Tractor } from 'lucide-react'
+import {
+  Accessibility,
+  AirVent,
+  Armchair,
+  ArrowDownUp,
+  Banknote,
+  Bluetooth,
+  Cable,
+  CalendarDays,
+  Camera,
+  Car,
+  CarFront,
+  CircleParking,
+  CloudFog,
+  Cog,
+  Cpu,
+  Disc3,
+  Donut,
+  Droplet,
+  Engine,
+  Flame,
+  Fuel,
+  Gauge,
+  Images,
+  LifeBuoy,
+  Lock,
+  MapPin,
+  Motorbike,
+  Navigation,
+  Palette,
+  Phone,
+  Power,
+  ShieldCheck,
+  Siren,
+  SlidersHorizontal,
+  Sun,
+  ThermometerSnowflake,
+  Tractor
+} from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { SelectOption } from 'src/core/types/select.ts'
 import type { RadioOption, RadioValue } from 'src/core/types/radioGroup.ts'
+import type { CheckboxOption } from 'src/core/types/checkboxGroup.ts'
 import { brandColors } from 'src/core/helpers/three.ts'
 import SteeringWheelIcon from 'src/assets/media/svgs/steering-wheel.svg?react'
 import type { ApplicationFormValues } from 'src/modules/applications/store/createOrEditApplication.ts'
@@ -19,7 +58,8 @@ import {
   type StepOption,
   type StepProgress,
   TransmissionType,
-  VehicleColor
+  VehicleColor,
+  VehicleFeature
 } from 'src/modules/applications/types'
 
 export const categoryOptions: Array<CategoryOption> = [
@@ -233,6 +273,35 @@ export const interiorColorOptions = toColorOptions([
   VehicleColor.Burgundy,
   VehicleColor.Gold
 ])
+
+export const vehicleFeatureOptions: Array<CheckboxOption<VehicleFeature>> = [
+  { label: 'applications.features.powerSteering', value: VehicleFeature.PowerSteering, icon: Droplet },
+  { label: 'applications.features.onboardComputer', value: VehicleFeature.OnboardComputer, icon: Cpu },
+  { label: 'applications.features.airConditioning', value: VehicleFeature.AirConditioning, icon: AirVent },
+  { label: 'applications.features.parkingControl', value: VehicleFeature.ParkingControl, icon: CircleParking },
+  { label: 'applications.features.rearViewCamera', value: VehicleFeature.RearViewCamera, icon: Camera },
+  { label: 'applications.features.electricWindows', value: VehicleFeature.ElectricWindows, icon: ArrowDownUp },
+  { label: 'applications.features.climateControl', value: VehicleFeature.ClimateControl, icon: ThermometerSnowflake },
+  { label: 'applications.features.cruiseControl', value: VehicleFeature.CruiseControl, icon: Gauge },
+  { label: 'applications.features.startStop', value: VehicleFeature.StartStop, icon: Power },
+  { label: 'applications.features.sunroof', value: VehicleFeature.Sunroof, icon: Sun },
+  { label: 'applications.features.heatedSeats', value: VehicleFeature.HeatedSeats, icon: Flame },
+  { label: 'applications.features.seatMemory', value: VehicleFeature.SeatMemory, icon: Armchair },
+  { label: 'applications.features.abs', value: VehicleFeature.Abs, icon: Disc3 },
+  { label: 'applications.features.tractionControl', value: VehicleFeature.TractionControl, icon: ShieldCheck },
+  { label: 'applications.features.centralLocking', value: VehicleFeature.CentralLocking, icon: Lock },
+  { label: 'applications.features.alarm', value: VehicleFeature.Alarm, icon: Siren },
+  { label: 'applications.features.fogLights', value: VehicleFeature.FogLights, icon: CloudFog },
+  { label: 'applications.features.navigation', value: VehicleFeature.Navigation, icon: Navigation },
+  { label: 'applications.features.aux', value: VehicleFeature.Aux, icon: Cable },
+  { label: 'applications.features.bluetooth', value: VehicleFeature.Bluetooth, icon: Bluetooth },
+  { label: 'applications.features.multifunctionSteeringWheel', value: VehicleFeature.MultifunctionSteeringWheel, icon: SteeringWheelIcon },
+  { label: 'applications.features.rims', value: VehicleFeature.Rims, icon: LifeBuoy },
+  { label: 'applications.features.spareTire', value: VehicleFeature.SpareTire, icon: Donut },
+  { label: 'applications.features.disabilityAdapted', value: VehicleFeature.DisabilityAdapted, icon: Accessibility }
+]
+
+export const commentMaxLength = 4000
 
 export const metallicColors: ReadonlyArray<VehicleColor> = [VehicleColor.Silver, VehicleColor.Gray, VehicleColor.Gold]
 

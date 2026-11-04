@@ -10,7 +10,8 @@ import {
   type MileageUnit,
   type SteeringSide,
   type TransmissionType,
-  type VehicleColor
+  type VehicleColor,
+  type VehicleFeature
 } from 'src/modules/applications/types'
 
 export interface ApplicationFormValues {
@@ -34,6 +35,8 @@ export interface ApplicationFormValues {
   readonly exteriorColor: VehicleColor | null
   readonly interiorMaterial: InteriorMaterial | null
   readonly interiorColor: VehicleColor | null
+  readonly features: ReadonlyArray<VehicleFeature>
+  readonly comment: string
   readonly trim: string
 }
 
@@ -88,6 +91,8 @@ const initialCreateOrEditApplicationStore: CreateOrEditApplicationStore = {
     exteriorColor: null,
     interiorMaterial: null,
     interiorColor: null,
+    features: [],
+    comment: '',
     trim: ''
   }
 }

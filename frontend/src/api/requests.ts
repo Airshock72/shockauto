@@ -13,7 +13,7 @@ export const sendRequest = async (
   silent = false
 ): Promise<GlobalResponse> => {
   try {
-    const urlParams = stringify(params, { encode: true })
+    const urlParams = stringify(params)
     const headersObject = {
       'Accept-Language': i18n.resolvedLanguage ?? 'ka',
       'Accept': 'application/json'
