@@ -1,6 +1,17 @@
 import { type Dispatch, useReducer } from 'react'
 import type { ID } from 'src/api/types/apiGlobalTypes.ts'
-import { ApplicationCategory, type ApplicationPreview, ApplicationStep, type MileageUnit } from 'src/modules/applications/types'
+import {
+  ApplicationCategory,
+  type ApplicationPreview,
+  ApplicationStep,
+  type DoorCount,
+  type DriveType,
+  type InteriorMaterial,
+  type MileageUnit,
+  type SteeringSide,
+  type TransmissionType,
+  type VehicleColor
+} from 'src/modules/applications/types'
 
 export interface ApplicationFormValues {
   readonly manufacturerId: ID | null
@@ -13,6 +24,16 @@ export interface ApplicationFormValues {
   readonly isTurbo: boolean
   readonly mileage: number | null
   readonly mileageUnit: MileageUnit | null
+  readonly steeringSide: SteeringSide | null
+  readonly transmission: TransmissionType | null
+  readonly driveType: DriveType | null
+  readonly doorCount: DoorCount | null
+  readonly hasThirdRowSeats: boolean | null
+  readonly hasCatalyst: boolean | null
+  readonly airbags: number | null
+  readonly exteriorColor: VehicleColor | null
+  readonly interiorMaterial: InteriorMaterial | null
+  readonly interiorColor: VehicleColor | null
   readonly trim: string
 }
 
@@ -43,7 +64,8 @@ const initialCreateOrEditApplicationStore: CreateOrEditApplicationStore = {
     imageUrl: null,
     title: null,
     price: null,
-    specs: {}
+    specs: {},
+    swatches: {}
   },
   values: {
     manufacturerId: null,
@@ -56,6 +78,16 @@ const initialCreateOrEditApplicationStore: CreateOrEditApplicationStore = {
     isTurbo: false,
     mileage: null,
     mileageUnit: null,
+    steeringSide: null,
+    transmission: null,
+    driveType: null,
+    doorCount: null,
+    hasThirdRowSeats: null,
+    hasCatalyst: null,
+    airbags: null,
+    exteriorColor: null,
+    interiorMaterial: null,
+    interiorColor: null,
     trim: ''
   }
 }

@@ -40,6 +40,11 @@
   "profile": {
     "title": "Personal information",
     "subtitle": "Manage your personal details and account settings",
+    "sections": {
+      "personal": "Personal details",
+      "contact": "Contact",
+      "security": "Security"
+    },
     "firstName": "First name",
     "lastName": "Last name",
     "gender": "Gender",
@@ -103,7 +108,17 @@
       "turbo": "Turbo",
       "mileage": "Mileage",
       "mileagePlaceholder": "Enter mileage",
-      "mileageUnit": "km/mi"
+      "mileageUnit": "km/mi",
+      "steeringSide": "Steering wheel",
+      "transmission": "Transmission",
+      "driveType": "Drive wheels",
+      "doorCount": "Doors",
+      "thirdRowSeats": "Third row seats",
+      "catalyst": "Catalytic converter",
+      "airbags": "Airbags",
+      "exteriorColor": "Exterior color",
+      "interiorMaterial": "Interior material",
+      "interiorColor": "Interior color"
     },
     "mileageUnits": {
       "kilometer": "Kilometer",
@@ -151,7 +166,57 @@
       "color": "Color"
     },
     "preview": {
-      "noImage": "No photo yet"
+      "noImage": "No photo yet",
+      "dragHint": "Drag to rotate"
+    },
+    "steeringSides": {
+      "left": "Left",
+      "right": "Right"
+    },
+    "transmissions": {
+      "manual": "Manual",
+      "automatic": "Automatic",
+      "tiptronic": "Tiptronic",
+      "variator": "CVT"
+    },
+    "driveTypes": {
+      "front": "Front",
+      "rear": "Rear",
+      "allWheel": "4x4"
+    },
+    "doorCounts": {
+      "twoThree": "2/3",
+      "fourFive": "4/5",
+      "moreThanFive": ">5"
+    },
+    "answers": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "interiorMaterials": {
+      "fabric": "Fabric",
+      "leather": "Leather",
+      "artificialLeather": "Artificial leather",
+      "combined": "Combined",
+      "alcantara": "Alcantara"
+    },
+    "colors": {
+      "white": "White",
+      "black": "Black",
+      "silver": "Silver",
+      "gray": "Gray",
+      "red": "Red",
+      "blue": "Blue",
+      "yellow": "Yellow",
+      "green": "Green",
+      "orange": "Orange",
+      "gold": "Gold",
+      "purple": "Purple",
+      "pink": "Pink",
+      "beige": "Beige",
+      "burgundy": "Burgundy",
+      "skyBlue": "Sky blue",
+      "brown": "Brown"
     }
   },
   "errors": {
@@ -165,7 +230,10 @@
   "notFound": {
     "title": "Page Not Found",
     "description": "The page you are looking for doesn't exist or has been removed",
-    "backHome": "Back to Homepage"
+    "backHome": "Back to Homepage",
+    "goBack": "Go back",
+    "eyebrow": "Error 404 · Wrong turn",
+    "hint": "Click the wheel"
   },
   "register": {
     "title": "Create an account",

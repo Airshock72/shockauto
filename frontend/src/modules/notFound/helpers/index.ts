@@ -1,154 +1,237 @@
 import gsap from 'gsap'
+import {
+  BoxGeometry,
+  ConeGeometry,
+  CylinderGeometry,
+  DirectionalLight,
+  ExtrudeGeometry,
+  Group,
+  HemisphereLight,
+  Mesh,
+  MeshBasicMaterial,
+  MeshPhysicalMaterial,
+  MeshStandardMaterial,
+  Path,
+  PlaneGeometry,
+  Shape,
+  TorusGeometry,
+  Vector3
+} from 'three'
+import { brandColors, createRadialTexture, createStudioEnvironment } from 'src/core/helpers/three.ts'
+import type { ContextSafe, ThreeStage } from 'src/core/types/three.ts'
+import type { WrongTurnController } from 'src/modules/notFound/types'
 
-export interface Point {
-  x: number
-  y: number
+const digitScale = 1.45
+const digitDepth = 0.5
+const digitOffsetX = 2.05
+const wheelRadius = 0.78
+const wheelTube = 0.3
+const wheelCenterY = wheelRadius + wheelTube
+const treadCount = 28
+const laneDashCount = 12
+const laneDashGap = 1.6
+const laneHalfLength = (laneDashCount * laneDashGap) / 2
+const idleSpinSpeed = 1.6
+const burnoutSpinSpeed = 26
+const roadSpeedRatio = 0.6
+
+const cameraPosition = new Vector3(0, 1.9, 9.6)
+const cameraTarget = new Vector3(0, 1.05, 0)
+
+const createFourGeometry = () => {
+  const shape = new Shape()
+    .moveTo(0.55, 0)
+    .lineTo(0.85, 0)
+    .lineTo(0.85, 0.35)
+    .lineTo(1, 0.35)
+    .lineTo(1, 0.6)
+    .lineTo(0.85, 0.6)
+    .lineTo(0.85, 1.5)
+    .lineTo(0.6, 1.5)
+    .lineTo(0, 0.6)
+    .lineTo(0, 0.35)
+    .lineTo(0.55, 0.35)
+    .closePath()
+  shape.holes.push(new Path().moveTo(0.55, 0.6).lineTo(0.55, 1.1).lineTo(0.24, 0.6).closePath())
+
+  const geometry = new ExtrudeGeometry(shape, { depth: digitDepth / digitScale, bevelThickness: 0.04, bevelSize: 0.035, bevelSegments: 4 })
+  geometry.scale(digitScale, digitScale, digitScale)
+  geometry.translate(-digitScale / 2, 0, -digitDepth / 2)
+  return geometry
 }
 
-export interface CableSample extends Point {
-  s: number
-}
+const createWheel = (rubber: MeshStandardMaterial, chrome: MeshPhysicalMaterial, glowMaterial: MeshBasicMaterial) => {
+  const spinner = new Group()
+  spinner.add(new Mesh(new TorusGeometry(wheelRadius, wheelTube, 24, 64), rubber))
 
-export const SVG_NS = 'http://www.w3.org/2000/svg'
-
-// Cable drag tuning (SVG units)
-export const MAX_PULL = 70 // how far the cable can be pulled
-export const FALLOFF = 150 // how much of the cable bends around the grab point
-export const PIN_LENGTH = 60 // cable eases out of the plug over this length
-export const CABLE_RELEASE_EASE = 'elastic.out(1, 0.3)' // wobble on release
-
-export const ZERO: Point = { x: 0, y: 0 }
-
-export const REDUCED_MOTION_OFF = '(prefers-reduced-motion: no-preference)'
-
-// Ambient loop timing (seconds)
-const LOOP_DURATION = 5
-const PULSE_ARRIVAL = 2.75
-const KEY_PRESS_START = 2.9
-const KEY_PRESS_STAGGER = 0.4
-
-/*
- * One 5s loop:
- *   0 → 2.75s   electric pulse runs down the cable
- *   2.75s       spark at the plug
- *   2.9 → 4.2s  keys press in sequence 4 → 0 → 4
- */
-export const createKeypadLoop = (svg: SVGSVGElement) => {
-  const pulse = svg.querySelector('.kp-pulse')
-  const spark = svg.querySelector('.kp-spark')
-  const keys = gsap.utils.toArray<SVGGElement>(svg.querySelectorAll('.kp-key'))
-
-  gsap.set(spark, { transformOrigin: '50% 50%' }).then()
-  gsap.set(keys, { filter: 'brightness(1)' }).then()
-
-  const timeline = gsap.timeline({ repeat: -1 })
-
-  timeline
-    .set(pulse, { strokeDashoffset: 3, opacity: 1 }, 0)
-    .to(pulse, { strokeDashoffset: 100, duration: PULSE_ARRIVAL, ease: 'none' }, 0)
-    .set(pulse, { opacity: 0 }, PULSE_ARRIVAL + 0.05)
-    .fromTo(spark, { scale: 0.2, opacity: 0 }, {
-      scale: 1,
-      opacity: 0.9,
-      duration: 0.1,
-      ease: 'none'
-    }, PULSE_ARRIVAL - 0.05)
-    .to(spark, { scale: 2.2, opacity: 0, duration: 0.5, ease: 'power2. out' }, PULSE_ARRIVAL + 0.05).then()
-
-  keys.forEach((key, index) => {
-    const at = KEY_PRESS_START + index * KEY_PRESS_STAGGER
-    const glow = key.querySelector('.kp-digit-glow')
-
-    timeline
-      .to(key, { y: 6, filter: 'brightness(1.15)', duration: 0.2, ease: 'power4.out' }, at)
-      .to(key, { y: 0, filter: 'brightness(1)', duration: 0.3, ease: 'power4.out' }, at + 0.2).then()
-
-    if (glow) {
-      timeline
-        .to(glow, { opacity: 1, duration: 0.2, ease: 'power4.out' }, at)
-        .to(glow, { opacity: 0, duration: 0.7, ease: 'power4.out' }, at + 0.2).then()
-    }
-  })
-
-  // Pad the timeline so every loop lasts exactly LOOP_DURATION
-  timeline.set({}, {}, LOOP_DURATION).then()
-
-  return timeline
-}
-
-// Keypad gently floating (the cable sways with it)
-export const createKeypadFloat = (svg: SVGSVGElement) =>
-  gsap.to(svg, { y: -8, rotation: -0.6, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1 })
-
-// Heading, description and button fade up one after another
-export const createPageReveal = (targets: Array<Element>) =>
-  gsap.from(targets, { opacity: 0, y: 8, duration: 0.45, delay: 0.15, stagger: 0.15, ease: 'expo.out' })
-
-// Clicked key: press down, bounce slightly back up, settle
-export const createKeyPress = (button: Element) =>
-  gsap
-    .timeline()
-    .to(button, { y: 7, filter: 'brightness(1.2)', duration: 0.09, ease: 'power2.out' })
-    .to(button, { y: -2, filter: 'brightness(1.05)', duration: 0.16, ease: 'power2.out' })
-    .to(button, { y: 0, filter: 'brightness(1)', duration: 0.2, ease: 'power2.out' })
-
-export const toSvgPoint = (svg: SVGSVGElement, clientX: number, clientY: number): Point | null => {
-  const matrix = svg.getScreenCTM()
-  if (!matrix) return null
-
-  const point = new DOMPoint(clientX, clientY).matrixTransform(matrix.inverse())
-  return { x: point.x, y: point.y }
-}
-
-// Soft limit: the further you pull, the harder it gets
-export const limitPull = ({ x, y }: Point): Point => {
-  const length = Math.hypot(x, y)
-  if (length === 0) return ZERO
-
-  const scale = (MAX_PULL * Math.tanh(length / MAX_PULL)) / length
-  return { x: x * scale, y: y * scale }
-}
-
-// Dense samples near the plug (visible curve), sparse along the long straight part
-export const sampleCable = (path: SVGPathElement): Array<CableSample> => {
-  const total = path.getTotalLength()
-  const samples: Array<CableSample> = []
-
-  for (let s = 0; s < total; s += s < 700 ? 5 : 50) {
-    const { x, y } = path.getPointAtLength(s)
-    samples.push({ x, y, s })
+  for (let index = 0; index < treadCount; index++) {
+    const angle = (index / treadCount) * Math.PI * 2
+    const block = new Mesh(new BoxGeometry(0.12, 0.08, wheelTube * 1.5), rubber)
+    block.position.set(Math.cos(angle) * (wheelRadius + wheelTube - 0.02), Math.sin(angle) * (wheelRadius + wheelTube - 0.02), 0)
+    block.rotation.z = angle
+    spinner.add(block)
   }
 
-  const end = path.getPointAtLength(total)
-  samples.push({ x: end.x, y: end.y, s: total })
+  const rim = new Mesh(new CylinderGeometry(wheelRadius - 0.04, wheelRadius - 0.04, 0.36, 48, 1, true), chrome)
+  rim.rotation.x = Math.PI / 2
+  const hub = new Mesh(new CylinderGeometry(0.16, 0.16, 0.42, 24), chrome)
+  hub.rotation.x = Math.PI / 2
+  spinner.add(rim, hub)
 
-  return samples
+  for (let index = 0; index < 5; index++) {
+    const spoke = new Mesh(new BoxGeometry(0.11, wheelRadius * 0.9, 0.08), chrome)
+    const angle = (index / 5) * Math.PI * 2
+    spoke.position.set(Math.cos(angle) * wheelRadius * 0.45, Math.sin(angle) * wheelRadius * 0.45, 0.12)
+    spoke.rotation.z = angle - Math.PI / 2
+    spinner.add(spoke)
+  }
+
+  const glow = new Mesh(new TorusGeometry(wheelRadius - 0.06, 0.02, 8, 64), glowMaterial)
+  glow.position.z = 0.2
+  spinner.add(glow)
+  return spinner
 }
 
-export const findNearestSample = (samples: Array<CableSample>, point: Point): CableSample =>
-  samples.reduce((best, sample) =>
-    Math.hypot(sample.x - point.x, sample.y - point.y) < Math.hypot(best.x - point.x, best.y - point.y) ? sample : best
+const createCone = (orange: MeshStandardMaterial, white: MeshStandardMaterial) => {
+  const cone = new Group()
+  const base = new Mesh(new BoxGeometry(0.5, 0.05, 0.5), orange)
+  base.position.y = 0.025
+  const body = new Mesh(new ConeGeometry(0.2, 0.7, 24), orange)
+  body.position.y = 0.4
+  const stripe = new Mesh(new CylinderGeometry(0.11, 0.135, 0.1, 24), white)
+  stripe.position.y = 0.45
+  cone.add(base, body, stripe)
+  return cone
+}
+
+export const createWrongTurnScene = (
+  { renderer, scene, camera, container }: ThreeStage,
+  contextSafe: ContextSafe,
+  reducedMotion: boolean
+): WrongTurnController => {
+  scene.environment = createStudioEnvironment(renderer)
+  scene.environmentIntensity = 0.9
+  camera.position.copy(cameraPosition)
+  camera.lookAt(cameraTarget)
+
+  scene.add(new HemisphereLight('#ffffff', '#1e1b4b', 0.8))
+  const keyLight = new DirectionalLight('#ffffff', 2.4)
+  keyLight.position.set(3, 6, 5)
+  const rimLight = new DirectionalLight(brandColors.neon, 1.6)
+  rimLight.position.set(-4, 3, -5)
+  scene.add(keyLight, rimLight)
+
+  const rig = new Group()
+  scene.add(rig)
+
+  const digitMaterial = new MeshPhysicalMaterial({ color: brandColors.violet, metalness: 0.55, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.06 })
+  const fourGeometry = createFourGeometry()
+  const digits = [-1, 1].map((side) => {
+    const digit = new Mesh(fourGeometry, digitMaterial)
+    digit.position.x = side * digitOffsetX
+    digit.rotation.y = -side * 0.12
+    rig.add(digit)
+    return digit
+  })
+
+  const glowMaterial = new MeshBasicMaterial({ color: brandColors.neon, transparent: true, opacity: 0.9 })
+  const wheel = new Group()
+  const spinner = createWheel(
+    new MeshStandardMaterial({ color: '#16161b', roughness: 0.92 }),
+    new MeshPhysicalMaterial({ color: '#d9dde6', metalness: 1, roughness: 0.18, clearcoat: 0.6 }),
+    glowMaterial
   )
+  wheel.add(spinner)
+  wheel.position.y = wheelCenterY
+  rig.add(wheel)
 
-// Bends the sampled cable around the grab point, keeping the plug end pinned
-export const buildCablePath = (samples: Array<CableSample>, offset: Point, grabS: number): string =>
-  samples
-    .map(({ x, y, s }, index) => {
-      const t = Math.min(1, s / PIN_LENGTH)
-      const pin = t * t * (3 - 2 * t) // smoothstep — no kink at the plug
-      const weight = Math.exp(-(((s - grabS) / FALLOFF) ** 2)) * pin
-      const command = index === 0 ? 'M' : 'L'
-      return `${command}${(x + offset.x * weight).toFixed(1)} ${(y + offset.y * weight).toFixed(1)}`
+  const coneOrange = new MeshStandardMaterial({ color: '#ff6a1a', roughness: 0.55, emissive: '#ff4d00', emissiveIntensity: 0.15 })
+  const coneWhite = new MeshStandardMaterial({ color: '#ffffff', roughness: 0.4 })
+  const cones = [-1, 1].map((side) => {
+    const cone = createCone(coneOrange, coneWhite)
+    cone.position.set(side * 3.55, 0, 0.6)
+    cone.rotation.y = side * 0.4
+    rig.add(cone)
+    return cone
+  })
+
+  const shadow = new Mesh(
+    new PlaneGeometry(9, 2.6),
+    new MeshBasicMaterial({ map: createRadialTexture('rgba(0,0,0,0.6)'), transparent: true, depthWrite: false })
+  )
+  shadow.rotation.x = -Math.PI / 2
+  shadow.position.y = 0.002
+  const dashMaterial = new MeshBasicMaterial({ color: brandColors.neon, transparent: true, opacity: 0.55, depthWrite: false })
+  const dashes = Array.from({ length: laneDashCount }, (_, index) => {
+    const dash = new Mesh(new PlaneGeometry(0.8, 0.06), dashMaterial)
+    dash.rotation.x = -Math.PI / 2
+    dash.position.set(index * laneDashGap - laneHalfLength, 0.001, 1.25)
+    rig.add(dash)
+    return dash
+  })
+  rig.add(shadow)
+
+  const motion = { spin: reducedMotion ? 0 : idleSpinSpeed }
+
+  if (!reducedMotion) {
+    gsap.timeline()
+      .from(digits.map(({ position }) => position), { y: 4, duration: 1.1, ease: 'bounce.out', stagger: 0.18 })
+      .from(wheel.position, { x: -7, duration: 1.4, ease: 'power3.out' }, 0.2)
+      .from(spinner.rotation, { z: 14, duration: 1.4, ease: 'power3.out' }, '<')
+      .from(cones.map(({ scale }) => scale), { x: 0, y: 0, z: 0, duration: 0.6, ease: 'back.out(2.5)', stagger: 0.1 }, 0.9)
+      .from(dashMaterial, { opacity: 0, duration: 0.8 }, 0.4).then()
+
+    digits.forEach((digit, index) => {
+      gsap.to(digit.rotation, { x: 0.06, duration: 2.4, ease: 'sine.inOut', repeat: -1, yoyo: true, delay: 1.4 + index * 0.6 }).then()
     })
-    .join(' ')
+    gsap.to(glowMaterial, { opacity: 0.35, duration: 1.4, ease: 'sine.inOut', repeat: -1, yoyo: true }).then()
+  }
 
-export const createRipple = (box: DOMRect): SVGRectElement => {
-  const ripple = document.createElementNS(SVG_NS, 'rect')
-  ripple.setAttribute('x', String(box.x))
-  ripple.setAttribute('y', String(box.y))
-  ripple.setAttribute('width', String(box.width))
-  ripple.setAttribute('height', String(box.height))
-  ripple.setAttribute('rx', '11')
-  ripple.setAttribute('class', 'kp-ripple')
-  return ripple
+  const burnout = contextSafe(() => {
+    if (reducedMotion) return
+
+    gsap.timeline()
+      .to(motion, { spin: burnoutSpinSpeed, duration: 0.3, ease: 'power3.out' })
+      .to(motion, { spin: idleSpinSpeed, duration: 1.8, ease: 'power2.inOut' })
+      .to(wheel.position, { keyframes: { y: [wheelCenterY, wheelCenterY + 0.12, wheelCenterY] }, duration: 0.4, ease: 'sine.inOut' }, 0)
+      .to(digits.map(({ position }) => position), { keyframes: { y: [0, 0.45, 0] }, duration: 0.7, ease: 'power2.out', stagger: 0.12 }, 0.1)
+      .to(cones.map(({ rotation }) => rotation), { keyframes: { z: [0, 0.6, -0.15, 0] }, duration: 1.1, ease: 'power2.out', stagger: 0.08 }, 0.15).then()
+  })
+
+  const tiltX = gsap.quickTo(rig.rotation, 'x', { duration: 0.9, ease: 'power3.out' })
+  const tiltY = gsap.quickTo(rig.rotation, 'y', { duration: 0.9, ease: 'power3.out' })
+
+  const handlePointerMove = contextSafe((event: PointerEvent) => {
+    if (reducedMotion) return
+
+    const bounds = container.getBoundingClientRect()
+    tiltY(((event.clientX - bounds.left) / bounds.width - 0.5) * 0.5).then()
+    tiltX(((event.clientY - bounds.top) / bounds.height - 0.5) * 0.16).then()
+  })
+
+  const handlePointerLeave = contextSafe(() => {
+    tiltX(0).then()
+    tiltY(0).then()
+  })
+
+  container.addEventListener('pointerdown', burnout)
+  container.addEventListener('pointermove', handlePointerMove)
+  container.addEventListener('pointerleave', handlePointerLeave)
+
+  const onFrame = (delta: number) => {
+    spinner.rotation.z -= motion.spin * delta
+    const travel = motion.spin * roadSpeedRatio * delta
+    dashes.forEach((dash) => {
+      dash.position.x -= travel
+      if (dash.position.x < -laneHalfLength) dash.position.x += laneDashCount * laneDashGap
+    })
+  }
+
+  const dispose = () => {
+    container.removeEventListener('pointerdown', burnout)
+    container.removeEventListener('pointermove', handlePointerMove)
+    container.removeEventListener('pointerleave', handlePointerLeave)
+  }
+
+  return { onFrame, dispose }
 }

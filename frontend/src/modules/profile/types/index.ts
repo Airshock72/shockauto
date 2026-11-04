@@ -1,4 +1,4 @@
-import type { AnimationEvent, ChangeEvent, ComponentProps, SubmitEvent } from 'react'
+import type { AnimationEvent, ChangeEvent, ComponentProps, ReactNode, SubmitEvent } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import type { VariantProps } from 'class-variance-authority'
 import type { GUID } from 'src/api/types/apiGlobalTypes.ts'
@@ -64,4 +64,16 @@ export interface ActionCardProps extends ComponentProps<'button'>, VariantProps<
   readonly icon: LucideIcon
   readonly title: string
   readonly description: string
+}
+
+export interface ProfileIdentityProps {
+  readonly firstName: string
+  readonly lastName: string
+  readonly email: string
+}
+
+export interface FormSectionProps {
+  readonly icon: LucideIcon
+  readonly title: string
+  readonly children: ReactNode
 }

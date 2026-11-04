@@ -29,22 +29,6 @@
   background: linear-gradient(90deg, transparent, var(--car), transparent);
 }
 
-.car-stripes {
-  display: flex;
-  justify-content: center;
-  gap: 0.25rem;
-}
-
-.car-stripes::before,
-.car-stripes::after {
-  content: '';
-  width: 1.75rem;
-  height: 0.25rem;
-  border-radius: 9999px;
-  background-color: var(--car);
-  box-shadow: 0 0 10px color-mix(in oklch, var(--car) 60%, transparent);
-}
-
 .car-glow {
   border-radius: 1.75rem;
   box-shadow: 0 30px 90px -30px color-mix(in oklch, var(--car) 70%, transparent);

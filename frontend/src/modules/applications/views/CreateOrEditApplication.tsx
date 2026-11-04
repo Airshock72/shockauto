@@ -18,6 +18,7 @@ const CreateOrEditApplication = () => {
     activeStep,
     expandedSteps,
     preview,
+    showroom,
     values,
     stepProgress,
     manufacturers,
@@ -42,7 +43,7 @@ const CreateOrEditApplication = () => {
             />
           </Card>
 
-          <ApplicationPreviewCard category={category} preview={preview} />
+          <ApplicationPreviewCard category={category} preview={preview} showroom={showroom} />
         </aside>
 
         <Card className='neon-edge relative animate-fade-up' style={{ animationDelay: '100ms' }}>

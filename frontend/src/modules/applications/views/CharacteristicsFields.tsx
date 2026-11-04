@@ -5,9 +5,31 @@ import DatePicker from 'src/core/components/inputs/DatePicker.tsx'
 import Switch from 'src/core/components/switchers/Switch.tsx'
 import Divider from 'src/core/components/dividers/Divider.tsx'
 import InputGroup from 'src/core/components/inputs/InputGroup.tsx'
+import RadioGroup from 'src/core/components/inputs/RadioGroup.tsx'
+import type { RadioOption, RadioValue } from 'src/core/types/radioGroup.ts'
 import { normalizeDigits } from 'src/core/helpers/normalizers.ts'
 import { getTodayIso } from 'src/core/helpers/datePicker.ts'
-import { cylinderOptions, engineVolumeOptions, mileageUnitOptions, minYearDate, toMileage, toYear, trimMaxLength } from 'src/modules/applications/helpers'
+import {
+  airbagOptions,
+  cylinderOptions,
+  defaultUpholstery,
+  doorCountOptions,
+  driveTypeOptions,
+  engineVolumeOptions,
+  exteriorColorOptions,
+  interiorColorOptions,
+  interiorMaterialOptions,
+  mileageUnitOptions,
+  minYearDate,
+  steeringSideOptions,
+  toMileage,
+  toYear,
+  transmissionOptions,
+  trimMaxLength,
+  vehicleColorSwatches,
+  yesNoOptions
+} from 'src/modules/applications/helpers'
+import MaterialSwatch from 'src/modules/applications/views/MaterialSwatch.tsx'
 import type { CharacteristicsFieldsProps } from 'src/modules/applications/types'
 
 const CharacteristicsFields = ({
@@ -21,6 +43,8 @@ const CharacteristicsFields = ({
   const { t } = useTranslation()
   const gasolineTypeOptions = gasolineTypes.options.map((option) => ({ ...option, group: option.group && t(option.group) }))
   const mileageUnitSelectOptions = mileageUnitOptions.map((option) => ({ ...option, label: t(option.label) }))
+  const translate = <T extends RadioValue>(options: ReadonlyArray<RadioOption<T>>) => options.map((option) => ({ ...option, label: t(option.label) }))
+  const upholsteryTint = values.interiorColor ? vehicleColorSwatches[values.interiorColor] : defaultUpholstery
 
   return (
     <div className='grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2'>
@@ -143,6 +167,93 @@ const CharacteristicsFields = ({
           onValueChange={(mileageUnit) => onValueChange('mileageUnit', mileageUnit)}
         />
       </InputGroup>
+      <Divider className='my-1 sm:col-span-2' />
+      <RadioGroup
+        required
+        name='steeringSide'
+        label={t('applications.fields.steeringSide')}
+        value={values.steeringSide}
+        options={translate(steeringSideOptions)}
+        onValueChange={(steeringSide) => onValueChange('steeringSide', steeringSide)}
+      />
+      <RadioGroup
+        required
+        name='transmission'
+        label={t('applications.fields.transmission')}
+        value={values.transmission}
+        options={translate(transmissionOptions)}
+        onValueChange={(transmission) => onValueChange('transmission', transmission)}
+      />
+      <RadioGroup
+        required
+        name='driveType'
+        label={t('applications.fields.driveType')}
+        value={values.driveType}
+        options={translate(driveTypeOptions)}
+        onValueChange={(driveType) => onValueChange('driveType', driveType)}
+      />
+      <RadioGroup
+        required
+        name='doorCount'
+        label={t('applications.fields.doorCount')}
+        value={values.doorCount}
+        options={translate(doorCountOptions)}
+        onValueChange={(doorCount) => onValueChange('doorCount', doorCount)}
+      />
+      <RadioGroup
+        name='hasThirdRowSeats'
+        label={t('applications.fields.thirdRowSeats')}
+        value={values.hasThirdRowSeats}
+        options={translate(yesNoOptions)}
+        onValueChange={(hasThirdRowSeats) => onValueChange('hasThirdRowSeats', hasThirdRowSeats)}
+      />
+      <RadioGroup
+        name='hasCatalyst'
+        label={t('applications.fields.catalyst')}
+        value={values.hasCatalyst}
+        options={translate(yesNoOptions)}
+        onValueChange={(hasCatalyst) => onValueChange('hasCatalyst', hasCatalyst)}
+      />
+      <RadioGroup
+        required
+        name='airbags'
+        label={t('applications.fields.airbags')}
+        value={values.airbags}
+        options={airbagOptions}
+        className='sm:col-span-2'
+        hideIndicator
+        optionClassName='px-0 tabular-nums'
+        onValueChange={(airbags) => onValueChange('airbags', airbags)}
+      />
+      <RadioGroup
+        required
+        name='exteriorColor'
+        label={t('applications.fields.exteriorColor')}
+        value={values.exteriorColor}
+        options={translate(exteriorColorOptions)}
+        className='sm:col-span-2'
+        onValueChange={(exteriorColor) => onValueChange('exteriorColor', exteriorColor)}
+      />
+      <RadioGroup
+        required
+        name='interiorMaterial'
+        label={t('applications.fields.interiorMaterial')}
+        value={values.interiorMaterial}
+        options={translate(interiorMaterialOptions)}
+        className='sm:col-span-2'
+        optionClassName='pl-2'
+        renderIndicator={(option, checked) => <MaterialSwatch material={option.value} tint={upholsteryTint} checked={checked} />}
+        onValueChange={(interiorMaterial) => onValueChange('interiorMaterial', interiorMaterial)}
+      />
+      <RadioGroup
+        required
+        name='interiorColor'
+        label={t('applications.fields.interiorColor')}
+        value={values.interiorColor}
+        options={translate(interiorColorOptions)}
+        className='sm:col-span-2'
+        onValueChange={(interiorColor) => onValueChange('interiorColor', interiorColor)}
+      />
     </div>
   )
 }

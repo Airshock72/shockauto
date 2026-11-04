@@ -3,7 +3,6 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import {
   animateBackdropOrbs,
-  animateBackdropStreaks,
   backdropOrbs,
   createBackdropParallax
 } from 'src/core/helpers/animatedBackdrop.ts'
@@ -19,7 +18,6 @@ const useAnimatedBackdrop = () => {
     if (!backdrop || prefersReducedMotion()) return
 
     animateBackdropOrbs(gsap.utils.toArray<HTMLElement>('[data-backdrop-orb]', backdrop))
-    animateBackdropStreaks(gsap.utils.toArray<HTMLElement>('[data-backdrop-streak]', backdrop))
 
     const handlePointerMove = createBackdropParallax(
       gsap.utils.toArray<HTMLElement>('[data-backdrop-layer]', backdrop),

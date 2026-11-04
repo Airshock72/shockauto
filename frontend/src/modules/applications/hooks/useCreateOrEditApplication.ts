@@ -4,8 +4,29 @@ import useModels from 'src/modules/lists/models/hooks/useModels.ts'
 import useGasolineTypes from 'src/modules/lists/gasolineTypes/hooks/useGasolineTypes.ts'
 import useCarCategories from 'src/modules/lists/carCategories/hooks/useCarCategories.ts'
 import { useCreateOrEditApplicationReducer } from 'src/modules/applications/store/createOrEditApplication.ts'
-import { engineVolumeOptions, getStepProgress, mileageUnitShortLabels, stepOptions } from 'src/modules/applications/helpers'
-import { type ApplicationCategory, ApplicationSpec, type ApplicationValueChange, type ApplicationStep, type CreateOrEditApplication, type StepProgress } from 'src/modules/applications/types'
+import {
+  defaultPaint,
+  defaultUpholstery,
+  engineVolumeOptions,
+  findOptionLabel,
+  getStepProgress,
+  metallicColors,
+  mileageUnitShortLabels,
+  steeringSideOptions,
+  stepOptions,
+  transmissionOptions,
+  vehicleColorLabels,
+  vehicleColorSwatches
+} from 'src/modules/applications/helpers'
+import {
+  type ApplicationCategory,
+  ApplicationSpec,
+  type ApplicationStep,
+  type ApplicationValueChange,
+  type CreateOrEditApplication,
+  type ShowroomConfig,
+  type StepProgress
+} from 'src/modules/applications/types'
 
 const useCreateOrEditApplication = (): CreateOrEditApplication => {
   const { t } = useTranslation()
@@ -23,13 +44,33 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
   const engineVolumeLabel = engineVolumeOptions.find((option) => option.value === values.engineVolume)?.label
   const engineLabel = engineVolumeLabel && [engineVolumeLabel, values.isTurbo && t('applications.fields.turbo')].filter(Boolean).join(' ')
   const mileageLabel = values.mileage !== null && [values.mileage.toLocaleString(), values.mileageUnit && t(mileageUnitShortLabels[values.mileageUnit])].filter(Boolean).join(' ')
+  const transmissionLabel = findOptionLabel(transmissionOptions, values.transmission)
+  const steeringSideLabel = findOptionLabel(steeringSideOptions, values.steeringSide)
+  const exteriorColorLabel = values.exteriorColor && vehicleColorLabels[values.exteriorColor]
   const specs = {
     ...preview.specs,
     ...(values.year !== null && { [ApplicationSpec.Year]: String(values.year) }),
     ...(gasolineTypeLabel && { [ApplicationSpec.GasolineType]: gasolineTypeLabel }),
     ...(carCategoryLabel && { [ApplicationSpec.CarCategory]: carCategoryLabel }),
     ...(engineLabel && { [ApplicationSpec.Engine]: engineLabel }),
-    ...(mileageLabel && { [ApplicationSpec.Mileage]: mileageLabel })
+    ...(mileageLabel && { [ApplicationSpec.Mileage]: mileageLabel }),
+    ...(transmissionLabel && { [ApplicationSpec.Transmission]: t(transmissionLabel) }),
+    ...(steeringSideLabel && { [ApplicationSpec.SteeringWheel]: t(steeringSideLabel) }),
+    ...(exteriorColorLabel && { [ApplicationSpec.Color]: t(exteriorColorLabel) })
+  }
+  const swatches = {
+    ...preview.swatches,
+    ...(values.exteriorColor && { [ApplicationSpec.Color]: vehicleColorSwatches[values.exteriorColor] })
+  }
+  const showroom: ShowroomConfig = {
+    paint: values.exteriorColor ? vehicleColorSwatches[values.exteriorColor] : defaultPaint,
+    isMetallic: values.exteriorColor !== null && metallicColors.includes(values.exteriorColor),
+    upholstery: values.interiorColor ? vehicleColorSwatches[values.interiorColor] : defaultUpholstery,
+    interiorMaterial: values.interiorMaterial,
+    steeringSide: values.steeringSide,
+    doorCount: values.doorCount,
+    driveType: values.driveType,
+    hasThirdRowSeats: values.hasThirdRowSeats === true
   }
   const stepProgress = Object.fromEntries(
     stepOptions.map(({ value }) => [value, getStepProgress(value, values)])
@@ -61,7 +102,8 @@ const useCreateOrEditApplication = (): CreateOrEditApplication => {
     category,
     activeStep,
     expandedSteps,
-    preview: { ...preview, title: title ?? preview.title, specs },
+    preview: { ...preview, title: title ?? preview.title, specs, swatches },
+    showroom,
     values,
     stepProgress,
     manufacturers,

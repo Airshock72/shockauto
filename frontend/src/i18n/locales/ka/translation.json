@@ -40,6 +40,11 @@
   "profile": {
     "title": "პირადი ინფორმაცია",
     "subtitle": "მართეთ თქვენი პირადი მონაცემები და ანგარიშის პარამეტრები",
+    "sections": {
+      "personal": "პირადი მონაცემები",
+      "contact": "საკონტაქტო ინფორმაცია",
+      "security": "უსაფრთხოება"
+    },
     "firstName": "სახელი",
     "lastName": "გვარი",
     "gender": "სქესი",
@@ -103,7 +108,17 @@
       "turbo": "ტურბო",
       "mileage": "გარბენი",
       "mileagePlaceholder": "ჩაწერე გარბენი",
-      "mileageUnit": "კმ/მილი"
+      "mileageUnit": "კმ/მილი",
+      "steeringSide": "საჭე",
+      "transmission": "ტრანსმისია",
+      "driveType": "წამყვანი თვლები",
+      "doorCount": "კარის რაოდენობა",
+      "thirdRowSeats": "მესამე რიგის სავარძლები",
+      "catalyst": "კატალიზატორი",
+      "airbags": "აირბეგი",
+      "exteriorColor": "ავტომობილის ფერი",
+      "interiorMaterial": "სალონის მასალა",
+      "interiorColor": "სალონის ფერი"
     },
     "mileageUnits": {
       "kilometer": "კილომეტრი",
@@ -151,7 +166,57 @@
       "color": "ფერი"
     },
     "preview": {
-      "noImage": "ფოტო ჯერ არ არის"
+      "noImage": "ფოტო ჯერ არ არის",
+      "dragHint": "გადაატრიალე"
+    },
+    "steeringSides": {
+      "left": "მარცხენა",
+      "right": "მარჯვენა"
+    },
+    "transmissions": {
+      "manual": "მექანიკა",
+      "automatic": "ავტომატიკა",
+      "tiptronic": "ტიპტრონიკი",
+      "variator": "ვარიატორი"
+    },
+    "driveTypes": {
+      "front": "წინა",
+      "rear": "უკანა",
+      "allWheel": "4x4"
+    },
+    "doorCounts": {
+      "twoThree": "2/3",
+      "fourFive": "4/5",
+      "moreThanFive": ">5"
+    },
+    "answers": {
+      "yes": "კი",
+      "no": "არა"
+    },
+    "interiorMaterials": {
+      "fabric": "ნაჭერი",
+      "leather": "ტყავი",
+      "artificialLeather": "ხელოვნური ტყავი",
+      "combined": "კომბინირებული",
+      "alcantara": "ალკანტარა"
+    },
+    "colors": {
+      "white": "თეთრი",
+      "black": "შავი",
+      "silver": "ვერცხლისფერი",
+      "gray": "რუხი",
+      "red": "წითელი",
+      "blue": "ლურჯი",
+      "yellow": "ყვითელი",
+      "green": "მწვანე",
+      "orange": "ნარინჯისფერი",
+      "gold": "ოქროსფერი",
+      "purple": "იისფერი",
+      "pink": "ვარდისფერი",
+      "beige": "ჩალისფერი",
+      "burgundy": "შინდისფერი",
+      "skyBlue": "ცისფერი",
+      "brown": "ყავისფერი"
     }
   },
   "errors": {
@@ -165,7 +230,10 @@
   "notFound": {
     "title": "გვერდი ვერ მოიძებნა",
     "description": "გვერდი რომელსაც თქვენ ეძებთ ვერ მოიძებნა ან წაშლილია",
-    "backHome": "მთავარი გვერდი"
+    "backHome": "მთავარი გვერდი",
+    "goBack": "უკან დაბრუნება",
+    "eyebrow": "შეცდომა 404 · არასწორი მოსახვევი",
+    "hint": "დააწკაპუნეთ საბურავზე"
   },
   "register": {
     "title": "ანგარიშის შექმნა",

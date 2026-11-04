@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import useRequireAuth from 'src/core/hooks/useRequireAuth.tsx'
 import AnimatedBackdrop from 'src/core/components/backgrounds/AnimatedBackdrop.tsx'
 import Header from 'src/modules/header/views/Header.tsx'
+import ScrollRail from 'src/core/components/scrollbars/ScrollRail.tsx'
 
 const PrivateLayout = () => {
   const authRedirect = useRequireAuth()
@@ -13,6 +14,7 @@ const PrivateLayout = () => {
       <AnimatedBackdrop />
       <Header />
       <Outlet />
+      <ScrollRail />
     </div>
   )
 }

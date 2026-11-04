@@ -2,14 +2,17 @@ import { ImagePlus } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Card from 'src/core/components/cards/Card.tsx'
 import { Skeleton } from 'src/core/components/ui/skeleton.tsx'
+import { isWebGLAvailable } from 'src/core/helpers/three.ts'
 import { categoryPlaceholderIcons, dustPuffCount, specOptions } from 'src/modules/applications/helpers'
 import usePlaceholderAnimation from 'src/modules/applications/hooks/usePlaceholderAnimation.ts'
+import VehicleShowroom from 'src/modules/applications/views/VehicleShowroom.tsx'
 import type { ApplicationPreviewCardProps } from 'src/modules/applications/types'
 
-const ApplicationPreviewCard = ({ category, preview }: ApplicationPreviewCardProps) => {
+const ApplicationPreviewCard = ({ category, preview, showroom }: ApplicationPreviewCardProps) => {
   const { t } = useTranslation()
-  const { imageUrl, title, price, specs } = preview
+  const { imageUrl, title, price, specs, swatches } = preview
   const PlaceholderIcon = categoryPlaceholderIcons[category]
+  const hasShowroom = isWebGLAvailable()
   const placeholderRef = usePlaceholderAnimation(category, Boolean(imageUrl))
 
   return (
@@ -19,20 +22,26 @@ const ApplicationPreviewCard = ({ category, preview }: ApplicationPreviewCardPro
           ? <img src={imageUrl} alt={title ?? ''} className='size-full animate-fade-in object-cover' />
           : (
             <div className='relative flex size-full items-center justify-center bg-linear-to-br from-primary/15 via-transparent to-neon/15'>
-              <Skeleton className='absolute inset-0 rounded-none opacity-60' />
-              <span ref={placeholderRef} aria-hidden='true' className='relative flex flex-col items-center opacity-0 will-change-transform'>
-                {Array.from({ length: dustPuffCount }, (_, index) => (
-                  <span key={index} data-puff className='absolute bottom-4 left-1/2 -ml-1.5 size-3 rounded-full bg-primary/30 opacity-0 blur-[2px]' />
-                ))}
-                <span data-vehicle className='relative will-change-transform'>
-                  <PlaceholderIcon
-                    strokeWidth={1.25}
-                    className='size-24 text-primary/70 drop-shadow-[0_0_18px_var(--neon)]'
-                  />
-                </span>
-                <span data-shadow className='-mt-4 h-1.5 w-16 rounded-full bg-primary/25 blur-sm' />
-              </span>
-              <span className='absolute right-3 bottom-3 flex items-center gap-1.5 rounded-full bg-card/80 px-2.5 py-1 text-2xs text-muted-foreground backdrop-blur'>
+              {hasShowroom
+                ? <VehicleShowroom key={category} category={category} config={showroom} />
+                : (
+                  <>
+                    <Skeleton className='absolute inset-0 rounded-none opacity-60' />
+                    <span ref={placeholderRef} aria-hidden='true' className='relative flex flex-col items-center opacity-0 will-change-transform'>
+                      {Array.from({ length: dustPuffCount }, (_, index) => (
+                        <span key={index} data-puff className='absolute bottom-4 left-1/2 -ml-1.5 size-3 rounded-full bg-primary/30 opacity-0 blur-[2px]' />
+                      ))}
+                      <span data-vehicle className='relative will-change-transform'>
+                        <PlaceholderIcon
+                          strokeWidth={1.25}
+                          className='size-24 text-primary/70 drop-shadow-[0_0_18px_var(--neon)]'
+                        />
+                      </span>
+                      <span data-shadow className='-mt-4 h-1.5 w-16 rounded-full bg-primary/25 blur-sm' />
+                    </span>
+                  </>
+                )}
+              <span className='pointer-events-none absolute right-3 bottom-3 flex items-center gap-1.5 rounded-full bg-card/80 px-2.5 py-1 text-2xs text-muted-foreground backdrop-blur'>
                 <ImagePlus aria-hidden='true' className='size-3.5' />
                 {t('applications.preview.noImage')}
               </span>
@@ -63,7 +72,18 @@ const ApplicationPreviewCard = ({ category, preview }: ApplicationPreviewCardPro
               <span className='min-w-0 flex-1'>
                 <span className='block truncate text-2xs text-muted-foreground'>{t(label)}</span>
                 {specs[value]
-                  ? <span className='block animate-fade-in truncate text-xs font-medium'>{specs[value]}</span>
+                  ? (
+                    <span key={specs[value]} className='flex animate-fade-in items-center gap-1.5 text-xs font-medium'>
+                      {swatches[value] && (
+                        <span
+                          aria-hidden='true'
+                          className='size-2.5 shrink-0 rounded-full shadow-[inset_0_0_0_1px_rgb(0_0_0/0.2)]'
+                          style={{ backgroundColor: swatches[value] }}
+                        />
+                      )}
+                      <span className='truncate'>{specs[value]}</span>
+                    </span>
+                  )
                   : <Skeleton className='mt-1 h-3 w-3/4' />}
               </span>
             </div>

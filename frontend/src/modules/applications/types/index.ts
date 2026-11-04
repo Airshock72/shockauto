@@ -5,6 +5,8 @@ import type { Models } from 'src/modules/lists/models/types'
 import type { GasolineTypes } from 'src/modules/lists/gasolineTypes/types'
 import type { CarCategories } from 'src/modules/lists/carCategories/types'
 import type { ApplicationFormValues } from 'src/modules/applications/store/createOrEditApplication.ts'
+import type { Group, Vector3 } from 'three'
+import type { ContextSafe, ThreeStage } from 'src/core/types/three.ts'
 
 export enum ApplicationCategory {
   Car = 'Car',
@@ -34,6 +36,57 @@ export enum ApplicationSpec {
 export enum MileageUnit {
   Kilometer = 'Kilometer',
   Mile = 'Mile'
+}
+
+export enum SteeringSide {
+  Left = 'Left',
+  Right = 'Right'
+}
+
+export enum TransmissionType {
+  Manual = 'Manual',
+  Automatic = 'Automatic',
+  Tiptronic = 'Tiptronic',
+  Variator = 'Variator'
+}
+
+export enum DriveType {
+  Front = 'Front',
+  Rear = 'Rear',
+  AllWheel = 'AllWheel'
+}
+
+export enum DoorCount {
+  TwoThree = 'TwoThree',
+  FourFive = 'FourFive',
+  MoreThanFive = 'MoreThanFive'
+}
+
+export enum VehicleColor {
+  White = 'White',
+  Black = 'Black',
+  Silver = 'Silver',
+  Gray = 'Gray',
+  Red = 'Red',
+  Blue = 'Blue',
+  Yellow = 'Yellow',
+  Green = 'Green',
+  Orange = 'Orange',
+  Gold = 'Gold',
+  Purple = 'Purple',
+  Pink = 'Pink',
+  Beige = 'Beige',
+  Burgundy = 'Burgundy',
+  SkyBlue = 'SkyBlue',
+  Brown = 'Brown'
+}
+
+export enum InteriorMaterial {
+  Fabric = 'Fabric',
+  Leather = 'Leather',
+  ArtificialLeather = 'ArtificialLeather',
+  Combined = 'Combined',
+  Alcantara = 'Alcantara'
 }
 
 export type SpecIcon = LucideIcon | ComponentType<ComponentProps<'svg'>>
@@ -69,6 +122,38 @@ export interface ApplicationPreview {
   readonly title: string | null
   readonly price: string | null
   readonly specs: Partial<Record<ApplicationSpec, string>>
+  readonly swatches: Partial<Record<ApplicationSpec, string>>
+}
+
+export interface UpholsteryFinish {
+  readonly roughness: number
+  readonly sheen: number
+  readonly clearcoat: number
+}
+
+export interface CabinProfile {
+  readonly outline: ReadonlyArray<readonly [number, number]>
+  readonly roof: { readonly from: number, readonly to: number, readonly height: number }
+  readonly doorSeams: ReadonlyArray<number>
+  readonly rearSeatX: number
+  readonly thirdRowX: number
+}
+
+export interface ShowroomConfig {
+  readonly paint: string
+  readonly isMetallic: boolean
+  readonly upholstery: string
+  readonly interiorMaterial: InteriorMaterial | null
+  readonly steeringSide: SteeringSide | null
+  readonly doorCount: DoorCount | null
+  readonly driveType: DriveType | null
+  readonly hasThirdRowSeats: boolean
+}
+
+export interface ShowroomController {
+  readonly apply: (config: ShowroomConfig, immediate: boolean) => void
+  readonly onFrame: (delta: number) => void
+  readonly dispose: () => void
 }
 
 export interface CreateOrEditApplication {
@@ -76,6 +161,7 @@ export interface CreateOrEditApplication {
   readonly activeStep: ApplicationStep
   readonly expandedSteps: ReadonlyArray<ApplicationStep>
   readonly preview: ApplicationPreview
+  readonly showroom: ShowroomConfig
   readonly values: ApplicationFormValues
   readonly stepProgress: Record<ApplicationStep, StepProgress>
   readonly manufacturers: Manufacturers
@@ -106,6 +192,31 @@ export interface ApplicationStepperProps {
 export interface ApplicationPreviewCardProps {
   readonly category: ApplicationCategory
   readonly preview: ApplicationPreview
+  readonly showroom: ShowroomConfig
+}
+
+export type ShowroomFactory = (stage: ThreeStage, contextSafe: ContextSafe, reducedMotion: boolean) => ShowroomController
+
+export interface TurntableOptions {
+  readonly cameraPosition: Vector3
+  readonly cameraTarget: Vector3
+  readonly radius: number
+}
+
+export interface TurntableStage {
+  readonly model: Group
+  readonly dispose: () => void
+}
+
+export interface VehicleShowroomProps {
+  readonly category: ApplicationCategory
+  readonly config: ShowroomConfig
+}
+
+export interface MaterialSwatchProps {
+  readonly material: InteriorMaterial
+  readonly tint: string
+  readonly checked: boolean
 }
 
 export interface CategoryTabsProps {

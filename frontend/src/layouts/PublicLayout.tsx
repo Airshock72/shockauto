@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import LanguageSwitcher from 'src/core/components/switchers/LanguageSwitcher.tsx'
 import ThemeSwitcher from 'src/core/components/switchers/ThemeSwitcher.tsx'
+import ScrollRail from 'src/core/components/scrollbars/ScrollRail.tsx'
 
 const PublicLayout = () => {
   const token = localStorage.getItem('token')
@@ -15,6 +16,7 @@ const PublicLayout = () => {
       </div>
 
       <Outlet />
+      <ScrollRail />
     </div>
   )
 }

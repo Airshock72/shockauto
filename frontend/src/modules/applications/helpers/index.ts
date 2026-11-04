@@ -1,6 +1,8 @@
 import { Banknote, CalendarDays, Car, CarFront, Cog, Engine, Fuel, Gauge, Images, MapPin, Motorbike, Palette, Phone, SlidersHorizontal, Tractor } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { SelectOption } from 'src/core/types/select.ts'
+import type { RadioOption, RadioValue } from 'src/core/types/radioGroup.ts'
+import { brandColors } from 'src/core/helpers/three.ts'
 import SteeringWheelIcon from 'src/assets/media/svgs/steering-wheel.svg?react'
 import type { ApplicationFormValues } from 'src/modules/applications/store/createOrEditApplication.ts'
 import {
@@ -8,10 +10,16 @@ import {
   ApplicationSpec,
   ApplicationStep,
   type CategoryOption,
+  DoorCount,
+  DriveType,
+  InteriorMaterial,
   MileageUnit,
   type SpecOption,
+  SteeringSide,
   type StepOption,
-  type StepProgress
+  type StepProgress,
+  TransmissionType,
+  VehicleColor
 } from 'src/modules/applications/types'
 
 export const categoryOptions: Array<CategoryOption> = [
@@ -111,8 +119,150 @@ export const mileageUnitShortLabels: Record<MileageUnit, string> = {
   [MileageUnit.Mile]: 'applications.mileageUnitsShort.mile'
 }
 
+export const steeringSideOptions: Array<RadioOption<SteeringSide>> = [
+  { label: 'applications.steeringSides.left', value: SteeringSide.Left },
+  { label: 'applications.steeringSides.right', value: SteeringSide.Right }
+]
+
+export const transmissionOptions: Array<RadioOption<TransmissionType>> = [
+  { label: 'applications.transmissions.manual', value: TransmissionType.Manual },
+  { label: 'applications.transmissions.automatic', value: TransmissionType.Automatic },
+  { label: 'applications.transmissions.tiptronic', value: TransmissionType.Tiptronic },
+  { label: 'applications.transmissions.variator', value: TransmissionType.Variator }
+]
+
+export const driveTypeOptions: Array<RadioOption<DriveType>> = [
+  { label: 'applications.driveTypes.front', value: DriveType.Front },
+  { label: 'applications.driveTypes.rear', value: DriveType.Rear },
+  { label: 'applications.driveTypes.allWheel', value: DriveType.AllWheel }
+]
+
+export const doorCountOptions: Array<RadioOption<DoorCount>> = [
+  { label: 'applications.doorCounts.twoThree', value: DoorCount.TwoThree },
+  { label: 'applications.doorCounts.fourFive', value: DoorCount.FourFive },
+  { label: 'applications.doorCounts.moreThanFive', value: DoorCount.MoreThanFive }
+]
+
+export const yesNoOptions: Array<RadioOption<boolean>> = [
+  { label: 'applications.answers.yes', value: true },
+  { label: 'applications.answers.no', value: false }
+]
+
+export const maxAirbags = 12
+
+export const airbagOptions: Array<RadioOption<number>> = Array.from({ length: maxAirbags + 1 }, (_, index) => ({ label: String(index), value: index }))
+
+export const interiorMaterialOptions: Array<RadioOption<InteriorMaterial>> = [
+  { label: 'applications.interiorMaterials.fabric', value: InteriorMaterial.Fabric },
+  { label: 'applications.interiorMaterials.leather', value: InteriorMaterial.Leather },
+  { label: 'applications.interiorMaterials.artificialLeather', value: InteriorMaterial.ArtificialLeather },
+  { label: 'applications.interiorMaterials.combined', value: InteriorMaterial.Combined },
+  { label: 'applications.interiorMaterials.alcantara', value: InteriorMaterial.Alcantara }
+]
+
+export const vehicleColorSwatches: Record<VehicleColor, string> = {
+  [VehicleColor.White]: '#f4f4f2',
+  [VehicleColor.Black]: '#131317',
+  [VehicleColor.Silver]: '#c3c7cf',
+  [VehicleColor.Gray]: '#6b7080',
+  [VehicleColor.Red]: '#d7262e',
+  [VehicleColor.Blue]: '#1f4fd6',
+  [VehicleColor.Yellow]: '#f6c915',
+  [VehicleColor.Green]: '#1c9a4a',
+  [VehicleColor.Orange]: '#f2731c',
+  [VehicleColor.Gold]: '#cfa43a',
+  [VehicleColor.Purple]: '#7a2fc4',
+  [VehicleColor.Pink]: '#e9559b',
+  [VehicleColor.Beige]: '#d9c6a0',
+  [VehicleColor.Burgundy]: '#7a1f2b',
+  [VehicleColor.SkyBlue]: '#4bb8ee',
+  [VehicleColor.Brown]: '#6f4325'
+}
+
+export const vehicleColorLabels: Record<VehicleColor, string> = {
+  [VehicleColor.White]: 'applications.colors.white',
+  [VehicleColor.Black]: 'applications.colors.black',
+  [VehicleColor.Silver]: 'applications.colors.silver',
+  [VehicleColor.Gray]: 'applications.colors.gray',
+  [VehicleColor.Red]: 'applications.colors.red',
+  [VehicleColor.Blue]: 'applications.colors.blue',
+  [VehicleColor.Yellow]: 'applications.colors.yellow',
+  [VehicleColor.Green]: 'applications.colors.green',
+  [VehicleColor.Orange]: 'applications.colors.orange',
+  [VehicleColor.Gold]: 'applications.colors.gold',
+  [VehicleColor.Purple]: 'applications.colors.purple',
+  [VehicleColor.Pink]: 'applications.colors.pink',
+  [VehicleColor.Beige]: 'applications.colors.beige',
+  [VehicleColor.Burgundy]: 'applications.colors.burgundy',
+  [VehicleColor.SkyBlue]: 'applications.colors.skyBlue',
+  [VehicleColor.Brown]: 'applications.colors.brown'
+}
+
+const toColorOptions = (colors: Array<VehicleColor>): Array<RadioOption<VehicleColor>> =>
+  colors.map((color) => ({ label: vehicleColorLabels[color], value: color, swatch: vehicleColorSwatches[color] }))
+
+export const exteriorColorOptions = toColorOptions([
+  VehicleColor.White,
+  VehicleColor.Black,
+  VehicleColor.Silver,
+  VehicleColor.Gray,
+  VehicleColor.Red,
+  VehicleColor.Blue,
+  VehicleColor.Yellow,
+  VehicleColor.Green,
+  VehicleColor.Orange,
+  VehicleColor.Gold,
+  VehicleColor.Purple,
+  VehicleColor.Pink,
+  VehicleColor.Beige,
+  VehicleColor.Burgundy,
+  VehicleColor.SkyBlue,
+  VehicleColor.Brown
+])
+
+export const interiorColorOptions = toColorOptions([
+  VehicleColor.Black,
+  VehicleColor.White,
+  VehicleColor.Gray,
+  VehicleColor.Brown,
+  VehicleColor.Beige,
+  VehicleColor.Red,
+  VehicleColor.Blue,
+  VehicleColor.Yellow,
+  VehicleColor.Orange,
+  VehicleColor.Burgundy,
+  VehicleColor.Gold
+])
+
+export const metallicColors: ReadonlyArray<VehicleColor> = [VehicleColor.Silver, VehicleColor.Gray, VehicleColor.Gold]
+
+export const defaultPaint = brandColors.violet
+
+export const defaultUpholstery = '#2b2b33'
+
+export const findOptionLabel = <T extends RadioValue>(options: ReadonlyArray<RadioOption<T>>, value: T | null): string | undefined =>
+  value === null ? undefined : options.find((option) => option.value === value)?.label
+
 export const stepRequiredFields: Record<ApplicationStep, Array<keyof ApplicationFormValues>> = {
-  [ApplicationStep.Characteristics]: ['manufacturerId', 'modelId', 'year', 'gasolineTypeId', 'carCategoryId', 'cylinders', 'engineVolume', 'mileage', 'mileageUnit'],
+  [ApplicationStep.Characteristics]: [
+    'manufacturerId',
+    'modelId',
+    'year',
+    'gasolineTypeId',
+    'carCategoryId',
+    'cylinders',
+    'engineVolume',
+    'mileage',
+    'mileageUnit',
+    'steeringSide',
+    'transmission',
+    'driveType',
+    'doorCount',
+    'airbags',
+    'exteriorColor',
+    'interiorMaterial',
+    'interiorColor'
+  ],
   [ApplicationStep.Location]: [],
   [ApplicationStep.Media]: [],
   [ApplicationStep.Price]: [],
