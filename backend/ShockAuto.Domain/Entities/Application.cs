@@ -73,4 +73,10 @@ public class Application : AuditableEntity
     public required int LocationId { get; set; }
     public virtual Location Location { get; set; } = null!;
     public bool? IsCustomsCleared { get; set; } // განბაჟებული
+    
+    // ფასი
+    public required int Price { get; set; }
+    public required int CurrencyId { get; set; }
+    public virtual Currency Currency { get; set; } = null!;
+    public bool? IsPriceNegotiable { get; set; }
 }
