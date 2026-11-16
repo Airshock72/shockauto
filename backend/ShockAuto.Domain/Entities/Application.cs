@@ -6,7 +6,7 @@ namespace ShockAuto.Domain.Entities;
 public class Application : AuditableEntity
 {
     public required Guid Id { get; set; }
-    
+
     public required VehicleCategory Category { get; set; }
     public required bool IsForSale { get; set; }
     
@@ -79,4 +79,10 @@ public class Application : AuditableEntity
     public required int CurrencyId { get; set; }
     public virtual Currency Currency { get; set; } = null!;
     public bool? IsPriceNegotiable { get; set; }
+    
+    // კონტაქტი
+    public required Guid UserId { get; set; }
+    public virtual User User { get; set; } = null!;
+
+    public required string MobilePhone { get; set; }
 }
