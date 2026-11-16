@@ -17,9 +17,10 @@ public class Application : AuditableEntity
     public bool? ForTaxi { get; set; }
     
     // ძირითადი მახასიათებლები
-    
     public required int ManufacturerId { get; set; }
+    public virtual Manufacturer Manufacturer { get; set; } = null!;
     public required int ModelId { get; set; }
+    public virtual Model Model { get; set; } = null!;
     public required int Year { get; set; }
     public string? TrimLevel { get; set; }
     public required Fuel FuelType { get; set; }
@@ -53,13 +54,13 @@ public class Application : AuditableEntity
     public bool? HasSunroof { get; set; }                          // ლუქი
     public bool? HasHeatedSeats { get; set; }                     // სავარძლის გათბობა
     public bool? HasSeatMemory { get; set; }                      // სავარძლის მეხსიერება
-    public bool? HasABS { get; set; }                              // ABS
+    public bool? HasAbs{ get; set; }                              // ABS
     public bool? HasTractionControl { get; set; }                 // მოცურების საწინააღმდეგო სისტემა
     public bool? HasCentralLocking { get; set; }                  // ცენტრალური საკეტი
     public bool? HasAlarm { get; set; }                            // სიგნალიზაცია
     public bool? HasFogLights { get; set; }                        // სანისლე ფარები
     public bool? HasNavigationSystem { get; set; }                // მონიტორი (ნავიგაცია)
-    public bool? HasAUX { get; set; }                              // AUX
+    public bool? HasAux { get; set; }                              // AUX
     public bool? HasBluetooth { get; set; }                       // Bluetooth
     public bool? HasMultifunctionSteeringWheel { get; set; }      // მულტი საჭე
     public bool? HasAlloyWheels { get; set; }                     // დისკები
@@ -69,4 +70,7 @@ public class Application : AuditableEntity
     public string? Description { get; set; }
     
     // მდებარეობა და განბაჟება
+    public required int LocationId { get; set; }
+    public virtual Location Location { get; set; } = null!;
+    public bool? IsCustomsCleared { get; set; } // განბაჟებული
 }
