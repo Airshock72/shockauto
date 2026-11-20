@@ -347,6 +347,24 @@ export const isStepCompleted = ({ filled, total }: StepProgress): boolean => tot
 
 export const dockMinGutter = 240
 
-export const dockDuration = 0.9
+export const dockDuration = 1.1
+
+export const dockEase = 'power3.inOut'
+
+export const dockArcStrength = 0.35
+
+export const dockStretch = 0.09
+
+export const dockTilt = 4
+
+export const dockJelly = 0.04
+
+export const dockLiquidId = 'dock-liquid'
+
+export const dockLiquidScale = 12
+
+export const dockLiquidFrequency = 0.004
+
+export const dockBlobRadii = [0.42, 0.58, 0.46, 0.54, 0.55, 0.45, 0.55, 0.45]
 
 export const dockedCardClassName = 'fixed top-[calc(var(--spacing-header)+1.5rem)] z-30 max-h-[calc(100dvh-var(--spacing-header)-3rem)] w-[calc(var(--dock-gutter)-2rem)] overflow-y-auto rounded-2xl'

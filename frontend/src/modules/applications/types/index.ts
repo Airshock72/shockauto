@@ -217,6 +217,17 @@ export interface ApplicationStepperProps {
   readonly isVertical: boolean
 }
 
+export interface DockTransition {
+  readonly rects: Array<DOMRect>
+  readonly height: number
+  readonly isDocking: boolean
+}
+
+export interface DockPoint {
+  readonly x: number
+  readonly y: number
+}
+
 export interface ApplicationPreviewCardProps {
   readonly category: ApplicationCategory
   readonly preview: ApplicationPreview

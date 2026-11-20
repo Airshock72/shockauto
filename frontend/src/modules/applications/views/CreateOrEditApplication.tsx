@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Card from 'src/core/components/cards/Card.tsx'
 import Divider from 'src/core/components/dividers/Divider.tsx'
 import { cn } from 'src/core/lib/utils'
-import { dockedCardClassName, stepOptions } from 'src/modules/applications/helpers'
+import { dockLiquidId, dockedCardClassName, stepOptions } from 'src/modules/applications/helpers'
 import useCreateOrEditApplication from 'src/modules/applications/hooks/useCreateOrEditApplication.ts'
 import useDockedCards from 'src/modules/applications/hooks/useDockedCards.ts'
 import ApplicationStepper from 'src/modules/applications/views/ApplicationStepper.tsx'
@@ -32,7 +32,7 @@ const CreateOrEditApplication = () => {
     toggleStep,
     handleValueChange
   } = useCreateOrEditApplication()
-  const { containerRef, asideRef, isDocked } = useDockedCards()
+  const { containerRef, asideRef, liquidRef, turbulenceRef, isDocked } = useDockedCards()
 
   return (
     <main className='container flex-1 py-8 md:py-12'>
@@ -41,6 +41,14 @@ const CreateOrEditApplication = () => {
           ref={asideRef}
           className={cn('grid grid-cols-1 gap-6 lg:grid-cols-2', !isDocked && 'z-10 lg:sticky lg:top-[calc(var(--spacing-header)+1.5rem)]')}
         >
+          <svg aria-hidden='true' className='pointer-events-none absolute size-0'>
+            <filter id={dockLiquidId} x='-20%' y='-20%' width='140%' height='140%'>
+              <feTurbulence ref={turbulenceRef} type='fractalNoise' numOctaves='1' seed='7' result='noise' />
+              <feGaussianBlur in='noise' stdDeviation='6' result='softNoise' />
+              <feDisplacementMap ref={liquidRef} in='SourceGraphic' in2='softNoise' scale='0' xChannelSelector='R' yChannelSelector='G' />
+            </filter>
+          </svg>
+
           <div data-dock-card className={cn(isDocked && dockedCardClassName, isDocked && 'left-4')}>
             <Card className={cn('flex h-full animate-fade-up p-5 sm:p-6', isDocked ? 'items-start' : 'items-center')}>
               <ApplicationStepper
