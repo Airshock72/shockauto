@@ -2,12 +2,12 @@
 
 public enum Fuel
 {
-    Gasoline,
-    Diesel,
-    Electric,
-    Hybrid,
-    PlugInHybrid,
-    Lpg,
-    Cng,
-    Hydrogen
+    Gasoline,       // ბენზინი
+    Diesel,         // დიზელი
+    Electric,       // ელექტრო
+    Hybrid,         // ჰიბრიდი
+    PlugInHybrid,   // დატენვადი ჰიბრიდი
+    Lpg,            // თხევადი გაზი
+    Cng,            // ბუნებრივი გაზი
+    Hydrogen        // წყალბადი
 }

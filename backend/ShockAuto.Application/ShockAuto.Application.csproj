@@ -19,4 +19,15 @@
       <ProjectReference Include="..\ShockAuto.Domain\ShockAuto.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\EnumTranslations.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>EnumTranslations.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <Compile Update="Resources\EnumTranslations.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+      </Compile>
+    </ItemGroup>
+
 </Project>
