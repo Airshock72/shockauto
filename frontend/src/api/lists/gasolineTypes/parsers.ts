@@ -9,8 +9,8 @@ export const parseGasolineTypes = (response: GlobalResponse): GasolineTypesData 
     return {
       data: content.map((gasolineType) => ({
         id: gasolineType.id,
+        key: gasolineType.key ?? '',
         name: gasolineType.name ?? '',
-        nameKa: gasolineType.nameKa ?? '',
         type: gasolineType.type ?? GasolineTypeKind.Common
       })),
       status: response.status

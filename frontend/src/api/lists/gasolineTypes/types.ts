@@ -8,8 +8,8 @@ export enum GasolineTypeKind {
 
 export interface GasolineTypeResponse {
     readonly id: ID
+    readonly key: string
     readonly name: string
-    readonly nameKa: string
     readonly type: GasolineTypeKind
 }
 
