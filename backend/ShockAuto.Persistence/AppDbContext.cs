@@ -8,7 +8,10 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
     
     public DbSet<Manufacturer> Manufacturers { get; set; }
     public DbSet<Model> Models { get; set; }
-    
+
+    public DbSet<Domain.Entities.Application> Applications { get; set; }
+    public DbSet<ApplicationImage> ApplicationImages { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseLazyLoadingProxies();

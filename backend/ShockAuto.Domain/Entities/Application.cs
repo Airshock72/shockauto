@@ -74,6 +74,9 @@ public class Application : AuditableEntity
     public virtual Location Location { get; set; } = null!;
     public bool? IsCustomsCleared { get; set; } // განბაჟებული
     
+    // ფოტო/ვიდეო
+    public virtual ICollection<ApplicationImage> Images { get; set; } = [];
+    
     // ფასი
     public required int Price { get; set; }
     public required int CurrencyId { get; set; }
@@ -85,4 +88,6 @@ public class Application : AuditableEntity
     public virtual User User { get; set; } = null!;
 
     public required string MobilePhone { get; set; }
+
+    public bool IsDeleted { get; set; } = false;
 }

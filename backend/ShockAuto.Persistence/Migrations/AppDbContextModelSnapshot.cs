@@ -25,6 +25,321 @@ namespace ShockAuto.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ShockAuto.Domain.Entities.Application", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BodyType")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CylinderCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int>("DoorsCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DriveTrain")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<decimal?>("EngineDisplacement")
+                        .HasPrecision(3, 1)
+                        .HasColumnType("decimal(3,1)");
+
+                    b.Property<string>("ExteriorColor")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<bool?>("ForTaxi")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FuelType")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<bool?>("HasAbs")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasAirConditioning")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("HasAirbags")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("HasAlarm")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasAlloyWheels")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasAux")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasBluetooth")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasCatalyticConverter")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasCentralLocking")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasClimateControl")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasCruiseControl")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasFogLights")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasHeatedSeats")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasMultifunctionSteeringWheel")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasNavigationSystem")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasOnBoardComputer")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasParkingSensors")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasPowerSteering")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasPowerWindows")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasRearViewCamera")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasSeatMemory")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasSpareTire")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasStartStopSystem")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasSunroof")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasThirdRowSeats")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasTractionControl")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("HasTurbo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("InteriorColor")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("InteriorMaterial")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<bool?>("IsAdaptedForPeopleWithDisabilities")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsCustomsCleared")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsDaily")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsForSale")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsInsured")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsKm")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsLeftSteeringWheel")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsPriceNegotiable")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ManufacturerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Mileage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MobilePhone")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<int>("ModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransmissionType")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("TrimLevel")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("WithBuyoutOption")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("WithDriver")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("ManufacturerId");
+
+                    b.HasIndex("ModelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Applications");
+                });
+
+            modelBuilder.Entity("ShockAuto.Domain.Entities.ApplicationImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("ApplicationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId", "Order");
+
+                    b.ToTable("ApplicationImages");
+                });
+
+            modelBuilder.Entity("ShockAuto.Domain.Entities.Currency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Currency");
+                });
+
+            modelBuilder.Entity("ShockAuto.Domain.Entities.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameKa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Location");
+                });
+
             modelBuilder.Entity("ShockAuto.Domain.Entities.Manufacturer", b =>
                 {
                     b.Property<int>("Id")
@@ -120,6 +435,60 @@ namespace ShockAuto.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("ShockAuto.Domain.Entities.Application", b =>
+                {
+                    b.HasOne("ShockAuto.Domain.Entities.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ShockAuto.Domain.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ShockAuto.Domain.Entities.Manufacturer", "Manufacturer")
+                        .WithMany()
+                        .HasForeignKey("ManufacturerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ShockAuto.Domain.Entities.Model", "Model")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ShockAuto.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Manufacturer");
+
+                    b.Navigation("Model");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ShockAuto.Domain.Entities.ApplicationImage", b =>
+                {
+                    b.HasOne("ShockAuto.Domain.Entities.Application", "Application")
+                        .WithMany("Images")
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Application");
+                });
+
             modelBuilder.Entity("ShockAuto.Domain.Entities.Model", b =>
                 {
                     b.HasOne("ShockAuto.Domain.Entities.Manufacturer", "Manufacturer")
@@ -129,6 +498,11 @@ namespace ShockAuto.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Manufacturer");
+                });
+
+            modelBuilder.Entity("ShockAuto.Domain.Entities.Application", b =>
+                {
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }
