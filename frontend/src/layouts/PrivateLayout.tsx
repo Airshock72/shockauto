@@ -3,6 +3,7 @@ import useRequireAuth from 'src/core/hooks/useRequireAuth.tsx'
 import AnimatedBackdrop from 'src/core/components/backgrounds/AnimatedBackdrop.tsx'
 import Header from 'src/modules/header/views/Header.tsx'
 import ScrollRail from 'src/core/components/scrollbars/ScrollRail.tsx'
+import BackToTopButton from 'src/core/components/buttons/BackToTopButton.tsx'
 
 const PrivateLayout = () => {
   const authRedirect = useRequireAuth()
@@ -15,6 +16,7 @@ const PrivateLayout = () => {
       <Header />
       <Outlet />
       <ScrollRail />
+      <BackToTopButton />
     </div>
   )
 }

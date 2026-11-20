@@ -24,12 +24,12 @@ const useCategoryTabs = (value: ApplicationCategory): CategoryTabs => {
 
       const position = getThumbPosition(target)
 
-      if (!hadValue || prefersReducedMotion()) {
-        gsap.set(thumb, { ...position, opacity: 1 }).then()
-        return
-      }
+      if (!hadValue || prefersReducedMotion()) gsap.set(thumb, { ...position, opacity: 1 }).then()
+      else animateLanguageSwitch(thumb, target.querySelector('[data-category-label]'), position).then()
 
-      animateLanguageSwitch(thumb, target.querySelector('[data-category-label]'), position).then()
+      return () => {
+        valueRef.current = null
+      }
     },
     { dependencies: [value], scope: containerRef }
   )

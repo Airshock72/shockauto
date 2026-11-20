@@ -344,3 +344,9 @@ export const getStepProgress = (step: ApplicationStep, values: ApplicationFormVa
 }
 
 export const isStepCompleted = ({ filled, total }: StepProgress): boolean => total > 0 && filled === total
+
+export const dockMinGutter = 240
+
+export const dockDuration = 0.9
+
+export const dockedCardClassName = 'fixed top-[calc(var(--spacing-header)+1.5rem)] z-30 max-h-[calc(100dvh-var(--spacing-header)-3rem)] w-[calc(var(--dock-gutter)-2rem)] overflow-y-auto rounded-2xl'

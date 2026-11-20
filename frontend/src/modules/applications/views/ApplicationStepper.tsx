@@ -1,16 +1,17 @@
 import { Check } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from 'src/core/lib/utils'
+import TruncatedText from 'src/core/components/tooltips/TruncatedText.tsx'
 import { getStepIndex, isStepCompleted, stepOptions } from 'src/modules/applications/helpers'
 import type { ApplicationStepperProps } from 'src/modules/applications/types'
 
-const ApplicationStepper = ({ activeStep, stepProgress, onSelect }: ApplicationStepperProps) => {
+const ApplicationStepper = ({ activeStep, stepProgress, onSelect, isVertical }: ApplicationStepperProps) => {
   const { t } = useTranslation()
   const activeIndex = getStepIndex(activeStep)
 
   return (
-    <nav aria-label={t('applications.stepsLabel')}>
-      <ol className='flex flex-col'>
+    <nav aria-label={t('applications.stepsLabel')} className='w-full'>
+      <ol className={cn('flex', isVertical && 'flex-col')}>
         {stepOptions.map(({ value, title, description }, index) => {
           const isCompleted = isStepCompleted(stepProgress[value])
           const isActive = index === activeIndex
@@ -19,15 +20,26 @@ const ApplicationStepper = ({ activeStep, stepProgress, onSelect }: ApplicationS
           return (
             <li
               key={value}
-              className='relative animate-fade-up pb-6'
+              className={cn('relative animate-fade-up', isVertical ? !isLast && 'pb-6' : 'min-w-0 flex-1')}
               style={{ animationDelay: `${index * 70}ms` }}
             >
               {!isLast && (
-                <span aria-hidden='true' className='absolute top-11 bottom-1 left-4.5 w-0.5 -translate-x-1/2 overflow-hidden rounded-full bg-border'>
+                <span
+                  aria-hidden='true'
+                  className={cn(
+                    'absolute overflow-hidden rounded-full bg-border',
+                    isVertical
+                      ? 'top-11 bottom-1 left-4.5 w-0.5 -translate-x-1/2'
+                      : 'top-4.5 right-[calc(-50%+1.75rem)] left-[calc(50%+1.75rem)] h-0.5 -translate-y-1/2'
+                  )}
+                >
                   <span
                     className={cn(
-                      'block size-full origin-top bg-linear-to-b from-primary to-neon transition-transform duration-500 ease-fluid',
-                      isCompleted ? 'scale-y-100' : 'scale-y-0'
+                      'block size-full from-primary to-neon transition-transform duration-500 ease-fluid',
+                      isVertical ? 'origin-top bg-linear-to-b' : 'origin-left bg-linear-to-r',
+                      isVertical
+                        ? (isCompleted ? 'scale-y-100' : 'scale-y-0')
+                        : (isCompleted ? 'scale-x-100' : 'scale-x-0')
                     )}
                   />
                 </span>
@@ -37,7 +49,10 @@ const ApplicationStepper = ({ activeStep, stepProgress, onSelect }: ApplicationS
                 type='button'
                 aria-current={isActive ? 'step' : undefined}
                 onClick={() => onSelect(value)}
-                className='group flex w-full items-start gap-3 rounded-xl text-left outline-none focus-visible:ring-4 focus-visible:ring-primary/15'
+                className={cn(
+                  'group flex w-full rounded-xl outline-none focus-visible:ring-4 focus-visible:ring-primary/15',
+                  isVertical ? 'items-start gap-3 text-left' : 'flex-col items-center gap-2 text-center'
+                )}
               >
                 <span
                   className={cn(
@@ -54,16 +69,19 @@ const ApplicationStepper = ({ activeStep, stepProgress, onSelect }: ApplicationS
                     : index + 1}
                 </span>
 
-                <span className='min-w-0 flex-1 pt-1.5'>
+                <span className={cn('min-w-0', isVertical ? 'flex-1 pt-1.5' : 'w-full px-1')}>
                   <span
                     className={cn(
-                      'block text-sm font-semibold transition-colors duration-300',
+                      'block font-semibold transition-colors duration-300',
+                      isVertical ? 'text-sm' : 'text-xs sm:text-sm',
                       isActive || isCompleted ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
                     )}
                   >
-                    {t(title)}
+                    {isVertical ? t(title) : <TruncatedText text={t(title)} />}
                   </span>
-                  <span className='mt-0.5 block text-xs leading-relaxed text-muted-foreground'>{t(description)}</span>
+                  <span className={cn('mt-0.5 text-muted-foreground', isVertical ? 'block text-xs leading-relaxed' : 'hidden text-2xs xl:block')}>
+                    {isVertical ? t(description) : <TruncatedText text={t(description)} />}
+                  </span>
                 </span>
               </button>
             </li>

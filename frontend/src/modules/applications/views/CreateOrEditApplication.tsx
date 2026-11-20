@@ -2,8 +2,10 @@ import { FilePlus2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Card from 'src/core/components/cards/Card.tsx'
 import Divider from 'src/core/components/dividers/Divider.tsx'
-import { stepOptions } from 'src/modules/applications/helpers'
+import { cn } from 'src/core/lib/utils'
+import { dockedCardClassName, stepOptions } from 'src/modules/applications/helpers'
 import useCreateOrEditApplication from 'src/modules/applications/hooks/useCreateOrEditApplication.ts'
+import useDockedCards from 'src/modules/applications/hooks/useDockedCards.ts'
 import ApplicationStepper from 'src/modules/applications/views/ApplicationStepper.tsx'
 import ApplicationPreviewCard from 'src/modules/applications/views/ApplicationPreviewCard.tsx'
 import CategoryTabs from 'src/modules/applications/views/CategoryTabs.tsx'
@@ -30,20 +32,29 @@ const CreateOrEditApplication = () => {
     toggleStep,
     handleValueChange
   } = useCreateOrEditApplication()
+  const { containerRef, asideRef, isDocked } = useDockedCards()
 
   return (
     <main className='container flex-1 py-8 md:py-12'>
-      <div className='mx-auto grid w-full max-w-8xl grid-cols-1 items-start gap-6 lg:grid-cols-[20rem_minmax(0,1fr)] xl:grid-cols-[22rem_minmax(0,1fr)]'>
-        <aside className='flex flex-col gap-6 lg:sticky lg:top-[calc(var(--spacing-header)+1.5rem)]'>
-          <Card className='animate-fade-up p-5 sm:p-6'>
-            <ApplicationStepper
-              activeStep={activeStep}
-              stepProgress={stepProgress}
-              onSelect={selectStep}
-            />
-          </Card>
+      <div ref={containerRef} className='mx-auto flex w-full max-w-8xl flex-col gap-6'>
+        <aside
+          ref={asideRef}
+          className={cn('grid grid-cols-1 gap-6 lg:grid-cols-2', !isDocked && 'z-10 lg:sticky lg:top-[calc(var(--spacing-header)+1.5rem)]')}
+        >
+          <div data-dock-card className={cn(isDocked && dockedCardClassName, isDocked && 'left-4')}>
+            <Card className={cn('flex h-full animate-fade-up p-5 sm:p-6', isDocked ? 'items-start' : 'items-center')}>
+              <ApplicationStepper
+                activeStep={activeStep}
+                stepProgress={stepProgress}
+                onSelect={selectStep}
+                isVertical={isDocked}
+              />
+            </Card>
+          </div>
 
-          <ApplicationPreviewCard category={category} preview={preview} showroom={showroom} />
+          <div data-dock-card className={cn(isDocked && dockedCardClassName, isDocked && 'right-4')}>
+            <ApplicationPreviewCard category={category} preview={preview} showroom={showroom} isVertical={isDocked} />
+          </div>
         </aside>
 
         <Card className='neon-edge relative animate-fade-up' style={{ animationDelay: '100ms' }}>

@@ -214,12 +214,14 @@ export interface ApplicationStepperProps {
   readonly activeStep: ApplicationStep
   readonly stepProgress: Record<ApplicationStep, StepProgress>
   readonly onSelect: (step: ApplicationStep) => void
+  readonly isVertical: boolean
 }
 
 export interface ApplicationPreviewCardProps {
   readonly category: ApplicationCategory
   readonly preview: ApplicationPreview
   readonly showroom: ShowroomConfig
+  readonly isVertical: boolean
 }
 
 export type ShowroomFactory = (stage: ThreeStage, contextSafe: ContextSafe, reducedMotion: boolean) => ShowroomController

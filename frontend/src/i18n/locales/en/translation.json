@@ -5,7 +5,8 @@
     "clear": "Clear",
     "cancel": "Cancel",
     "close": "Close",
-    "changeLanguage": "Change language"
+    "changeLanguage": "Change language",
+    "backToTop": "Back to top"
   },
   "gasolineTypes": {
     "hybrid": "Hybrid",

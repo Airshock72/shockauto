@@ -73,6 +73,7 @@ const useThreeStage = <TController extends ThreeStageController>(
         disposeObject(scene)
         scene.environment?.dispose()
         renderer.dispose()
+        renderer.forceContextLoss()
         renderer.domElement.remove()
       }
     },

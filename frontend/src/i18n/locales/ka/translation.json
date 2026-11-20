@@ -5,7 +5,8 @@
     "clear": "გასუფთავება",
     "cancel": "გაუქმება",
     "close": "დახურვა",
-    "changeLanguage": "ენის შეცვლა"
+    "changeLanguage": "ენის შეცვლა",
+    "backToTop": "ზემოთ დაბრუნება"
   },
   "gasolineTypes": {
     "hybrid": "ჰიბრიდი",
